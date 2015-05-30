@@ -10,12 +10,14 @@
 
 using namespace std;
 
-class Config {
+class ConfigManager {
 
 public:
-    Config();
+    ConfigManager();
 
     void JsonLoad(rapidjson::Value &jsonObj);
+
+    uint16_t PlayersNum;
 };
 
 

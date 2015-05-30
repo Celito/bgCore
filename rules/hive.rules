@@ -2,5 +2,15 @@
   "game_config": {
     "players":2
   },
-  "game_bits": []
+  "game_bits": [
+    {
+      "id":"Table",
+      "type":"hex_board"
+    },
+    {
+      "id":"PlayerPieces",
+      "type":"pieces_set",
+      "owner":"player"
+    }
+  ]
 }

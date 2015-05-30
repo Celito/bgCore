@@ -9,7 +9,8 @@
 #include "rapidjson/document.h"
 #include "GameManager.h"
 #include "Player.h"
-#include "Config.h"
+#include "ConfigManager.h"
+#include "BitsManager.h"
 
 using namespace std;
 using namespace rapidjson;
@@ -17,12 +18,14 @@ using namespace rapidjson;
 GameManager::GameManager() {
     cout << "Creating the GameManager" << endl;
 
-    vector<Player*>* players = new vector<Player*>();
-
-    Config* config = new Config();
+    //For now this is the list of players
+    Players = new vector<Player*>();
+    Bits = new BitsManager(this);
+    Config = new ConfigManager();
 
     Document document;
 
+    //Open the rules file
     ifstream file("rules/hive.rules");
     file.seekg(0, std::ios::end);
     size_t size = (size_t) file.tellg();
@@ -31,26 +34,23 @@ GameManager::GameManager() {
     file.read(&buffer[0], size);
 
     document.Parse(buffer.c_str());
-    assert(document.IsObject());
+    if(!document.IsObject()){throw "ERROR";}
     assert(document.HasMember("game_config"));
 
     Value& configValues = document["game_config"];
-    config->JsonLoad(configValues);
+    Config->JsonLoad(configValues);
 
+    //Instantiate players
+    for (uint16_t i = 0; i < Config->PlayersNum; i++) {
+        Players->push_back(new Player(i+1));
+    }
 
-//    bool configJson = d.HasMember("game_config");
-
-    //TODO: this should be part of the game rules;
-//    uint16_t numOfPlayers = 2;
-//
-//    //Instantiate players
-//    for (uint16_t i = 0; i < numOfPlayers; i++) {
-//        players->push_back(new Player(i+1));
-//    }
-
-
+    Value& bitsValues = document["game_bits"];
+    Bits->JsonLoad(bitsValues);
 
     //TODO: create a sample of rules (hive)
+
+    //TODO: load the game bits
 
     //TODO: create the turn structure
 
