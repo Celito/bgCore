@@ -7,9 +7,8 @@
 
 using namespace std;
 
-Piece::Piece(GameManager *game): GameBit(game){
-
-    cout << "creating a Piece" << endl;
+Piece::Piece(GameManager *game, std::string refId) : GameBit(game, refId){
+    cout << "creating a piece" << endl;
 }
 
 void Piece::JsonLoad(rapidjson::Value &json) {

@@ -35,7 +35,6 @@ GameManager::GameManager() {
 
     document.Parse(buffer.c_str());
     if(!document.IsObject()){throw "ERROR";}
-    assert(document.HasMember("game_config"));
 
     Value& configValues = document["game_config"];
     Config->JsonLoad(configValues);
@@ -46,7 +45,7 @@ GameManager::GameManager() {
     }
 
     Value& bitsValues = document["game_bits"];
-    Bits->JsonLoad(bitsValues);
+    Bits->JsonLoadBitsList<GameBit>(bitsValues, nullptr);
 
     //TODO: create a sample of rules (hive)
 

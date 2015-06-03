@@ -6,12 +6,12 @@
 #define BGCORE_HEXBOARD_H
 
 
-#include "GameBit.h"
-#include "../GameManager.h"
+#include "../GameBit.h"
+#include "../../GameManager.h"
 
 class HexBoard : public GameBit {
 public:
-    HexBoard(GameManager *game);
+    HexBoard(GameManager *game, std::string refId);
 };
 
 

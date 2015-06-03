@@ -13,8 +13,9 @@ class GameManager;
 class GameBit {
 protected:
     GameManager* _game;
+    std::string _refId;
 public:
-    GameBit(GameManager *game);
+    GameBit(GameManager *game, std::string refId);
     virtual void JsonLoad(rapidjson::Value& json){};
 };
 

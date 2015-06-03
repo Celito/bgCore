@@ -10,7 +10,18 @@
     {
       "id":"PlayerPieces",
       "type":"pieces_set",
-      "owner":"player"
+      "owner":"player",
+      "pieces":[
+        {
+          "id":"Queen",
+          "type":"piece"
+        },
+        {
+          "id":"Beetle",
+          "type":"piece",
+          "quantity":2
+        }
+      ]
     }
   ]
 }

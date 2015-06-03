@@ -7,9 +7,9 @@
 
 #include "GameBit.h"
 
-class Piece : GameBit {
+class Piece : public GameBit {
 public:
-    Piece(GameManager* game);
+    Piece(GameManager *game, std::string refId);
 
 private:
     virtual void JsonLoad(rapidjson::Value &json) override;
