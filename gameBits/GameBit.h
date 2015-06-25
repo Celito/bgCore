@@ -8,14 +8,14 @@
 
 #include <rapidjson/document.h>
 
-class GameManager;
+class Game;
 
 class GameBit {
 protected:
-    GameManager* _game;
+    Game * _game;
     std::string _refId;
 public:
-    GameBit(GameManager *game, std::string refId);
+    GameBit(Game *game, std::string refId);
     virtual void JsonLoad(rapidjson::Value& json){};
 };
 

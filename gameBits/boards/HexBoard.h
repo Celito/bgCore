@@ -7,11 +7,11 @@
 
 
 #include "../GameBit.h"
-#include "../../GameManager.h"
+#include "../../Game.h"
 
 class HexBoard : public GameBit {
 public:
-    HexBoard(GameManager *game, std::string refId);
+    HexBoard(Game *game, std::string refId);
 };
 
 

@@ -10,15 +10,15 @@
 #include <map>
 #include <vector>
 
-class GameManager;
+class Game;
 class GameBit;
 
 class BitsManager {
 
 public:
-    BitsManager(GameManager* manager);
+    BitsManager(Game * manager);
 
-    GameManager* _manager;
+    Game * _manager;
 
     //This is a nested map with the first key being the bit id and the second one being the bit refId
     std::map<std::string, std::map<std::string, GameBit *> > AllGameBits;

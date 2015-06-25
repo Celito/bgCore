@@ -6,16 +6,20 @@
 #define BGCORE_GAMEMANAGER_H
 
 #include <vector>
+#include <memory>
 
 class Player;
 class BitsManager;
 class ConfigManager;
 
-class GameManager {
+class Game {
 public:
-    GameManager();
+    Game();
 
-    std::vector<Player* > *Players;
+    void Start();
+
+private:
+    std::vector<std::shared_ptr<Player> > _players;
     BitsManager *Bits;
     ConfigManager *Config;
 };

@@ -14,7 +14,7 @@
 class PieceSet : public GameBit {
 
 public:
-    PieceSet(GameManager *game, std::string refId);
+    PieceSet(Game *game, std::string refId);
 
     virtual void JsonLoad(rapidjson::Value &json) override;
 
