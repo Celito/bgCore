@@ -9,10 +9,7 @@
 
 class Piece : public GameBit {
 public:
-    Piece(Game *game, std::string refId);
-
-private:
-    virtual void JsonLoad(rapidjson::Value &json) override;
+    Piece(Game &game, std::string refId);
 };
 
 

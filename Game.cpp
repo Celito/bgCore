@@ -5,41 +5,37 @@
 #include <iostream>
 #include <vector>
 #include <stdint-gcc.h>
-#include "json/json.h"
 #include "Game.h"
 #include "Player.h"
 #include "ConfigManager.h"
 #include "BitsManager.h"
-#include "gameBits/boards/HexBoard.h"
 #include "gameBits/PieceSet.h"
 #include "TurnsManager.h"
 
 using namespace std;
-using namespace rapidjson;
 
 Game::Game() {
     cout << "Creating the Game" << endl;
 
+    _bits = make_shared<BitsManager>(*this);
     //For now this is the list of players
-    Bits = new BitsManager(this);
     Config = new ConfigManager();
 
     //MANUAL LOADING
     Config->PlayersNum = 2;
     const string PLAYER_PIECES = "PlayerPieces";
     const string QUEEN = "Queen";
-    Bits->AllGameBits["Table"]["Table_0"] = new HexBoard(this, "Table_0");
     for (uint16_t i = 0; i < Config->PlayersNum; i++) {
 
         shared_ptr<Player> player = make_shared<Player>(i+1);
         _players.push_back(player);
-        string pieceSetRefId = PLAYER_PIECES + "_" + to_string(i);
-        PieceSet* playerSet = new PieceSet(this, pieceSetRefId);
-        Bits->AllGameBits[PLAYER_PIECES][pieceSetRefId] = playerSet;
-        player->Posetions[pieceSetRefId] = playerSet;
-        const string queenRefId = QUEEN + "_" + to_string(i);
-        Piece *queen = new Piece(this, queenRefId);
-        playerSet->Pieces.push_back(queen);
+
+        shared_ptr<PieceSet> playerSet = _bits->create_bit<PieceSet>(PLAYER_PIECES);
+
+        shared_ptr<Piece> queen = _bits->create_bit<Piece>(QUEEN);
+        playerSet->add_piece(queen);
+
+        player->receive(playerSet);
     }
 
     new TurnsManager(this);

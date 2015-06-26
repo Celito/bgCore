@@ -11,7 +11,7 @@
 
 class HexBoard : public GameBit {
 public:
-    HexBoard(Game *game, std::string refId);
+    HexBoard(Game &game, std::string refId);
 };
 
 

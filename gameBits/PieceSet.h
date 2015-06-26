@@ -10,15 +10,17 @@
 #include "GameBit.h"
 #include "Piece.h"
 
+using namespace std;
 
 class PieceSet : public GameBit {
 
 public:
-    PieceSet(Game *game, std::string refId);
+    PieceSet(Game &game, string refId);
 
-    virtual void JsonLoad(rapidjson::Value &json) override;
+    void add_piece(shared_ptr<Piece> piece);
 
-    std::vector<Piece *> Pieces;
+private:
+    vector<shared_ptr<Piece> > _pieces;
 };
 
 

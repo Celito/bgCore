@@ -5,47 +5,40 @@
 #ifndef BGCORE_BITSMANAGER_H
 #define BGCORE_BITSMANAGER_H
 
-#include <rapidjson/document.h>
 #include <string>
 #include <map>
 #include <vector>
+#include <memory>
+#include "gameBits/GameBit.h"
+
+using namespace std;
 
 class Game;
-class GameBit;
 
 class BitsManager {
 
 public:
-    BitsManager(Game * manager);
+    BitsManager(Game & game);
 
-    Game * _manager;
+    template<class T>
+    shared_ptr<T> create_bit(string bit_id);
+
+    uint32_t register_bit(shared_ptr<GameBit> bit);
 
     //This is a nested map with the first key being the bit id and the second one being the bit refId
-    std::map<std::string, std::map<std::string, GameBit *> > AllGameBits;
+    map<string, vector< shared_ptr<GameBit> > > _all_bits;
 
-    template <typename T>
-    void JsonLoadBitsList(rapidjson::Value &jsonArray, std::vector<T *> *bitsArray);
+private:
+    Game &_game;
 
-    GameBit * JsonLoadBit(rapidjson::Value &bitInfo);
 };
 
-template<typename T>
-void BitsManager::JsonLoadBitsList(rapidjson::Value &jsonArray, std::vector<T *> *bitsArray) {
-    if(!jsonArray.IsArray()){ throw "Json list of objects to load is not an array"; }
-    for (uint16_t i = 0; i < jsonArray.Size(); ++i) {
-        rapidjson::Value& bitInfo = jsonArray[i];
-        uint16_t quantity = 1;
-        //When there is multiple entries of the same bit the quantity is set here
-        if(bitInfo.HasMember("quantity")) {
-            quantity = bitInfo["quantity"].GetInt();
-        }
-        for (uint16_t j = 0; j < quantity; ++j) {
-            GameBit *ret = JsonLoadBit(bitInfo);
-            if(bitsArray != nullptr) {
-                bitsArray->push_back((T *)ret);
-            }
-        }
-    }
+template<class T>
+shared_ptr<T> BitsManager::create_bit(string bit_id) {
+    static_assert((is_base_of<GameBit, T>::value),"Type T of create_bit must be a GameBit");
+    auto gameBit = make_shared<T>(_game, bit_id);
+    static_cast<GameBit*>(gameBit.get())->set_ref_id(register_bit(gameBit));
+    return gameBit;
 }
 
 

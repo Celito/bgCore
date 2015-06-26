@@ -1,12 +1,15 @@
 #include <iostream>
 #include "Game.h"
+#include "tui/GameTUI.h"
 
 using namespace std;
 
 int main() {
     cout << "Hello, World!" << endl;
 
-    Game * gameManager = new Game();
+    Game game;
+    GameTUI gameTUI(game);
+    gameTUI.Run();
 
     return 0;
 }

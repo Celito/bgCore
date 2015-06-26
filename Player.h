@@ -7,7 +7,11 @@
 
 #include <string>
 #include <map>
-#include "gameBits/GameBit.h"
+#include <memory>
+
+class GameBit;
+class PlayerInterface;
+class PieceSet;
 
 using namespace std;
 
@@ -15,9 +19,18 @@ class Player {
 public:
     Player(unsigned int id);
 
-    map<string, GameBit*> Posetions;
+    void receive(shared_ptr<PieceSet> bit);
+
+    const shared_ptr<PlayerInterface> &get_interface() const {
+        return _interface;
+    }
+
 private:
     unsigned int _id;
+
+    map<string, shared_ptr<GameBit> > _possessions;
+
+    shared_ptr<PlayerInterface> _interface;
 };
 
 
