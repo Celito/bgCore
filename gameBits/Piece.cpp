@@ -7,6 +7,4 @@
 
 using namespace std;
 
-Piece::Piece(Game &game, string refId) : GameBit(game, refId){
-    cout << "creating a piece" << endl;
-}
+Piece::Piece(Game &game, string refId) : GameBit(game, refId){}

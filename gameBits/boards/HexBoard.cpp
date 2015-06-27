@@ -7,6 +7,4 @@
 
 using namespace std;
 
-HexBoard::HexBoard(Game &game, string refId) : GameBit(game, refId){
-    cout << "Creating a hex board" << endl;
-}
+HexBoard::HexBoard(Game &game, string refId) : GameBit(game, refId){}

@@ -11,7 +11,6 @@ using namespace std;
 
 GameBit::GameBit(Game &game, string bit_id) : _game(game) {
     _bit_id = bit_id;
-    std::cout << "created the bit '" << bit_id << "'" << std::endl;
 }
 
 string GameBit::get_unique_id() const {

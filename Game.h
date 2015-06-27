@@ -21,9 +21,14 @@ public:
     void Start();
 
 private:
+    //game config:
+    uint32_t num_of_players;
+
+    //game pointers:
     vector<shared_ptr<Player> > _players;
+
+    //helper managers:
     shared_ptr<BitsManager> _bits;
-    ConfigManager *Config;
 };
 
 
