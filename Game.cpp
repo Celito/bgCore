@@ -6,20 +6,27 @@
 #include <vector>
 #include <stdint-gcc.h>
 #include "Game.h"
-#include "Player.h"
+#include "GameController.h"
+#include "player/Player.h"
 #include "BitsManager.h"
 #include "gameBits/PieceSet.h"
-#include "TurnsManager.h"
+#include "turns/TurnsManager.h"
+#include "turns/Turn.h"
+#include "turns/Action.h"
+#include "gameBits/boards/HexBoard.h"
+#include "turns/PutPieceOnBoard.h"
 
 using namespace std;
 
 Game::Game() {
     cout << "Creating the Game" << endl;
 
+    // Initialize the supporting managers;
     _bits = make_shared<BitsManager>(*this);
+    _turns = make_shared<TurnsManager>(*this);
 
     //TEMP starting to manual load the game configuration
-    num_of_players = 2;
+    _num_of_players = 2;
     const string PLAYER_PIECES = "PlayerPieces";
 
     //TEMP vector with the quantity of each piece on the set and its bit id
@@ -32,7 +39,7 @@ Game::Game() {
         {3, "Ant"},
     };
 
-    for (uint32_t i = 0; i < num_of_players; i++) {
+    for (uint32_t i = 0; i < _num_of_players; i++) {
 
         shared_ptr<Player> player = make_shared<Player>(i+1);
         _players.push_back(player);
@@ -47,9 +54,22 @@ Game::Game() {
                 player_set->add_piece(new_piece);
             }
         }
+
+        _players[i]->receive(player_set);
     }
 
-    new TurnsManager(this);
+    // TEMP create the board, call it 'Table' and add it to the table objects;
+    shared_ptr<HexBoard> _board = _bits->create_bit<HexBoard>("Table");
+    _table[_board->get_unique_id()] = _board;
+
+    // TEMP create the normal turn with the possible actions in it;
+    shared_ptr<Turn> normal_turn = make_shared<Turn>();
+
+    shared_ptr<PutPieceOnBoard> action = make_shared<PutPieceOnBoard>();
+
+    normal_turn->add_action(action);
+
+    _turns->register_turn(normal_turn);
 
     //TODO: create a sample of rules (hive)
 
@@ -68,10 +88,16 @@ Game::Game() {
     //TODO: create the group of pieces
 
     //TODO: create the player inventory
-
-    system("pause");
 }
 
-void Game::Start() {
+void Game::start(GameController &game_controller) {
+    for(uint32_t i = 0; i < _players.size(); i++)
+    {
+        _players[i]->set_controller(game_controller.get_player_controller(i));
+    }
+    _turns->start_turn();
+}
 
+shared_ptr<Player> Game::get_player(uint32_t id) {
+    return _players[id];
 }

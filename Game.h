@@ -7,10 +7,15 @@
 
 #include <vector>
 #include <memory>
+#include <map>
 
 class Player;
 class BitsManager;
 class ConfigManager;
+class GameBit;
+class TurnsManager;
+class PlayerController;
+class GameController;
 
 using namespace std;
 
@@ -18,17 +23,27 @@ class Game {
 public:
     Game();
 
-    void Start();
+    //interface:
+    void start(GameController &game_controller);
+
+    //internal:
+    shared_ptr<Player> get_player(uint32_t id);
+
+    uint32_t get_num_of_players() const {
+        return _num_of_players;
+    }
 
 private:
-    //game config:
-    uint32_t num_of_players;
+//game config:
+    uint32_t _num_of_players;
 
     //game pointers:
     vector<shared_ptr<Player> > _players;
+    map< string, shared_ptr<GameBit> > _table;
 
     //helper managers:
     shared_ptr<BitsManager> _bits;
+    shared_ptr<TurnsManager> _turns;
 };
 
 

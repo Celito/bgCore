@@ -8,10 +8,14 @@
 
 #include "../GameBit.h"
 #include "../../Game.h"
+#include "Board.h"
 
-class HexBoard : public GameBit {
+class HexBoard : public Board {
 public:
     HexBoard(Game &game, std::string refId);
+
+
+    virtual bool have_free_tiles() override;
 };
 
 

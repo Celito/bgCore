@@ -7,4 +7,9 @@
 
 using namespace std;
 
-HexBoard::HexBoard(Game &game, string refId) : GameBit(game, refId){}
+HexBoard::HexBoard(Game &game, string refId) : Board(game, refId){}
+
+bool HexBoard::have_free_tiles() {
+    //TODO: Complete this function;
+    return true;
+}

@@ -19,6 +19,8 @@ public:
 
     void add_piece(shared_ptr<Piece> piece);
 
+    bool is_empty();
+
 private:
     vector<shared_ptr<Piece> > _pieces;
 };

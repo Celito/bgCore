@@ -9,7 +9,9 @@ int main() {
 
     Game game;
     GameTUI gameTUI(game);
-    gameTUI.Run();
+    gameTUI.run();
+
+    system("pause");
 
     return 0;
 }

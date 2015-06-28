@@ -11,6 +11,7 @@
 
 class GameBit;
 class PlayerInterface;
+class PlayerController;
 class PieceSet;
 
 using namespace std;
@@ -21,8 +22,16 @@ public:
 
     void receive(shared_ptr<PieceSet> bit);
 
-    const shared_ptr<PlayerInterface> &get_interface() const {
+    shared_ptr<PlayerInterface> get_interface() const {
         return _interface;
+    }
+
+    shared_ptr<PlayerController> get_controller() {
+        return _controller;
+    }
+
+    void set_controller(shared_ptr<PlayerController> _controller) {
+        Player::_controller = _controller;
     }
 
 private:
@@ -31,6 +40,7 @@ private:
     map<string, shared_ptr<GameBit> > _possessions;
 
     shared_ptr<PlayerInterface> _interface;
+    shared_ptr<PlayerController> _controller;
 };
 
 

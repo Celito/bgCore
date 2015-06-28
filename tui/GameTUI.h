@@ -7,16 +7,26 @@
 
 
 #include "../Game.h"
+#include "../GameController.h"
 
-class GameTUI {
+class PlayerTUI;
+class PlayerController;
+
+using namespace std;
+
+class GameTUI : public GameController {
 
 public:
-    GameTUI(Game &game) : _game(game) { }
+    GameTUI(Game &game);
 
-    void Run();
+    virtual shared_ptr<PlayerController> get_player_controller(uint32_t player_id) override;
+
+    void run();
 
 private:
     Game &_game;
+
+    vector< shared_ptr<PlayerTUI> > _player_TUIS;
 };
 
 
