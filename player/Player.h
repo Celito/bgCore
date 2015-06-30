@@ -6,8 +6,9 @@
 #define BGCORE_PLAYER_H
 
 #include <string>
-#include <map>
+#include <vector>
 #include <memory>
+#include "../gameBits/GameBit.h"
 
 class GameBit;
 class PlayerInterface;
@@ -18,9 +19,11 @@ using namespace std;
 
 class Player {
 public:
-    Player(unsigned int id);
+    Player(Game &game, unsigned int id);
 
     void receive(shared_ptr<PieceSet> bit);
+
+    shared_ptr<GameBit> get_bit(string bit_id) const;
 
     shared_ptr<PlayerInterface> get_interface() const {
         return _interface;
@@ -30,14 +33,19 @@ public:
         return _controller;
     }
 
+    Game &get_curr_game() {
+        return _game;
+    }
+
     void set_controller(shared_ptr<PlayerController> _controller) {
         Player::_controller = _controller;
     }
 
 private:
+    Game &_game;
     unsigned int _id;
 
-    map<string, shared_ptr<GameBit> > _possessions;
+    vector< shared_ptr<GameBit> > _possessions;
 
     shared_ptr<PlayerInterface> _interface;
     shared_ptr<PlayerController> _controller;

@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <vector>
+#include <algorithm>
 #include <stdint-gcc.h>
 #include "Game.h"
 #include "GameController.h"
@@ -27,7 +27,7 @@ Game::Game() {
 
     //TEMP starting to manual load the game configuration
     _num_of_players = 2;
-    const string PLAYER_PIECES = "PlayerPieces";
+    const string PLAYER_PIECES = "PiecesSet";
 
     //TEMP vector with the quantity of each piece on the set and its bit id
     vector<pair<uint32_t , string> > pieces_info =
@@ -41,7 +41,7 @@ Game::Game() {
 
     for (uint32_t i = 0; i < _num_of_players; i++) {
 
-        shared_ptr<Player> player = make_shared<Player>(i+1);
+        shared_ptr<Player> player = make_shared<Player>(*this, i+1);
         _players.push_back(player);
 
         shared_ptr<PieceSet> player_set = _bits->create_bit<PieceSet>(PLAYER_PIECES);
@@ -57,15 +57,18 @@ Game::Game() {
 
         _players[i]->receive(player_set);
     }
+    
+    const string HEX_BOARD_NAME = "Table";
 
     // TEMP create the board, call it 'Table' and add it to the table objects;
-    shared_ptr<HexBoard> _board = _bits->create_bit<HexBoard>("Table");
-    _table[_board->get_unique_id()] = _board;
+    shared_ptr<HexBoard> _board = _bits->create_bit<HexBoard>(HEX_BOARD_NAME);
+    _table.push_back(_board);
 
     // TEMP create the normal turn with the possible actions in it;
     shared_ptr<Turn> normal_turn = make_shared<Turn>();
 
-    shared_ptr<PutPieceOnBoard> action = make_shared<PutPieceOnBoard>();
+    shared_ptr<PutPieceOnBoard> action =
+            make_shared<PutPieceOnBoard>(BitReference(PLAYER_PIECES), BitReference(HEX_BOARD_NAME));
 
     normal_turn->add_action(action);
 
@@ -100,4 +103,11 @@ void Game::start(GameController &game_controller) {
 
 shared_ptr<Player> Game::get_player(uint32_t id) {
     return _players[id];
+}
+
+shared_ptr<GameBit> Game::get_table_bit(string bit_id) const {
+    vector<shared_ptr<GameBit>>::const_iterator it;
+    it = find_if(_table.begin(), _table.end(),
+                 [bit_id](shared_ptr<GameBit> const& bit) -> bool { return bit->get_bit_id() == bit_id;});
+    return *it;
 }

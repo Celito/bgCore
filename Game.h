@@ -33,13 +33,15 @@ public:
         return _num_of_players;
     }
 
+    shared_ptr<GameBit> get_table_bit(string bit_id) const;
+
 private:
 //game config:
     uint32_t _num_of_players;
 
     //game pointers:
-    vector<shared_ptr<Player> > _players;
-    map< string, shared_ptr<GameBit> > _table;
+    vector< shared_ptr<Player> > _players;
+    vector< shared_ptr<GameBit> > _table;
 
     //helper managers:
     shared_ptr<BitsManager> _bits;

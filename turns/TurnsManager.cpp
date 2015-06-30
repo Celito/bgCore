@@ -4,6 +4,7 @@
 
 #include "TurnsManager.h"
 #include "Turn.h"
+#include "Action.h"
 #include "../player/Player.h"
 #include "../player/PlayerController.h"
 #include "../Game.h"
@@ -26,6 +27,9 @@ void TurnsManager::start_turn() {
 
     shared_ptr<PlayerController> controller = curr_player->get_controller();
 
+    action->apply_to(curr_player);
+
+    //TODO: if the first action is not available, the throw an error, because the player have no valid actions to take;
     controller->resolve_action(action);
 
 }

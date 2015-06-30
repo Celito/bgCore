@@ -16,6 +16,8 @@ class GameBit {
 public:
     GameBit(Game &game, string bit_id);
 
+    virtual ~GameBit() {};
+
     string get_unique_id() const;
 
     void set_ref_id(const uint32_t _ref_id) {

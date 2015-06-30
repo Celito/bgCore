@@ -10,7 +10,7 @@
 
 class PlayerTUI : public PlayerController {
 
-    virtual void resolve_action(weak_ptr<Action> action) override;
+    virtual void resolve_action(shared_ptr<Action> action) override;
 };
 
 
