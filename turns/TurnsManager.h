@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <memory>
+#include <stdint-gcc.h>
 
 class Game;
 class Turn;
@@ -23,7 +24,7 @@ public:
     void start_turn();
 private:
     Game &_game;
-    uint16_t _current_player_id;
+    uint32_t _current_player_id;
 
     vector<shared_ptr<Turn> > _possible_turns;
 };

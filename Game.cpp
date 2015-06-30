@@ -15,6 +15,7 @@
 #include "turns/Action.h"
 #include "gameBits/boards/HexBoard.h"
 #include "turns/PutPieceOnBoard.h"
+#include "turns/MultiActions.h"
 
 using namespace std;
 
@@ -67,10 +68,13 @@ Game::Game() {
     // TEMP create the normal turn with the possible actions in it;
     shared_ptr<Turn> normal_turn = make_shared<Turn>();
 
-    shared_ptr<PutPieceOnBoard> action =
-            make_shared<PutPieceOnBoard>(BitReference(PLAYER_PIECES), BitReference(HEX_BOARD_NAME));
+    auto put_piece_on_board = make_shared<PutPieceOnBoard>(BitReference(PLAYER_PIECES), BitReference(HEX_BOARD_NAME));
 
-    normal_turn->add_action(action);
+    auto first_action = make_shared<MultiActions>();
+
+    first_action->add_sub_action(put_piece_on_board);
+
+    normal_turn->add_action(first_action);
 
     _turns->register_turn(normal_turn);
 

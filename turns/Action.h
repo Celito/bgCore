@@ -12,9 +12,12 @@ using namespace std;
 
 class Action {
 public:
+
+    virtual ~Action() {}
+
     virtual void apply_to(shared_ptr<Player> player);
 
-    virtual bool is_available() = 0;
+    virtual bool is_available() const = 0;
 
 protected:
     vector<BitReference> _references;

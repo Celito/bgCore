@@ -5,7 +5,6 @@
 #include "TurnsManager.h"
 #include "Turn.h"
 #include "Action.h"
-#include "../player/Player.h"
 #include "../player/PlayerController.h"
 #include "../Game.h"
 

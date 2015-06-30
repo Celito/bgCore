@@ -18,7 +18,7 @@ public:
 
     virtual void apply_to(shared_ptr<Player> player) override;
 
-    virtual bool is_available() override;
+    virtual bool is_available() const override;
 
 private:
     BitReference _pieces_pool_ref;
