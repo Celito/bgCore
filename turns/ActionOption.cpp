@@ -3,3 +3,7 @@
 //
 
 #include "ActionOption.h"
+
+string ActionOption::get_description() {
+    return _selected_action->get_description();
+}
