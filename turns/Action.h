@@ -10,6 +10,8 @@
 
 using namespace std;
 
+class ActionOption;
+
 class Action {
 public:
 
@@ -17,9 +19,14 @@ public:
 
     virtual void apply_to(shared_ptr<Player> player);
 
+    //Interface:
+
     virtual bool is_available() const = 0;
 
+    virtual const vector< shared_ptr <ActionOption> >& get_options() const;
+
 protected:
+    vector< shared_ptr <ActionOption> > _options;
     vector<BitReference> _references;
     shared_ptr<Player> _curr_player;
 };

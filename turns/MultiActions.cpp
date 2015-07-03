@@ -4,6 +4,7 @@
 
 #include "MultiActions.h"
 #include <algorithm>
+#include "ActionOption.h"
 
 bool MultiActions::is_available() const {
     bool available = false;
@@ -16,6 +17,8 @@ bool MultiActions::is_available() const {
 
 void MultiActions::add_sub_action(shared_ptr<Action> action) {
     _sub_actions.push_back(action);
+    //TODO: add a choice option to the options;
+    _options.push_back(make_shared<ActionOption>());
 }
 
 void MultiActions::apply_to(shared_ptr<Player> player) {

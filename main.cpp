@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 #include "Game.h"
 #include "tui/GameTUI.h"
 

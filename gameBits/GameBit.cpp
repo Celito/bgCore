@@ -3,6 +3,7 @@
 //
 
 #include <c++/iostream>
+#include <string>
 #include "GameBit.h"
 #include "../Game.h"
 #include "../BitsManager.h"

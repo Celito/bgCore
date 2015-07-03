@@ -7,6 +7,8 @@
 #include "../turns/Action.h"
 
 void PlayerTUI::resolve_action(shared_ptr<Action> action) {
-    cout << "player controller received " << (action->is_available() ? "a valid" :  "an invalid") << " action " << endl;
+    auto options = action->get_options();
+    cout << "player controller received " << (action->is_available() ? "a valid" :  "an invalid") << " action with " <<
+            options.size() << " options" <<  endl;
     action->is_available();
 }
