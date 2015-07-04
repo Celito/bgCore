@@ -37,8 +37,8 @@ public:
         return _game;
     }
 
-    void set_controller(shared_ptr<PlayerController> _controller) {
-        Player::_controller = _controller;
+    void set_controller(shared_ptr<PlayerController> controller) {
+        _controller = controller;
     }
 
 private:

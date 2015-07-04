@@ -20,6 +20,9 @@ public:
 
     virtual bool is_available() const override;
 
+
+    virtual string get_description() const override;
+
 private:
     BitReference _pieces_pool_ref;
     BitReference _target_board_ref;

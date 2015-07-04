@@ -25,6 +25,8 @@ public:
 
     virtual const vector< shared_ptr <ActionOption> >& get_options() const;
 
+    virtual string get_description() const = 0;
+
 protected:
     vector< shared_ptr <ActionOption> > _options;
     vector<BitReference> _references;

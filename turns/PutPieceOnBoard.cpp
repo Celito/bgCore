@@ -16,3 +16,7 @@ void PutPieceOnBoard::apply_to(shared_ptr<Player> player) {
 //    _target_board = _target_board_ref.get_from_table(player->get_curr_game());
     // TODO: assert if the _target_board exists, the _pieces_pool can be null;
 }
+
+string PutPieceOnBoard::get_description() const {
+    return "Put pieces on the table";
+}

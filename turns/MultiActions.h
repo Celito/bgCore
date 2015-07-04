@@ -17,8 +17,9 @@ public:
 
     virtual bool is_available() const override;
 
-
     virtual void apply_to(shared_ptr<Player> player) override;
+
+    virtual string get_description() const override;
 
 private:
 
