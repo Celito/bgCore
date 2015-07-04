@@ -6,11 +6,13 @@
 #define BGCORE_ACTIONOPTION_H
 
 #include <memory>
-#include "Action.h"
+#include "Option.h"
 
 using namespace std;
 
-class ActionOption {
+class Action;
+
+class ActionOption : public  Option{
 public:
     ActionOption(shared_ptr<Action> action) : _selected_action(action) {}
 

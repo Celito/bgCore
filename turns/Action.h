@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class ActionOption;
+class Option;
 
 class Action {
 public:
@@ -23,12 +23,14 @@ public:
 
     virtual bool is_available() const = 0;
 
-    virtual const vector< shared_ptr <ActionOption> >& get_options() const;
+    virtual const vector< shared_ptr <Option> >& get_options() const;
 
     virtual string get_description() const = 0;
 
+    virtual void choose(shared_ptr<Option> option) = 0;
+
 protected:
-    vector< shared_ptr <ActionOption> > _options;
+    vector< shared_ptr <Option> > _options;
     vector<BitReference> _references;
     shared_ptr<Player> _curr_player;
 };

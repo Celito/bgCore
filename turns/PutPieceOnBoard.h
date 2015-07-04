@@ -7,8 +7,9 @@
 
 
 #include "Action.h"
-#include "../gameBits/PieceSet.h"
-#include "../gameBits/boards/Board.h"
+
+class Board;
+class BitReference;
 
 class PutPieceOnBoard : public Action {
 public:
@@ -20,8 +21,10 @@ public:
 
     virtual bool is_available() const override;
 
-
     virtual string get_description() const override;
+
+
+    virtual void choose(shared_ptr<Option> option) override;
 
 private:
     BitReference _pieces_pool_ref;

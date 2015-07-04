@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "../Game.h"
 #include "PlayerInterface.h"
+#include "PlayerController.h"
 #include "../gameBits/PieceSet.h"
 
 using namespace std;
@@ -25,4 +26,9 @@ shared_ptr<GameBit> Player::get_bit(string bit_id) const {
     it = find_if(_possessions.begin(), _possessions.end(),
                           [bit_id](shared_ptr<GameBit> const& bit) -> bool { return bit->get_bit_id() == bit_id;});
     return *it;
+}
+
+void Player::set_controller(shared_ptr<PlayerController> controller) {
+    _controller = controller;
+    _controller->set_interface(get_interface());
 }

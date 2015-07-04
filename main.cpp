@@ -12,6 +12,7 @@ int main() {
     GameTUI gameTUI(game);
     gameTUI.run();
 
+    cout << "You reached the end of the program" << endl;
     system("pause");
 
     return 0;

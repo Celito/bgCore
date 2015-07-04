@@ -21,6 +21,8 @@ public:
 
     virtual string get_description() const override;
 
+    virtual void choose(shared_ptr<Option> option) override;
+
 private:
 
     vector<shared_ptr<Action> > _sub_actions;

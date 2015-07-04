@@ -33,17 +33,17 @@ public:
         return _controller;
     }
 
+    uint32_t get_id() { return  _id; }
+
     Game &get_curr_game() {
         return _game;
     }
 
-    void set_controller(shared_ptr<PlayerController> controller) {
-        _controller = controller;
-    }
+    void set_controller(shared_ptr<PlayerController> controller);
 
 private:
     Game &_game;
-    unsigned int _id;
+    uint32_t _id;
 
     vector< shared_ptr<GameBit> > _possessions;
 

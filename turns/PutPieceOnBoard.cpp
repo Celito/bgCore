@@ -3,6 +3,8 @@
 //
 
 #include "PutPieceOnBoard.h"
+#include "../gameBits/PieceSet.h"
+#include "../gameBits/boards/Board.h"
 
 bool PutPieceOnBoard::is_available() const {
     return _pieces_pool && !_pieces_pool->is_empty() && _target_board->have_free_tiles();
@@ -18,5 +20,9 @@ void PutPieceOnBoard::apply_to(shared_ptr<Player> player) {
 }
 
 string PutPieceOnBoard::get_description() const {
-    return "Put pieces on the table";
+    return "Put a piece on the table";
+}
+
+void PutPieceOnBoard::choose(shared_ptr<Option> option) {
+
 }

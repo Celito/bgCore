@@ -8,6 +8,6 @@ void Action::apply_to(shared_ptr<Player> player) {
     _curr_player = player;
 }
 
-const vector<shared_ptr<ActionOption> > &Action::get_options() const {
+const vector<shared_ptr<Option> > &Action::get_options() const {
     return _options;
 }

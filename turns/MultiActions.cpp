@@ -4,7 +4,8 @@
 
 #include "MultiActions.h"
 #include <algorithm>
-#include "ActionOption.h"
+#include "options/Option.h"
+#include "options/ActionOption.h"
 
 bool MultiActions::is_available() const {
     bool available = false;
@@ -29,4 +30,8 @@ void MultiActions::apply_to(shared_ptr<Player> player) {
 
 string MultiActions::get_description() const {
     return "Choose your next action";
+}
+
+void MultiActions::choose(shared_ptr<Option> option) {
+
 }
