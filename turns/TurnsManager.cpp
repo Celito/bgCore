@@ -22,15 +22,24 @@ void TurnsManager::start_turn() {
     //TODO: choose the turn according to the conditions to choose the turn type;
     shared_ptr<Turn> turn = _possible_turns[0];
 
-    shared_ptr<Action> action = turn->get_first_action();
+    shared_ptr<Action> curr_action = turn->get_first_action();
 
     shared_ptr<PlayerController> controller = curr_player->get_controller();
 
-    action->apply_to(curr_player);
+    while(curr_action != nullptr)
+    {
+        curr_action->init(curr_player);
+        while(curr_action->self_resolve())
+        {
+            curr_action = curr_action->get_next_action().lock();
+        }
 
-    //TODO: if the first action is not available, the throw an error, because the player have no valid actions to take;
-    controller->resolve_action(action);
-
+        if(curr_action)
+        {
+            controller->resolve_action(curr_action);
+            curr_action = curr_action->get_next_action().lock();
+        }
+    }
 }
 
 void TurnsManager::register_turn(shared_ptr<Turn> turn) {

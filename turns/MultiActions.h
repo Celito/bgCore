@@ -17,11 +17,13 @@ public:
 
     virtual bool is_available() const override;
 
-    virtual void apply_to(shared_ptr<Player> player) override;
+    virtual void init(shared_ptr<Player> player) override;
 
     virtual string get_description() const override;
 
     virtual void choose(shared_ptr<Option> option) override;
+
+    virtual bool self_resolve() override;
 
 private:
 

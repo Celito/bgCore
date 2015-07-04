@@ -4,7 +4,7 @@
 
 #include "Action.h"
 
-void Action::apply_to(shared_ptr<Player> player) {
+void Action::init(shared_ptr<Player> player) {
     _curr_player = player;
 }
 

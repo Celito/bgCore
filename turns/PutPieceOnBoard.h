@@ -17,7 +17,7 @@ public:
             _pieces_pool_ref(pieces_pool), _target_board_ref(target_board) {}
 
 
-    virtual void apply_to(shared_ptr<Player> player) override;
+    virtual void init(shared_ptr<Player> player) override;
 
     virtual bool is_available() const override;
 
