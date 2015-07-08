@@ -14,6 +14,10 @@ void PieceSet::add_piece(shared_ptr<Piece> piece) {
     _pieces.push_back(piece);
 }
 
-bool PieceSet::is_empty() {
+bool PieceSet::is_empty() const {
     return _pieces.size() == 0;
+}
+
+vector<shared_ptr<Piece> > const &PieceSet::get_pieces() const {
+    return _pieces;
 }

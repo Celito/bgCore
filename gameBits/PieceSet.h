@@ -19,7 +19,9 @@ public:
 
     void add_piece(shared_ptr<Piece> piece);
 
-    bool is_empty();
+    vector<shared_ptr<Piece> > const &get_pieces() const;
+
+    bool is_empty() const;
 
 private:
     vector<shared_ptr<Piece> > _pieces;

@@ -10,12 +10,11 @@
 
 class Board;
 class BitReference;
+class ChoosePiece;
 
 class PutPieceOnBoard : public Action {
 public:
-    PutPieceOnBoard(BitReference pieces_pool, BitReference target_board) :
-            _pieces_pool_ref(pieces_pool), _target_board_ref(target_board) {}
-
+    PutPieceOnBoard(BitReference pieces_pool, BitReference target_board);
 
     virtual void init(shared_ptr<Player> player) override;
 
@@ -23,13 +22,13 @@ public:
 
     virtual string get_description() const override;
 
-
     virtual void choose(shared_ptr<Option> option) override;
 
+    virtual bool self_resolve() override;
+
 private:
-    BitReference _pieces_pool_ref;
     BitReference _target_board_ref;
-    shared_ptr<PieceSet> _pieces_pool;
+    shared_ptr<ChoosePiece> _choose_piece_action;
     shared_ptr<Board> _target_board;
 };
 
