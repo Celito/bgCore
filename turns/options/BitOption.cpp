@@ -6,5 +6,5 @@
 #include "../../gameBits/GameBit.h"
 
 string BitOption::get_description() {
-    return _selected_bit->get_unique_id();
+    return _selected_bit->get_bit_id();
 }

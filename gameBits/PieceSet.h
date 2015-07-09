@@ -20,15 +20,13 @@ public:
 
     void add_piece(shared_ptr<Piece> piece);
 
-    vector<shared_ptr<Piece> > const &get_pieces() const;
+    vector< shared_ptr<Piece> > get_available_pieces() const;
 
     bool is_empty() const;
 
 private:
     vector<shared_ptr<Piece> > _pieces;
 };
-
-bool game_bit_compare_bit_id(shared_ptr<Piece> p1, shared_ptr<Piece> p2);
 
 
 #endif //BGCORE_PIECESET_H

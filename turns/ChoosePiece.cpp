@@ -11,10 +11,9 @@
 void ChoosePiece::init(shared_ptr<Player> player) {
     Action::init(player);
     _pieces_pool = dynamic_pointer_cast<PieceSet>(_pieces_pool_ref.get_from_player(player));
-    //TODO: Get only available pieces to be picked
-    vector<shared_ptr<Piece>> pieces = _pieces_pool->get_pieces();
+    vector<shared_ptr<Piece>> pieces = _pieces_pool->get_available_pieces();
 
-    for(auto iter = pieces.begin(); iter != pieces.end(); iter = unique(iter, pieces.end(),game_bit_compare_bit_id)) {
+    for(auto iter = pieces.begin(); iter != pieces.end(); iter++) {
         _options.push_back(make_shared<BitOption>((*iter)));
     }
 }
