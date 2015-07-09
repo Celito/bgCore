@@ -7,6 +7,7 @@
 
 #include "../player/Player.h"
 #include "../gameBits/BitReference.h"
+#include <boost/signals2.hpp>
 
 using namespace std;
 
@@ -37,13 +38,17 @@ public:
 
     virtual string get_description() const = 0;
 
-    virtual void choose(shared_ptr<Option> option) = 0;
+    virtual void choose(shared_ptr<Option> option);
+
+    boost::signals2::connection on_option_taken(boost::signals2::slot<void(shared_ptr<Option>)> slot);
 
 protected:
     vector< shared_ptr <Option> > _options;
     vector<BitReference> _references;
     shared_ptr<Player> _curr_player;
     weak_ptr<Action> _next_action;
+
+    boost::signals2::signal<void(shared_ptr<Option>)> _option_taken;
 };
 
 

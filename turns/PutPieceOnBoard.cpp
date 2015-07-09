@@ -4,12 +4,19 @@
 
 #include "PutPieceOnBoard.h"
 #include "ChoosePiece.h"
+#include "options/Option.h"
 #include "../gameBits/PieceSet.h"
 #include "../gameBits/boards/Board.h"
+#include "options/BitOption.h"
 
 PutPieceOnBoard::PutPieceOnBoard(BitReference pieces_pool, BitReference target_board) :
         _target_board_ref(target_board) {
     _choose_piece_action = make_shared<ChoosePiece>(pieces_pool);
+    _choose_piece_action.get()->on_option_taken([this](shared_ptr<Option> opt){
+        shared_ptr<BitOption> bit_opt = dynamic_pointer_cast<BitOption>(opt);
+        _selected_bit = bit_opt->get_bit();
+        cout << "PIECE SELECTED: " << _selected_bit->get_bit_id() << endl;
+    });
 }
 
 bool PutPieceOnBoard::is_available() const {
@@ -28,10 +35,6 @@ void PutPieceOnBoard::init(shared_ptr<Player> player) {
 
 string PutPieceOnBoard::get_description() const {
     return "Put a piece on the table";
-}
-
-void PutPieceOnBoard::choose(shared_ptr<Option> option) {
-
 }
 
 bool PutPieceOnBoard::self_resolve() {

@@ -27,7 +27,3 @@ string ChoosePiece::get_description() const {
 }
 
 ChoosePiece::ChoosePiece(BitReference pieces_pool) : _pieces_pool_ref(pieces_pool) {}
-
-void ChoosePiece::choose(shared_ptr<Option> option) {
-
-}

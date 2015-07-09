@@ -8,3 +8,7 @@
 string BitOption::get_description() {
     return _selected_bit->get_bit_id();
 }
+
+shared_ptr<GameBit> BitOption::get_bit() {
+    return _selected_bit;
+}

@@ -20,8 +20,6 @@ public:
 
     virtual bool is_available() const override;
 
-    virtual void choose(shared_ptr<Option> option) override;
-
 private:
     BitReference _pieces_pool_ref;
     shared_ptr<PieceSet> _pieces_pool;

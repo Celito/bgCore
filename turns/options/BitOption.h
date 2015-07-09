@@ -15,6 +15,8 @@ public:
 
     virtual string get_description() override;
 
+    shared_ptr<GameBit> get_bit();
+
 private:
     shared_ptr<GameBit> _selected_bit;
 };

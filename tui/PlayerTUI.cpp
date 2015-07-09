@@ -10,7 +10,7 @@
 #include "../turns/options/Option.h"
 
 void PlayerTUI::resolve_action(shared_ptr<Action> action) {
-    system("cls");
+    //system("cls");
     vector<shared_ptr<Option>> const &options = action->get_options();
     shared_ptr<PlayerInterface> interface = get_interface().lock();
     uint32_t id = interface->get_id();

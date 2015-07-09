@@ -22,14 +22,13 @@ public:
 
     virtual string get_description() const override;
 
-    virtual void choose(shared_ptr<Option> option) override;
-
     virtual bool self_resolve() override;
 
 private:
     BitReference _target_board_ref;
     shared_ptr<ChoosePiece> _choose_piece_action;
     shared_ptr<Board> _target_board;
+    shared_ptr<GameBit> _selected_bit;
 };
 
 

@@ -36,6 +36,7 @@ void MultiActions::choose(shared_ptr<Option> option) {
     shared_ptr<ActionOption> action_choosed = dynamic_pointer_cast<ActionOption>(option);
     shared_ptr<Action> next_action = action_choosed->get_selected_action();
     set_next_action(next_action);
+    Action::choose(option);
 }
 
 bool MultiActions::self_resolve() {
