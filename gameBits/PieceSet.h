@@ -7,6 +7,7 @@
 
 #include <c++/iostream>
 #include <vector>
+#include <list>
 #include "GameBit.h"
 #include "Piece.h"
 
@@ -26,6 +27,8 @@ public:
 private:
     vector<shared_ptr<Piece> > _pieces;
 };
+
+bool game_bit_compare_bit_id(shared_ptr<Piece> p1, shared_ptr<Piece> p2);
 
 
 #endif //BGCORE_PIECESET_H
