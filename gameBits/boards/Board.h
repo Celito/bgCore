@@ -8,7 +8,7 @@
 
 #include "../GameBit.h"
 
-class Board : public GameBit {
+class Board : public GameBit, public BitHolder{
 public:
     Board(Game &game, const string &bit_id) : GameBit(game, bit_id) { }
 

@@ -18,10 +18,15 @@ public:
 
     virtual string get_description() const override;
 
+    void set_bit(shared_ptr<GameBit> bit) {
+        _bit = bit;
+    }
+
 private:
     BitReference _target_ref;
     // TODO: Make the move bit to be more generic so it can target any bit holders
-    shared_ptr<Board> _target;
+    shared_ptr<BitHolder> _target;
+    shared_ptr<GameBit> _bit;
 };
 
 

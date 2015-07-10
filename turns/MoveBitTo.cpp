@@ -10,7 +10,7 @@ bool MoveBitTo::is_available() const {
 
 void MoveBitTo::init(shared_ptr<Player> player) {
     Action::init(player);
-    _target = dynamic_pointer_cast<Board>(_target_ref.get_bit());
+    assert(_target = dynamic_pointer_cast<BitHolder>(_target_ref.get_bit()));
 }
 
 string MoveBitTo::get_description() const {
