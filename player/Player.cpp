@@ -17,13 +17,9 @@ Player::Player(Game &game, unsigned int id) : _game(game), _id(id) {
     cout << "Creating the player " << id << endl;
 }
 
-void Player::receive(shared_ptr<PieceSet> bit) {
-    _possessions.push_back(bit);
-}
-
 shared_ptr<GameBit> Player::get_bit(string bit_id) const {
     vector<shared_ptr<GameBit>>::const_iterator it;
-    it = find_if(_possessions.begin(), _possessions.end(),
+    it = find_if(_bits.begin(), _bits.end(),
                           [bit_id](shared_ptr<GameBit> const& bit) -> bool { return bit->get_bit_id() == bit_id;});
     return *it;
 }

@@ -23,7 +23,7 @@ Game::Game() {
     cout << "Creating the Game" << endl;
 
     // Initialize the supporting managers;
-    _bits = make_shared<BitsManager>(*this);
+    _bits_manager = make_shared<BitsManager>(*this);
     _turns = make_shared<TurnsManager>(*this);
 
     //TEMP starting to manual load the game configuration
@@ -45,14 +45,14 @@ Game::Game() {
         shared_ptr<Player> player = make_shared<Player>(*this, i+1);
         _players.push_back(player);
 
-        shared_ptr<PieceSet> player_set = _bits->create_bit<PieceSet>(PLAYER_PIECES);
+        shared_ptr<PieceSet> player_set = _bits_manager->create_bit<PieceSet>(PLAYER_PIECES);
 
         for(auto iter = pieces_info.begin(); iter != pieces_info.end(); iter++ )
         {
             for(uint32_t j = 0; j < iter->first; j++)
             {
-                shared_ptr<Piece> new_piece = _bits->create_bit<Piece>(iter->second);
-                player_set->add_piece(new_piece);
+                shared_ptr<Piece> new_piece = _bits_manager->create_bit<Piece>(iter->second);
+                player_set->receive(new_piece);
             }
         }
 
@@ -62,8 +62,7 @@ Game::Game() {
     const string HEX_BOARD_NAME = "Table";
 
     // TEMP create the board, call it 'Table' and add it to the table objects;
-    shared_ptr<HexBoard> _board = _bits->create_bit<HexBoard>(HEX_BOARD_NAME);
-    _table.push_back(_board);
+    shared_ptr<HexBoard> _board = _bits_manager->create_bit<HexBoard>(HEX_BOARD_NAME);
 
     // TEMP create the normal turn with the possible actions in it;
     shared_ptr<Turn> normal_turn = make_shared<Turn>();

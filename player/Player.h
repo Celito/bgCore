@@ -9,6 +9,7 @@
 #include <vector>
 #include <memory>
 #include "../gameBits/GameBit.h"
+#include "../gameBits/BitHolder.h"
 
 class GameBit;
 class PlayerInterface;
@@ -17,11 +18,9 @@ class PieceSet;
 
 using namespace std;
 
-class Player {
+class Player : public BitHolder {
 public:
     Player(Game &game, unsigned int id);
-
-    void receive(shared_ptr<PieceSet> bit);
 
     shared_ptr<GameBit> get_bit(string bit_id) const;
 
@@ -44,8 +43,6 @@ public:
 private:
     Game &_game;
     uint32_t _id;
-
-    vector< shared_ptr<GameBit> > _possessions;
 
     shared_ptr<PlayerInterface> _interface;
     shared_ptr<PlayerController> _controller;

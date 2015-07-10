@@ -8,6 +8,7 @@
 #include <vector>
 #include <memory>
 #include <map>
+#include "gameBits/BitHolder.h"
 
 class Player;
 class BitsManager;
@@ -19,7 +20,7 @@ class GameController;
 
 using namespace std;
 
-class Game {
+class Game : public virtual BitHolder{
 public:
     Game();
 
@@ -41,10 +42,9 @@ private:
 
     //game pointers:
     vector< shared_ptr<Player> > _players;
-    vector< shared_ptr<GameBit> > _table;
 
     //helper managers:
-    shared_ptr<BitsManager> _bits;
+    shared_ptr<BitsManager> _bits_manager;
     shared_ptr<TurnsManager> _turns;
 };
 

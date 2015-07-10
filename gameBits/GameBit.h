@@ -11,8 +11,10 @@
 using namespace std;
 
 class Game;
+class BitHolder;
 
 class GameBit {
+friend class BitHolder;
 public:
     GameBit(Game &game, string bit_id);
 
@@ -28,10 +30,17 @@ public:
         return _bit_id;
     }
 
+    BitHolder &get_parent() const {
+        return _parent;
+    }
+
 protected:
     Game &_game;
     uint32_t _ref_id;
     string _bit_id;
+
+private:
+    BitHolder &_parent;
 };
 
 

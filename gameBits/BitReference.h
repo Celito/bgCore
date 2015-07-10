@@ -18,7 +18,8 @@ using namespace std;
  */
 class BitReference {
 public:
-    BitReference(string bit_id, Game &game, bool player_targeted = false): _bit_id(bit_id), _game(game) {}
+    BitReference(string bit_id, Game &game, bool player_targeted = false):
+            _bit_id(bit_id), _game(game), _player_targeted(player_targeted) {}
 
     shared_ptr<GameBit> get_bit();
 

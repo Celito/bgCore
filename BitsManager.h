@@ -10,6 +10,7 @@
 #include <vector>
 #include <memory>
 #include "gameBits/GameBit.h"
+#include "Game.h"
 
 using namespace std;
 
@@ -37,6 +38,7 @@ template<class T>
 shared_ptr<T> BitsManager::create_bit(string bit_id) {
     static_assert((is_base_of<GameBit, T>::value),"Type T of create_bit must be a GameBit");
     auto gameBit = make_shared<T>(_game, bit_id);
+    _game._bits.push_back(gameBit);
     static_cast<GameBit*>(gameBit.get())->set_ref_id(register_bit(gameBit));
     return gameBit;
 }

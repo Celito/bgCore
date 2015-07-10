@@ -9,23 +9,19 @@
 #include <vector>
 #include <list>
 #include "GameBit.h"
+#include "BitHolder.h"
 #include "Piece.h"
 
 using namespace std;
 
-class PieceSet : public GameBit {
+class PieceSet : public GameBit, public BitHolder {
 
 public:
     PieceSet(Game &game, string refId);
 
-    void add_piece(shared_ptr<Piece> piece);
-
     vector< shared_ptr<Piece> > get_available_pieces() const;
 
-    bool is_empty() const;
-
-private:
-    vector<shared_ptr<Piece> > _pieces;
+    virtual void receive(shared_ptr<GameBit> bit) override;
 };
 
 
