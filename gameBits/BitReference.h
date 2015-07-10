@@ -18,14 +18,23 @@ using namespace std;
  */
 class BitReference {
 public:
-    BitReference(string bit_id): _bit_id(bit_id) {}
+    BitReference(string bit_id, Game &game, bool player_targeted = false): _bit_id(bit_id), _game(game) {}
+
+    shared_ptr<GameBit> get_bit();
 
     shared_ptr<GameBit> get_from_player(shared_ptr<Player> player);
 
-    shared_ptr<GameBit> get_from_table(Game const &game);
+    shared_ptr<GameBit> get_from_table();
+
+    void set_curr_player(const shared_ptr<Player> &_curr_player) {
+        BitReference::_curr_player = _curr_player;
+    }
 
 private:
     string _bit_id;
+    bool _player_targeted;
+    shared_ptr<Player> _curr_player;
+    Game &_game;
 };
 
 

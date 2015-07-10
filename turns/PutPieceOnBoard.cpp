@@ -8,6 +8,7 @@
 #include "../gameBits/PieceSet.h"
 #include "../gameBits/boards/Board.h"
 #include "options/BitOption.h"
+#include "MoveBitTo.h"
 
 PutPieceOnBoard::PutPieceOnBoard(BitReference pieces_pool, BitReference target_board) :
         _target_board_ref(target_board) {
@@ -17,6 +18,8 @@ PutPieceOnBoard::PutPieceOnBoard(BitReference pieces_pool, BitReference target_b
         _selected_bit = bit_opt->get_bit();
         cout << "PIECE SELECTED: " << _selected_bit->get_bit_id() << endl;
     });
+    _choose_target_on_board = make_shared<MoveBitTo>(target_board);
+    _choose_piece_action->set_next_action(_choose_target_on_board);
 }
 
 bool PutPieceOnBoard::is_available() const {
@@ -27,7 +30,7 @@ void PutPieceOnBoard::init(shared_ptr<Player> player) {
     Action::init(player);
     _choose_piece_action->init(player);
     set_next_action(_choose_piece_action);
-    _target_board = dynamic_pointer_cast<Board>(_target_board_ref.get_from_table(player->get_curr_game()));
+    _target_board = dynamic_pointer_cast<Board>(_target_board_ref.get_from_table());
 //    _pieces_pool = _pieces_pool_ref.get_from_player(player);
 //    _target_board = _target_board_ref.get_from_table(player->get_curr_game());
     // TODO: assert if the _target_board exists, the _pieces_pool can be null;

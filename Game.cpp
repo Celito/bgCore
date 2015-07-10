@@ -68,7 +68,8 @@ Game::Game() {
     // TEMP create the normal turn with the possible actions in it;
     shared_ptr<Turn> normal_turn = make_shared<Turn>();
 
-    auto put_piece_on_board = make_shared<PutPieceOnBoard>(BitReference(PLAYER_PIECES), BitReference(HEX_BOARD_NAME));
+    auto put_piece_on_board =
+            make_shared<PutPieceOnBoard>(BitReference(PLAYER_PIECES, *this, true), BitReference(HEX_BOARD_NAME, *this));
 
     auto first_action = make_shared<MultiActions>();
 

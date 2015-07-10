@@ -34,9 +34,9 @@ public:
 
     //Interface:
 
-    virtual const vector< shared_ptr <Option> >& get_options() const;
-
     virtual string get_description() const = 0;
+
+    virtual const vector< shared_ptr <Option> >& get_options() const;
 
     virtual void choose(shared_ptr<Option> option);
 
