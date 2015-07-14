@@ -111,7 +111,7 @@ shared_ptr<Player> Game::get_player(uint32_t id) {
 
 shared_ptr<GameBit> Game::get_table_bit(string bit_id) const {
     vector<shared_ptr<GameBit>>::const_iterator it;
-    it = find_if(_table.begin(), _table.end(),
+    it = find_if(_bits.begin(), _bits.end(),
                  [bit_id](shared_ptr<GameBit> const& bit) -> bool { return bit->get_bit_id() == bit_id;});
     return *it;
 }

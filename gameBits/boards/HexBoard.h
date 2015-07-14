@@ -15,6 +15,9 @@ public:
     HexBoard(Game &game, std::string refId);
 
     virtual bool have_free_tiles() override;
+
+private:
+    vector<TilePos> _directions;
 };
 
 
