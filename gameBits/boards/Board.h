@@ -24,10 +24,14 @@ public:
 
     vector< shared_ptr<Tile> > get_available_titles();
 
-    shared_ptr<Tile> get_tile(TilePos pos) const { return _tile_grid.at(pos); }
+    shared_ptr<Tile> get_tile(TilePos pos) const { return _tile_grid.count(pos) ? _tile_grid.at(pos) : nullptr; }
+
+    void add_new_tile(TilePos pos);
 
 protected:
     map< TilePos, shared_ptr< Tile > > _tile_grid;
+
+    vector<TilePos> _default_directions;
 };
 
 

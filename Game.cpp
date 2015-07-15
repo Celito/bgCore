@@ -46,12 +46,14 @@ Game::Game() {
         _players.push_back(player);
 
         shared_ptr<PieceSet> player_set = make_shared<PieceSet>(*this, PLAYER_PIECES);
+        register_new_bit(player_set);
 
         for(auto iter = pieces_info.begin(); iter != pieces_info.end(); iter++ )
         {
             for(uint32_t j = 0; j < iter->first; j++)
             {
                 shared_ptr<Piece> new_piece = make_shared<Piece>(*this, iter->second);
+                register_new_bit(new_piece);
                 player_set->receive(new_piece);
             }
         }
@@ -62,8 +64,9 @@ Game::Game() {
     const string HEX_BOARD_NAME = "Table";
 
     // TEMP create the board, call it 'Table' and add it to the table objects;
-    shared_ptr<HexBoard> _board = make_shared<HexBoard>(*this, HEX_BOARD_NAME);
-    receive(_board);
+    shared_ptr<HexBoard> board = make_shared<HexBoard>(*this, HEX_BOARD_NAME);
+    register_new_bit(board);
+    receive(board);
 
     // TEMP create the normal turn with the possible actions in it;
     shared_ptr<Turn> normal_turn = make_shared<Turn>();
@@ -123,6 +126,5 @@ shared_ptr<GameBit> Game::get_table_bit(string bit_id) const {
 }
 
 void Game::register_new_bit(shared_ptr<GameBit> bit) {
-    _bits.push_back(bit);
-    static_cast<GameBit*>(bit.get())->set_ref_id(_bits_manager->register_bit(bit));
+    bit.get()->set_ref_id(_bits_manager->register_bit(bit));
 }

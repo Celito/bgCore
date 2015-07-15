@@ -12,10 +12,9 @@ using namespace std;
 
 HexBoard::HexBoard(Game &game, string refId) : Board(game, refId){
     auto zero = TilePos(0, 0);
-    _directions = {TilePos(0, 2), TilePos(1, 1), TilePos(1, -1), TilePos(0, -2), TilePos(-1, -1), TilePos(-1, 1)};
-    _tile_grid[zero] = make_shared<Tile>(*this, zero, _directions);
-    _game.register_new_bit(_tile_grid[zero]);
-    receive(_tile_grid[zero]);
+    _default_directions =
+            {TilePos(0, 2), TilePos(1, 1), TilePos(1, -1), TilePos(0, -2), TilePos(-1, -1), TilePos(-1, 1)};
+    add_new_tile(zero);
 }
 
 bool HexBoard::have_free_tiles() {
