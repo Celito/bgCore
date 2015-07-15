@@ -15,24 +15,23 @@
 
 using namespace std;
 
-class Tile : public GameBit {
+class Tile : public GameBit, public BitHolder {
 public:
     Tile(Board &board, TilePos location, vector< TilePos > const &directions);
 
     void update_neighbourhood();
 
-    int32_t x() { return _location.first; }
-    int32_t y() { return _location.second; }
+    TilePos const & get_pos() const { return  _pos; }
 
-    bool is_empty();
+    int32_t x() const { return _pos.x(); }
+    int32_t y() const { return _pos.y(); }
 
-    bool is_updating() { return _updating; }
+    bool is_updating() const { return _updating; }
 
 private:
     vector< weak_ptr<Tile> > _neighbours;
     Board &_board;
-    vector< shared_ptr<Piece> > _pieces_stack;
-    TilePos _location;
+    TilePos _pos;
 
     vector< TilePos > const &_directions;
     bool _updating;

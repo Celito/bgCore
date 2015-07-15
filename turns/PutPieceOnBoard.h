@@ -30,7 +30,7 @@ private:
     shared_ptr<ChoosePiece> _choose_piece_action;
     shared_ptr<Board> _target_board;
     shared_ptr<GameBit> _selected_bit;
-    shared_ptr<MoveBitTo> _choose_target_on_board;
+    shared_ptr<MoveBitTo> _choose_tile_on_board;
 };
 
 

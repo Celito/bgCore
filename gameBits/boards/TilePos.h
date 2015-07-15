@@ -17,10 +17,10 @@ public:
 
     TilePos operator+(TilePos const &pos) const;
 
-    string to_string();
+    string to_string() const;
 
-    int32_t x() { return first; }
-    int32_t y() { return second; }
+    int32_t x() const { return first; }
+    int32_t y() const { return second; }
 };
 
 

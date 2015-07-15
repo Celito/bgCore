@@ -7,21 +7,17 @@
 #include "TilePos.h"
 
 Tile::Tile(Board &board, TilePos location, vector<TilePos> const &directions) :
-        _board(board), _location(location), _directions(directions),_updating(false), GameBit(board.get_game(), board.get_bit_id() + location.to_string()) {
+        _board(board), _pos(location), _directions(directions),_updating(false), GameBit(board.get_game(), board.get_bit_id() + location.to_string()) {
     for (int i = 0; i < _directions.size(); ++i) {
         _neighbours.push_back(weak_ptr<Tile>());
     }
-}
-
-bool Tile::is_empty(){
-    return !_pieces_stack.size();
 }
 
 void Tile::update_neighbourhood(){
     _updating = true;
     for(uint32_t i = 0; i < _directions.size(); i++){
         if(!_neighbours[i].lock()){
-            shared_ptr<Tile> other = _board.get_tile(_location + _directions[i]);
+            shared_ptr<Tile> other = _board.get_tile(_pos + _directions[i]);
             if(other == nullptr){
                 _updating = false;
                 return;

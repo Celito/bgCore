@@ -17,6 +17,8 @@ public:
 
     virtual string get_description() override;
 
+    shared_ptr<Tile> get_tile() const { return _tile; }
+
 private:
     shared_ptr<Tile> _tile;
 };

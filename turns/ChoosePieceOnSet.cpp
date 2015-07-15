@@ -3,7 +3,7 @@
 //
 
 #include <algorithm>
-#include "ChoosePiece.h"
+#include "ChoosePieceOnSet.h"
 #include "../gameBits/PieceSet.h"
 #include "../gameBits/BitReference.h"
 #include "options/BitOption.h"
