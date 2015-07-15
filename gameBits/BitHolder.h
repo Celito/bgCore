@@ -15,7 +15,6 @@ using namespace std;
 class GameBit;
 
 class BitHolder {
-friend class BitsManager;
 public:
     virtual ~BitHolder() {}
     virtual void receive(shared_ptr<GameBit> bit);
@@ -24,7 +23,7 @@ public:
 protected:
 
     void remove(shared_ptr<GameBit> bit);
-    vector<shared_ptr<GameBit> > _bits;
+    vector< shared_ptr<GameBit> > _bits;
 };
 
 

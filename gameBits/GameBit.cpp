@@ -10,7 +10,7 @@
 
 using namespace std;
 
-GameBit::GameBit(Game &game, string bit_id) : _game(game), _parent(game) {
+GameBit::GameBit(Game &game, string bit_id) : _game(game), _parent(nullptr) {
     _bit_id = bit_id;
 }
 

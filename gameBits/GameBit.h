@@ -14,7 +14,6 @@ class Game;
 class BitHolder;
 
 class GameBit {
-friend class BitHolder;
 public:
     GameBit(Game &game, string bit_id);
 
@@ -30,8 +29,12 @@ public:
         return _bit_id;
     }
 
-    BitHolder &get_parent() const {
+    BitHolder *get_parent() const {
         return _parent;
+    }
+
+    void set_parent(BitHolder *parent) {
+        _parent = parent;
     }
 
     Game &get_game() const {
@@ -44,7 +47,7 @@ protected:
     string _bit_id;
 
 private:
-    BitHolder &_parent;
+    BitHolder * _parent;
 };
 
 

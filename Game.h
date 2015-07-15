@@ -20,7 +20,7 @@ class GameController;
 
 using namespace std;
 
-class Game : public virtual BitHolder{
+class Game : public BitHolder{
 public:
     Game();
 

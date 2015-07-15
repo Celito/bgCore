@@ -7,9 +7,9 @@
 #include <algorithm>
 
 void BitHolder::receive(shared_ptr<GameBit> bit) {
-    if(&bit->get_parent() == this) return;
-    bit->get_parent().remove(bit);
-    bit->_parent = *this;
+    if(bit->get_parent() == this) return;
+    if(bit->get_parent()) bit->get_parent()->remove(bit);
+    bit->set_parent(this);
     _bits.push_back(bit);
 }
 
@@ -18,5 +18,5 @@ bool BitHolder::is_empty() const {
 }
 
 void BitHolder::remove(shared_ptr<GameBit> bit) {
-    _bits.erase(find(_bits.begin(),_bits.end(),bit));
+    _bits.erase(std::remove(_bits.begin(),_bits.end(),bit), _bits.end());
 }
