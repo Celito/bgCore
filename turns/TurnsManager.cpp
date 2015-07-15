@@ -17,7 +17,7 @@ void TurnsManager::next_turn() {
 
     auto curr_player = _game.get_player(_current_player_id);
     _current_player_id++;
-    if(_current_player_id > _game.get_num_of_players()) _current_player_id = 0;
+    if(_current_player_id + 1 > _game.get_num_of_players()) _current_player_id = 0;
 
     //TODO: choose the turn according to the conditions to choose the turn type;
     shared_ptr<Turn> turn = _possible_turns[0];

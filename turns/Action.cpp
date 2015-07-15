@@ -6,6 +6,7 @@
 
 void Action::init(shared_ptr<Player> player) {
     _curr_player = player;
+    _options.clear();
 }
 
 const vector<shared_ptr<Option> > &Action::get_options() const {
