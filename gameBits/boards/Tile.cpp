@@ -13,6 +13,15 @@ Tile::Tile(Board &board, TilePos location, vector<TilePos> const &directions) :
     }
 }
 
+bool Tile::is_empty(){
+    return !_pieces_stack.size();
+}
+
+void Tile::put_piece(shared_ptr<Piece> piece){
+    _board.receive(piece);
+    _pieces_stack.push_back(piece);
+}
+
 void Tile::update_neighbourhood(){
     _updating = true;
     for(uint32_t i = 0; i < _directions.size(); i++){

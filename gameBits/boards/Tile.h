@@ -21,6 +21,13 @@ public:
 
     void update_neighbourhood();
 
+    int32_t x() { return _location.first; }
+    int32_t y() { return _location.second; }
+
+    void put_piece(shared_ptr<Piece> piece);
+
+    bool is_empty();
+
     bool is_updating() { return _updating; }
 
 private:

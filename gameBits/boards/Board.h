@@ -22,6 +22,8 @@ public:
 
     virtual bool have_free_tiles() = 0;
 
+    vector< shared_ptr<Tile> > get_available_titles();
+
     shared_ptr<Tile> get_tile(TilePos pos) const { return _tile_grid.at(pos); }
 
 protected:
