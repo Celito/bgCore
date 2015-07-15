@@ -12,6 +12,7 @@ bool MoveBitTo::is_available() const {
 
 void MoveBitTo::init(shared_ptr<Player> player) {
     Action::init(player);
+    _options.clear();
     assert(_target = dynamic_pointer_cast<Board>(_target_ref.get_bit()));
     //TODO: load the options base on the placement rules for the piece
     vector< shared_ptr<Tile> > tiles =  _target.get()->get_available_titles();

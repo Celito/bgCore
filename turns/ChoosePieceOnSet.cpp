@@ -10,6 +10,7 @@
 
 void ChoosePiece::init(shared_ptr<Player> player) {
     Action::init(player);
+    _options.clear();
     _pieces_pool = dynamic_pointer_cast<PieceSet>(_pieces_pool_ref.get_from_player(player));
     vector<shared_ptr<Piece>> pieces = _pieces_pool->get_available_pieces();
 

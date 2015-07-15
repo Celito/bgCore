@@ -78,6 +78,8 @@ Game::Game() {
 
     _turns->register_turn(normal_turn);
 
+    _is_over = false;
+
     //TODO: create a sample of rules (hive)
 
     //TODO: load the game bits
@@ -102,7 +104,10 @@ void Game::start(GameController &game_controller) {
     {
         _players[i]->set_controller(game_controller.get_player_controller(i));
     }
-    _turns->start_turn();
+
+    while(!_is_over){
+        _turns->next_turn();
+    }
 }
 
 shared_ptr<Player> Game::get_player(uint32_t id) {

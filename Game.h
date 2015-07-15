@@ -48,6 +48,7 @@ private:
     //helper managers:
     shared_ptr<BitsManager> _bits_manager;
     shared_ptr<TurnsManager> _turns;
+    bool _is_over;
 };
 
 

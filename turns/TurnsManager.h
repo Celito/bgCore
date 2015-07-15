@@ -21,7 +21,7 @@ public:
 
     void register_turn(shared_ptr<Turn> turn);
 
-    void start_turn();
+    void next_turn();
 private:
     Game &_game;
     uint32_t _current_player_id;

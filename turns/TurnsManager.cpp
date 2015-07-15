@@ -12,7 +12,7 @@ TurnsManager::TurnsManager(Game &game) : _game(game) {
     _current_player_id = 0;
 }
 
-void TurnsManager::start_turn() {
+void TurnsManager::next_turn() {
     //TODO: change the players order if defined by the game
 
     auto curr_player = _game.get_player(_current_player_id);
