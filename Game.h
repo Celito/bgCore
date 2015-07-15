@@ -36,6 +36,8 @@ public:
 
     shared_ptr<GameBit> get_table_bit(string bit_id) const;
 
+    void register_new_bit(shared_ptr<GameBit> bit);
+
 private:
 //game config:
     uint32_t _num_of_players;

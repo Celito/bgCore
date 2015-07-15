@@ -37,10 +37,10 @@ private:
 template<class T>
 shared_ptr<T> BitsManager::create_bit(string bit_id) {
     static_assert((is_base_of<GameBit, T>::value),"Type T of create_bit must be a GameBit");
-    auto gameBit = make_shared<T>(_game, bit_id);
-    _game._bits.push_back(gameBit);
-    static_cast<GameBit*>(gameBit.get())->set_ref_id(register_bit(gameBit));
-    return gameBit;
+    auto game_bit = make_shared<T>(_game, bit_id);
+    _game._bits.push_back(game_bit);
+    static_cast<GameBit*>(game_bit.get())->set_ref_id(register_bit(game_bit));
+    return game_bit;
 }
 
 

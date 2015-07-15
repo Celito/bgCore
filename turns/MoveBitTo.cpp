@@ -6,13 +6,13 @@
 #include "options/TileOption.h"
 
 bool MoveBitTo::is_available() const {
-    return false;
+    return _target->have_free_tiles();
 }
 
 void MoveBitTo::init(shared_ptr<Player> player) {
     Action::init(player);
     assert(_target = dynamic_pointer_cast<Board>(_target_ref.get_bit()));
-    vector<shared_ptr<Tile> > tiles =  _target.get()->get_available_titles();
+    vector< shared_ptr<Tile> > tiles =  _target.get()->get_available_titles();
     for_each(tiles.begin(), tiles.end(), [this](shared_ptr<Tile> tile){
         _options.push_back(make_shared<TileOption>(tile));
     });

@@ -6,6 +6,7 @@
 #define BGCORE_TILEPOS_H
 
 #include <stdint.h>
+#include <string>
 #include <c++/bits/stl_pair.h>
 
 using namespace std;
@@ -15,6 +16,11 @@ public:
     TilePos(int32_t x, int32_t y);
 
     TilePos operator+(TilePos const &pos) const;
+
+    string to_string();
+
+    int32_t x() { return first; }
+    int32_t y() { return second; }
 };
 
 

@@ -34,6 +34,10 @@ public:
         return _parent;
     }
 
+    Game &get_game() const {
+        return _game;
+    }
+
 protected:
     Game &_game;
     uint32_t _ref_id;

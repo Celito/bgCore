@@ -7,7 +7,7 @@
 #include "TilePos.h"
 
 Tile::Tile(Board &board, TilePos location, vector<TilePos> const &directions) :
-        _board(board), _location(location),    _directions(directions), _updating(false) {
+        _board(board), _location(location), _directions(directions),_updating(false), GameBit(board.get_game(), board.get_bit_id() + location.to_string()) {
     for (int i = 0; i < _directions.size(); ++i) {
         _neighbours.push_back(weak_ptr<Tile>());
     }
@@ -15,11 +15,6 @@ Tile::Tile(Board &board, TilePos location, vector<TilePos> const &directions) :
 
 bool Tile::is_empty(){
     return !_pieces_stack.size();
-}
-
-void Tile::put_piece(shared_ptr<Piece> piece){
-    _board.receive(piece);
-    _pieces_stack.push_back(piece);
 }
 
 void Tile::update_neighbourhood(){

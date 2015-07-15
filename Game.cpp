@@ -115,3 +115,8 @@ shared_ptr<GameBit> Game::get_table_bit(string bit_id) const {
                  [bit_id](shared_ptr<GameBit> const& bit) -> bool { return bit->get_bit_id() == bit_id;});
     return *it;
 }
+
+void Game::register_new_bit(shared_ptr<GameBit> bit) {
+    _bits.push_back(bit);
+    static_cast<GameBit*>(bit.get())->set_ref_id(_bits_manager->register_bit(bit));
+}

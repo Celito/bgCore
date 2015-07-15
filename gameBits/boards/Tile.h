@@ -15,7 +15,7 @@
 
 using namespace std;
 
-class Tile {
+class Tile : public GameBit {
 public:
     Tile(Board &board, TilePos location, vector< TilePos > const &directions);
 
@@ -23,8 +23,6 @@ public:
 
     int32_t x() { return _location.first; }
     int32_t y() { return _location.second; }
-
-    void put_piece(shared_ptr<Piece> piece);
 
     bool is_empty();
 
