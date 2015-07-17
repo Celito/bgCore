@@ -9,6 +9,7 @@
 #include <memory>
 #include <map>
 #include "gameBits/BitHolder.h"
+#include "gameBits/attributes/AttrManager.h"
 
 class Player;
 class BitsManager;
@@ -30,13 +31,13 @@ public:
     //internal:
     shared_ptr<Player> get_player(uint32_t id);
 
-    uint32_t get_num_of_players() const {
-        return _num_of_players;
-    }
+    uint32_t get_num_of_players() const { return _num_of_players; }
 
     shared_ptr<GameBit> get_table_bit(string bit_id) const;
 
     void register_new_bit(shared_ptr<GameBit> bit);
+
+    shared_ptr<AttrManager> get_attr() { return  _attr_manager; }
 
 private:
 //game config:
@@ -48,6 +49,7 @@ private:
     //helper managers:
     shared_ptr<BitsManager> _bits_manager;
     shared_ptr<TurnsManager> _turns;
+    shared_ptr<AttrManager> _attr_manager;
     bool _is_over;
 };
 

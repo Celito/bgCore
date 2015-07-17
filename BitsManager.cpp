@@ -4,7 +4,6 @@
 
 #include <map>
 #include "BitsManager.h"
-#include "gameBits/boards/HexBoard.h"
 
 using namespace std;
 

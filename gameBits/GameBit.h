@@ -7,6 +7,8 @@
 #define BGCORE_GAMEBIT_H
 
 #include <memory>
+#include <map>
+#include "attributes/Attribute.h"
 
 using namespace std;
 
@@ -20,6 +22,8 @@ public:
     virtual ~GameBit() {};
 
     string get_unique_id() const;
+
+    void set_attr(string id, uint32_t value);
 
     void set_ref_id(const uint32_t _ref_id) {
         GameBit::_ref_id = _ref_id;
@@ -45,6 +49,7 @@ protected:
     Game &_game;
     uint32_t _ref_id;
     string _bit_id;
+    map<uint32_t, Attribute> _attributes;
 
 private:
     BitHolder * _parent;
