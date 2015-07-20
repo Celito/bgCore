@@ -5,12 +5,12 @@
 #include "ChooseTileOnBoard.h"
 #include "options/TileOption.h"
 
-bool MoveBitTo::is_available() const {
+bool ChooseTileOnBoard::is_available() const {
     //TODO: make it based on the placement rules for the piece if there is one
     return _target->have_free_tiles();
 }
 
-void MoveBitTo::init(shared_ptr<Player> player) {
+void ChooseTileOnBoard::init(shared_ptr<Player> player) {
     Action::init(player);
     _options.clear();
     assert(_target = dynamic_pointer_cast<Board>(_target_ref.get_bit()));
@@ -21,6 +21,6 @@ void MoveBitTo::init(shared_ptr<Player> player) {
     });
 }
 
-string MoveBitTo::get_description() const {
+string ChooseTileOnBoard::get_description() const {
     return "Choose a board location";
 }

@@ -12,7 +12,6 @@
 #include <map>
 
 class Tile;
-class TilePos;
 
 using namespace std;
 
@@ -23,6 +22,8 @@ public:
     virtual bool have_free_tiles() = 0;
 
     vector< shared_ptr<Tile> > get_available_titles();
+
+    vector< shared_ptr<Tile> > get_tiles();
 
     shared_ptr<Tile> get_tile(TilePos pos) const { return _tile_grid.count(pos) ? _tile_grid.at(pos) : nullptr; }
 

@@ -28,3 +28,11 @@ void Board::add_new_tile(TilePos pos) {
         caller.populate_neighbours();
     });
 }
+
+vector<shared_ptr<Tile> > Board::get_tiles() {
+    vector< shared_ptr<Tile> > ret;
+    for_each(_tile_grid.begin(), _tile_grid.end(), [&ret](pair< TilePos, shared_ptr<Tile> > tile_entry){
+        ret.push_back(tile_entry.second);
+    });
+    return ret;
+}

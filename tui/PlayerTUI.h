@@ -11,6 +11,8 @@
 class PlayerTUI : public PlayerController {
 
     virtual void resolve_action(shared_ptr<Action> action) override;
+
+    void print_board(const vector <shared_ptr<Option>> &options, const shared_ptr<Board> &board) const;
 };
 
 

@@ -20,7 +20,7 @@ PutPieceOnBoard::PutPieceOnBoard(BitReference pieces_pool, BitReference target_b
         _choose_tile_on_board->set_bit(_selected_bit);
         cout << "PIECE SELECTED: " << _selected_bit->get_bit_id() << endl;
     });
-    _choose_tile_on_board = make_shared<MoveBitTo>(target_board);
+    _choose_tile_on_board = make_shared<ChooseTileOnBoard>(target_board);
     _choose_piece_action->set_next_action(_choose_tile_on_board);
     _choose_tile_on_board->on_option_taken([this](shared_ptr<Option> opt){
         shared_ptr<TileOption> bit_opt = dynamic_pointer_cast<TileOption>(opt);

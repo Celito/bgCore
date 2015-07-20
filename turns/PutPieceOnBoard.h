@@ -11,7 +11,7 @@
 class Board;
 class BitReference;
 class ChoosePiece;
-class MoveBitTo;
+class ChooseTileOnBoard;
 
 class PutPieceOnBoard : public Action {
 public:
@@ -30,7 +30,7 @@ private:
     shared_ptr<ChoosePiece> _choose_piece_action;
     shared_ptr<Board> _target_board;
     shared_ptr<GameBit> _selected_bit;
-    shared_ptr<MoveBitTo> _choose_tile_on_board;
+    shared_ptr<ChooseTileOnBoard> _choose_tile_on_board;
 };
 
 
