@@ -28,6 +28,8 @@ public:
 
     TilePos const & get_pos() const { return  _pos; }
 
+    shared_ptr<Piece> get_top_piece() const;
+
     int32_t x() const { return _pos.x(); }
     int32_t y() const { return _pos.y(); }
 

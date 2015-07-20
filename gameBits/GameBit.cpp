@@ -21,3 +21,7 @@ void GameBit::set_attr(string id, uint32_t value) {
     if(!_game.get_attr()->is_registered(id)) _game.get_attr()->register_id(id);
     _attributes[_game.get_attr()->get_id(id)] = Attribute(value);
 }
+
+Attribute GameBit::get_attr(string id) {
+    return _attributes[_game.get_attr()->get_id(id)];
+}

@@ -23,27 +23,19 @@ public:
 
     string get_unique_id() const;
 
+    Attribute get_attr(string id);
+
     void set_attr(string id, uint32_t value);
 
-    void set_ref_id(const uint32_t _ref_id) {
-        GameBit::_ref_id = _ref_id;
-    }
+    void set_ref_id(const uint32_t _ref_id) {GameBit::_ref_id = _ref_id; }
 
-    const string &get_bit_id() const {
-        return _bit_id;
-    }
+    const string &get_bit_id() const { return _bit_id; }
 
-    BitHolder *get_parent() const {
-        return _parent;
-    }
+    BitHolder *get_parent() const { return _parent; }
 
-    void set_parent(BitHolder *parent) {
-        _parent = parent;
-    }
+    void set_parent(BitHolder *parent) { _parent = parent; }
 
-    Game &get_game() const {
-        return _game;
-    }
+    Game &get_game() const { return _game; }
 
 protected:
     Game &_game;

@@ -11,6 +11,8 @@ class Attribute {
 public:
     Attribute(uint32_t value) : _value(value) {}
     Attribute() : _value(0) {}
+
+    uint32_t get_value() const { return _value; }
 private:
     uint32_t _value;
 };

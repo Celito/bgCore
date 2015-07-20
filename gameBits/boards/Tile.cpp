@@ -48,3 +48,7 @@ void Tile::populate_neighbours() {
     }
     update_neighbourhood();
 }
+
+shared_ptr<Piece> Tile::get_top_piece() const {
+    return dynamic_pointer_cast<Piece>(_bits.empty()? nullptr : _bits[_bits.size() - 1]);
+}
