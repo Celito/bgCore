@@ -23,10 +23,6 @@ public:
 
     shared_ptr<GameBit> get_bit();
 
-    shared_ptr<GameBit> get_from_player(shared_ptr<Player> player);
-
-    shared_ptr<GameBit> get_from_table();
-
     void set_curr_player(const shared_ptr<Player> &_curr_player) {
         BitReference::_curr_player = _curr_player;
     }

@@ -13,6 +13,12 @@ using namespace std;
 
 class Option;
 
+enum required_bit_t{
+    piece,
+    piece_set,
+    board
+};
+
 class Action {
 public:
 
@@ -20,17 +26,22 @@ public:
 
     virtual void init(shared_ptr<Player> player);
 
-    void set_next_action(shared_ptr<Action> next_action) {
-        _next_action = next_action;
-    }
+    void set_next_action(shared_ptr<Action> next_action) { _next_action = next_action; }
 
-    weak_ptr<Action> get_next_action() const {
-        return _next_action;
-    }
+    weak_ptr<Action> get_next_action() const { return _next_action; }
+
+    void set_required_bit(required_bit_t bit_type, shared_ptr<GameBit> bit) { _required_bits[bit_type] = bit; }
+
+    /*
+     * Pass the generated bits of this action to the required bits of the concated action;
+     */
+    virtual void concat_action(shared_ptr<Action> other_action);
 
     virtual bool self_resolve()  { return false; }
 
-    virtual bool is_available() const = 0;
+    virtual bool is_available() const ;
+
+    virtual void update_options() = 0;
 
     //Interface:
 
@@ -44,7 +55,9 @@ public:
 
 protected:
     vector< shared_ptr <Option> > _options;
-    vector<BitReference> _references;
+    map< required_bit_t, shared_ptr<GameBit> > _selected_bits;
+    map< required_bit_t, shared_ptr<GameBit> > _required_bits;
+    map< required_bit_t, shared_ptr<BitReference> > _bit_refs;
     shared_ptr<Player> _curr_player;
     weak_ptr<Action> _next_action;
 

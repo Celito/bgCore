@@ -8,6 +8,9 @@
 
 #include "../player/PlayerController.h"
 
+class Option;
+class Board;
+
 class PlayerTUI : public PlayerController {
 
     virtual void resolve_action(shared_ptr<Action> action) override;

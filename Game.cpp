@@ -29,7 +29,7 @@ Game::Game() {
 
     //TEMP starting to manual load the game configuration
     _num_of_players = 2;
-    const string PLAYER_PIECES = "PiecesSet";
+    string PLAYER_PIECES = "PiecesSet";
 
     //TEMP vector with the quantity of each piece on the set and its bit id
     vector<pair<uint32_t , string> > pieces_info =
@@ -62,7 +62,7 @@ Game::Game() {
         _players[i]->receive(player_set);
     }
     
-    const string HEX_BOARD_NAME = "Table";
+    string HEX_BOARD_NAME = "Table";
 
     // TEMP create the board, call it 'Table' and add it to the table objects;
     shared_ptr<HexBoard> board = make_shared<HexBoard>(*this, HEX_BOARD_NAME);
@@ -73,7 +73,12 @@ Game::Game() {
     shared_ptr<Turn> normal_turn = make_shared<Turn>();
 
     auto put_piece_on_board =
-            make_shared<PutPieceOnBoard>(BitReference(PLAYER_PIECES, *this, true), BitReference(HEX_BOARD_NAME, *this));
+            make_shared<PutPieceOnBoard>(
+                    make_shared<BitReference>(PLAYER_PIECES, *this, true),
+                    make_shared<BitReference>(HEX_BOARD_NAME, *this)
+            );
+
+    //auto move_piece_on_board =
 
     auto first_action = make_shared<MultiActions>();
 

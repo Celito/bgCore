@@ -10,19 +10,14 @@
 
 class BitReference;
 
-class ChoosePiece : public Action {
+class ChoosePieceOnSet : public Action {
 public:
-    ChoosePiece(BitReference pieces_pool);
-
-    virtual void init(shared_ptr<Player> player) override;
+    ChoosePieceOnSet(shared_ptr<BitReference> pieces_pool);
 
     virtual string get_description() const override;
 
-    virtual bool is_available() const override;
+    virtual void update_options() override;
 
-private:
-    BitReference _pieces_pool_ref;
-    shared_ptr<PieceSet> _pieces_pool;
 };
 
 

@@ -15,6 +15,8 @@ public:
 
     void add_sub_action(shared_ptr<Action> action);
 
+    virtual void update_options() override;
+
     virtual bool is_available() const override;
 
     virtual void init(shared_ptr<Player> player) override;

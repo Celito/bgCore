@@ -5,18 +5,10 @@
 #include "BitReference.h"
 #include "../Game.h"
 
-shared_ptr<GameBit> BitReference::get_from_player(shared_ptr<Player> player) {
-    return player->get_bit(_bit_id);
-}
-
-shared_ptr<GameBit> BitReference::get_from_table() {
-    return _game.get_table_bit(_bit_id);
-}
-
 shared_ptr<GameBit> BitReference::get_bit() {
     if(!_player_targeted)
     {
-        return get_from_table();
+        return _game.get_table_bit(_bit_id);
     }
     if(_curr_player == nullptr)
     {

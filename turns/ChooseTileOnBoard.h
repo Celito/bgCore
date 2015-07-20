@@ -10,25 +10,13 @@
 
 class ChooseTileOnBoard : public Action {
 public:
-    ChooseTileOnBoard(BitReference target) : _target_ref(target) {}
+    ChooseTileOnBoard(shared_ptr<BitReference> target);
 
-    virtual void init(shared_ptr<Player> player) override;
-
-    virtual bool is_available() const override;
+    virtual void update_options() override;
 
     virtual string get_description() const override;
 
-    shared_ptr<Board> get_board() { return _target; }
-
-    void set_bit(shared_ptr<GameBit> bit) {
-        _bit = bit;
-    }
-
-private:
-    BitReference _target_ref;
-    // TODO: Make the move bit to be more generic so it can target any bit holders
-    shared_ptr<Board> _target;
-    shared_ptr<GameBit> _bit;
+    shared_ptr<Board> get_board() { return (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[board]); }
 };
 
 
