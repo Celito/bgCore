@@ -25,6 +25,7 @@ Game::Game() {
     // Initialize the supporting managers;
     _bits_manager = make_shared<BitsManager>(*this);
     _turns = make_shared<TurnsManager>(*this);
+    _attr_manager = make_shared<AttrManager>();
 
     //TEMP starting to manual load the game configuration
     _num_of_players = 2;
@@ -54,10 +55,10 @@ Game::Game() {
             {
                 shared_ptr<Piece> new_piece = make_shared<Piece>(*this, iter->second);
                 register_new_bit(new_piece);
+                new_piece->set_attr("Color", i);
                 player_set->receive(new_piece);
             }
         }
-
         _players[i]->receive(player_set);
     }
     
