@@ -20,11 +20,19 @@ class Tile : public GameBit, public BitHolder {
 public:
     Tile(Board &board, TilePos location, vector< TilePos > directions);
 
-    void update_neighbourhood();
+    void update_neighbourhood(shared_ptr<Tile> self);
 
     void populate_neighbours();
 
     virtual void receive(shared_ptr<GameBit> bit) override;
+
+    shared_ptr<Tile> get_neighbour(uint32_t dir) {
+        return _neighbours[dir].expired()? nullptr : _neighbours[dir].lock();
+    }
+
+    void set_neighbour(uint32_t dir, shared_ptr<Tile> tile) {
+        _neighbours[dir] = tile;
+    }
 
     TilePos const & get_pos() const { return  _pos; }
 
@@ -33,14 +41,12 @@ public:
     int32_t x() const { return _pos.x(); }
     int32_t y() const { return _pos.y(); }
 
-    bool is_updating() const { return _updating; }
-
     boost::signals2::connection on_piece_received(boost::signals2::slot<void(Tile &)> slot) {
         return _piece_received.connect(slot);
     }
 
 private:
-    vector< shared_ptr<Tile> > _neighbours;
+    vector< weak_ptr<Tile> > _neighbours;
     Board &_board;
     TilePos _pos;
 
