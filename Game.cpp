@@ -79,6 +79,8 @@ Game::Game() {
                     make_shared<BitReference>(HEX_BOARD_NAME, *this)
             );
 
+    put_piece_on_board->add_enable_movement_rule();
+
     auto move_piece_on_board =
             make_shared<MovePieceOnBoard>(make_shared<BitReference>(HEX_BOARD_NAME, *this));
 
@@ -108,12 +110,11 @@ Game::Game() {
 }
 
 void Game::start(GameController &game_controller) {
-    for(uint32_t i = 0; i < _players.size(); i++)
-    {
+    for(uint32_t i = 0; i < _players.size(); i++) {
         _players[i]->set_controller(game_controller.get_player_controller(i));
     }
 
-    while(!_is_over){
+    while(!_is_over) {
         _turns->next_turn();
     }
 }
