@@ -6,7 +6,7 @@
 #include "options/TileOption.h"
 
 ChooseTileOnBoard::ChooseTileOnBoard(shared_ptr<BitReference> target) {
-    _bit_refs[board] = target;
+    _bit_refs[e_board] = target;
 }
 
 string ChooseTileOnBoard::get_description() const {
@@ -16,7 +16,7 @@ string ChooseTileOnBoard::get_description() const {
 void ChooseTileOnBoard::update_options() {
     _options.clear();
 
-    auto target = dynamic_pointer_cast<Board>(_required_bits[board]);
+    auto target = dynamic_pointer_cast<Board>(_required_bits[e_board]);
 
     if(target == nullptr) return;
 

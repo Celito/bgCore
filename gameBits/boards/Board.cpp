@@ -36,3 +36,13 @@ vector<shared_ptr<Tile> > Board::get_tiles() {
     });
     return ret;
 }
+
+vector<shared_ptr<Piece> > Board::get_pieces() {
+    vector< shared_ptr<Tile> > tiles = get_tiles();
+    vector< shared_ptr<Piece> > ret;
+    for_each(tiles.begin(), tiles.end(), [&ret]( shared_ptr<Tile> tile){
+        if(!tile->is_empty())
+            ret.push_back(tile->get_top_piece());
+    });
+    return ret;
+}

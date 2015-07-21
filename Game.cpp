@@ -16,6 +16,7 @@
 #include "gameBits/boards/HexBoard.h"
 #include "turns/PutPieceOnBoard.h"
 #include "turns/MultiActions.h"
+#include "turns/MovePieceOnBoard.h"
 
 using namespace std;
 
@@ -78,11 +79,14 @@ Game::Game() {
                     make_shared<BitReference>(HEX_BOARD_NAME, *this)
             );
 
-    //auto move_piece_on_board =
+    auto move_piece_on_board =
+            make_shared<MovePieceOnBoard>(make_shared<BitReference>(HEX_BOARD_NAME, *this));
 
     auto first_action = make_shared<MultiActions>();
 
     first_action->add_sub_action(put_piece_on_board);
+
+    first_action->add_sub_action(move_piece_on_board);
 
     normal_turn->add_action(first_action);
 
@@ -97,12 +101,6 @@ Game::Game() {
     //TODO: create the turn structure
 
     //TODO: load the rules
-
-    //TODO: create the GameBits
-
-    //TODO: create the Board
-
-    //TODO: create the pieces
 
     //TODO: create the group of pieces
 

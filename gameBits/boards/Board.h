@@ -9,6 +9,7 @@
 #include "../GameBit.h"
 #include "../BitHolder.h"
 #include "TilePos.h"
+#include "../Piece.h"
 #include <map>
 
 class Tile;
@@ -24,6 +25,8 @@ public:
     vector< shared_ptr<Tile> > get_available_titles();
 
     vector< shared_ptr<Tile> > get_tiles();
+
+    vector< shared_ptr<Piece> > get_pieces();
 
     shared_ptr<Tile> get_tile(TilePos pos) const { return _tile_grid.count(pos) ? _tile_grid.at(pos) : nullptr; }
 

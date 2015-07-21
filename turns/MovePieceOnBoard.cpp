@@ -4,6 +4,10 @@
 
 #include "MovePieceOnBoard.h"
 
-MovePieceOnBoard::MovePieceOnBoard(shared_ptr<BitReference> target_board) {
-    _bit_refs[board] = target_board;
+MovePieceOnBoard::MovePieceOnBoard(shared_ptr<BitReference> target_board) : ChoosePieceOnBoard(target_board) {
+
+}
+
+string MovePieceOnBoard::get_description() const {
+    return "Move piece on the board";
 }

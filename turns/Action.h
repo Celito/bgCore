@@ -14,9 +14,9 @@ using namespace std;
 class Option;
 
 enum required_bit_t{
-    piece,
-    piece_set,
-    board
+    e_piece,
+    e_piece_set,
+    e_board
 };
 
 class Action {

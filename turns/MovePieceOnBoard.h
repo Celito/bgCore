@@ -8,10 +8,13 @@
 #include "../gameBits/BitReference.h"
 #include "Action.h"
 #include "../gameBits/boards/Board.h"
+#include "ChoosePieceOnBoard.h"
 
-class MovePieceOnBoard : public Action {
+class MovePieceOnBoard : public ChoosePieceOnBoard {
 public:
     MovePieceOnBoard(shared_ptr<BitReference> target_board);
+
+    virtual string get_description() const override;
 };
 
 

@@ -8,7 +8,7 @@
 #include "options/BitOption.h"
 
 ChoosePieceOnSet::ChoosePieceOnSet(shared_ptr<BitReference> pieces_pool) {
-    _bit_refs[piece_set] = pieces_pool;
+    _bit_refs[e_piece_set] = pieces_pool;
 }
 
 string ChoosePieceOnSet::get_description() const {
@@ -18,7 +18,7 @@ string ChoosePieceOnSet::get_description() const {
 void ChoosePieceOnSet::update_options() {
     _options.clear();
 
-    auto pieces_pool = dynamic_pointer_cast<PieceSet>(_required_bits[piece_set]);
+    auto pieces_pool = dynamic_pointer_cast<PieceSet>(_required_bits[e_piece_set]);
 
     if(pieces_pool == nullptr) return;
 
