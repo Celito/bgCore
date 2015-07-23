@@ -9,7 +9,6 @@
 #include "Action.h"
 #include "../gameBits/boards/Board.h"
 #include "ChoosePieceOnBoard.h"
-#include "../rules/EnableMovementRule.h"
 
 class MovePieceOnBoard : public ChoosePieceOnBoard {
 public:
@@ -18,11 +17,6 @@ public:
     virtual void update_options() override;
 
     virtual string get_description() const override;
-
-    void add_enable_movement_rule(shared_ptr<EnableMovementRule> rule);
-
-private:
-    vector< shared_ptr<Rule> > _enable_movement_rules;
 };
 
 

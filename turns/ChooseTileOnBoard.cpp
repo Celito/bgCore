@@ -16,7 +16,7 @@ string ChooseTileOnBoard::get_description() const {
 void ChooseTileOnBoard::update_options() {
     _options.clear();
 
-    auto target = dynamic_pointer_cast<Board>(_required_bits[e_board]);
+    shared_ptr<Board> target = (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board]);
 
     if(target == nullptr) return;
 

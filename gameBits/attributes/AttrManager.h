@@ -14,9 +14,10 @@ using namespace std;
 
 class AttrManager {
 public:
+    uint32_t register_id(string id_name);
+
     bool is_registered(string id_name) { return _attr_ids.count(id_name) != 0; }
-    void register_id(string id_name) { if(!is_registered(id_name)) _attr_ids[id_name] = _curr_ids++; }
-    uint32_t get_id(string id_name) { return _attr_ids[id_name]; }
+    uint32_t get_id(string id_name) const { return _attr_ids.at(id_name); }
 private:
     uint32_t _curr_ids;
     map<string, uint32_t> _attr_ids;

@@ -13,8 +13,6 @@
 class HexBoard : public Board {
 public:
     HexBoard(Game &game, std::string refId);
-
-    virtual bool have_free_tiles() override;
 };
 
 

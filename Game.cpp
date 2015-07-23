@@ -44,6 +44,9 @@ Game::Game() {
         {3, "Ant"},
     };
 
+    shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);
+    is_player_color->set_tested_attr(COLOR_ATTR);
+
     for (uint32_t i = 0; i < _num_of_players; i++) {
 
         shared_ptr<Player> player = make_shared<Player>(*this, i+1);
@@ -60,6 +63,7 @@ Game::Game() {
                 shared_ptr<Piece> new_piece = make_shared<Piece>(*this, iter->second);
                 register_new_bit(new_piece);
                 new_piece->set_attr(COLOR_ATTR, i);
+                new_piece->add_movement_availability_rule(is_player_color);
                 player_set->receive(new_piece);
             }
         }

@@ -28,19 +28,13 @@ public:
         return _interface;
     }
 
-    shared_ptr<PlayerController> get_controller() {
-        return _controller;
-    }
+    shared_ptr<PlayerController> get_controller() { return _controller; }
 
     uint32_t get_id() { return  _id; }
 
-    Game &get_curr_game() {
-        return _game;
-    }
-
     void set_controller(shared_ptr<PlayerController> controller);
 
-    Attribute get_attr(string id);
+    Attribute get_attr(uint32_t id);
 
     void set_attr(string id, uint32_t value);
 

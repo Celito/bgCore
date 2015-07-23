@@ -37,7 +37,7 @@ public:
 
     void register_new_bit(shared_ptr<GameBit> bit);
 
-    shared_ptr<AttrManager> get_attr() { return  _attr_manager; }
+    shared_ptr<AttrManager> get_attr() const { return  _attr_manager; }
 
 private:
 //game config:

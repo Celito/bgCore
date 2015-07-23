@@ -23,7 +23,9 @@ public:
 
     string get_unique_id() const;
 
-    Attribute get_attr(string id);
+    Attribute get_attr(string id) const;
+
+    Attribute get_attr(uint32_t id) const;
 
     void set_attr(string id, uint32_t value);
 

@@ -22,6 +22,10 @@ void GameBit::set_attr(string id, uint32_t value) {
     _attributes[_game.get_attr()->get_id(id)] = Attribute(value);
 }
 
-Attribute GameBit::get_attr(string id) {
-    return _attributes[_game.get_attr()->get_id(id)];
+Attribute GameBit::get_attr(string id) const {
+    return get_attr(_game.get_attr()->get_id(id));
+}
+
+Attribute GameBit::get_attr(uint32_t id) const {
+    return _attributes.at(id);
 }
