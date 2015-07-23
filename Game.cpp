@@ -31,6 +31,8 @@ Game::Game() {
     //TEMP starting to manual load the game configuration
     _num_of_players = 2;
     string PLAYER_PIECES = "PiecesSet";
+    string COLOR_ATTR = "Color";
+    string HEX_BOARD_NAME = "Table";
 
     //TEMP vector with the quantity of each piece on the set and its bit id
     vector<pair<uint32_t , string> > pieces_info =
@@ -45,6 +47,7 @@ Game::Game() {
     for (uint32_t i = 0; i < _num_of_players; i++) {
 
         shared_ptr<Player> player = make_shared<Player>(*this, i+1);
+        player->set_attr(COLOR_ATTR, i);
         _players.push_back(player);
 
         shared_ptr<PieceSet> player_set = make_shared<PieceSet>(*this, PLAYER_PIECES);
@@ -56,14 +59,12 @@ Game::Game() {
             {
                 shared_ptr<Piece> new_piece = make_shared<Piece>(*this, iter->second);
                 register_new_bit(new_piece);
-                new_piece->set_attr("Color", i);
+                new_piece->set_attr(COLOR_ATTR, i);
                 player_set->receive(new_piece);
             }
         }
         _players[i]->receive(player_set);
     }
-    
-    string HEX_BOARD_NAME = "Table";
 
     // TEMP create the board, call it 'Table' and add it to the table objects;
     shared_ptr<HexBoard> board = make_shared<HexBoard>(*this, HEX_BOARD_NAME);
@@ -79,7 +80,7 @@ Game::Game() {
                     make_shared<BitReference>(HEX_BOARD_NAME, *this)
             );
 
-    put_piece_on_board->add_enable_movement_rule();
+    //put_piece_on_board->add_enable_movement_rule();
 
     auto move_piece_on_board =
             make_shared<MovePieceOnBoard>(make_shared<BitReference>(HEX_BOARD_NAME, *this));

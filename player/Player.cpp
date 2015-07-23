@@ -8,7 +8,6 @@
 #include "../Game.h"
 #include "PlayerInterface.h"
 #include "PlayerController.h"
-#include "../gameBits/PieceSet.h"
 
 using namespace std;
 
@@ -27,4 +26,13 @@ shared_ptr<GameBit> Player::get_bit(string bit_id) const {
 void Player::set_controller(shared_ptr<PlayerController> controller) {
     _controller = controller;
     _controller->set_interface(get_interface());
+}
+
+void Player::set_attr(string id, uint32_t value) {
+    if(!_game.get_attr()->is_registered(id)) _game.get_attr()->register_id(id);
+    _attributes[_game.get_attr()->get_id(id)] = Attribute(value);
+}
+
+Attribute Player::get_attr(string id) {
+    return _attributes[_game.get_attr()->get_id(id)];
 }

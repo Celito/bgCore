@@ -8,13 +8,13 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "../gameBits/GameBit.h"
 #include "../gameBits/BitHolder.h"
 
 class GameBit;
 class PlayerInterface;
 class PlayerController;
 class PieceSet;
+class Attribute;
 
 using namespace std;
 
@@ -40,12 +40,18 @@ public:
 
     void set_controller(shared_ptr<PlayerController> controller);
 
+    Attribute get_attr(string id);
+
+    void set_attr(string id, uint32_t value);
+
 private:
     Game &_game;
     uint32_t _id;
 
     shared_ptr<PlayerInterface> _interface;
     shared_ptr<PlayerController> _controller;
+
+    map<uint32_t, Attribute> _attributes;
 };
 
 
