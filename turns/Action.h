@@ -55,8 +55,8 @@ public:
 
 protected:
     vector< shared_ptr <Option> > _options;
-    map< required_bit_t, shared_ptr<GameBit> > _selected_bits;
-    map< required_bit_t, shared_ptr<GameBit> > _required_bits;
+    map< required_bit_t, weak_ptr<GameBit> > _selected_bits;
+    map< required_bit_t, weak_ptr<GameBit> > _required_bits;
     map< required_bit_t, shared_ptr<BitReference> > _bit_refs;
     shared_ptr<Player> _curr_player;
     weak_ptr<Action> _next_action;

@@ -33,8 +33,8 @@ void Action::concat_action(shared_ptr<Action> other_action) {
     _next_action = other_action;
     _option_taken.connect([this](shared_ptr<Option> opt){
         for (auto bit_pair : _selected_bits) {
-            if(!_next_action.expired())
-                _next_action.lock()->set_required_bit(bit_pair.first, bit_pair.second);
+            if(!_next_action.expired() && !bit_pair.second.expired())
+                _next_action.lock()->set_required_bit(bit_pair.first, bit_pair.second.lock());
         }
     });
 }

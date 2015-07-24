@@ -39,6 +39,8 @@ public:
 
     shared_ptr<AttrManager> get_attr() const { return  _attr_manager; }
 
+    shared_ptr<BitsManager> bits_manager() const { return _bits_manager; }
+
 private:
 //game config:
     uint32_t _num_of_players;

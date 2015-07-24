@@ -4,7 +4,6 @@
 
 #include "ChoosePieceOnBoard.h"
 #include "../gameBits/boards/Board.h"
-#include "../gameBits/Piece.h"
 #include "options/BitOption.h"
 
 ChoosePieceOnBoard::ChoosePieceOnBoard(shared_ptr<BitReference> target_board) {
@@ -17,9 +16,9 @@ string ChoosePieceOnBoard::get_description() const {
 
 void ChoosePieceOnBoard::update_options() {
     _options.clear();
-    shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board]);
+    if(_required_bits.count(e_board) == 0 && _required_bits[e_board].expired()) return;
 
-    if(board == nullptr) return;
+    shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board].lock());
 
     vector< shared_ptr<Piece> > pieces = board.get()->get_pieces();
     for (auto piece : pieces) {

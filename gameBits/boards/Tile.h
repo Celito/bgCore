@@ -24,6 +24,8 @@ public:
 
     void populate_neighbours();
 
+    void clear_neighbours();
+
     virtual void receive(shared_ptr<GameBit> bit) override;
 
     shared_ptr<Tile> get_neighbour(uint32_t dir) {
@@ -45,6 +47,13 @@ public:
         return _piece_received.connect(slot);
     }
 
+    boost::signals2::connection on_piece_removed(boost::signals2::slot<void(Tile &, Piece &)> slot) {
+        return _piece_removed.connect(slot);
+    }
+
+protected:
+    virtual void remove(shared_ptr<GameBit> bit) override;
+
 private:
     vector< weak_ptr<Tile> > _neighbours;
     Board &_board;
@@ -54,6 +63,7 @@ private:
     bool _updating;
 
     boost::signals2::signal<void(Tile &)> _piece_received;
+    boost::signals2::signal<void(Tile &, Piece &)> _piece_removed;
 };
 
 

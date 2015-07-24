@@ -16,7 +16,9 @@ public:
 
     virtual string get_description() const override;
 
-    shared_ptr<Board> get_board() { return (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board]); }
+    shared_ptr<Board> get_board() {
+        return (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board].lock());
+    }
 };
 
 

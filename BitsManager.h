@@ -23,6 +23,8 @@ public:
 
     uint32_t register_bit(shared_ptr<GameBit> bit);
 
+    void remove_bit(shared_ptr<GameBit> bit);
+
     //This is a nested map with the first key being the bit id and the second one being the bit refId
     map<string, vector< shared_ptr<GameBit> > > _all_bits;
 

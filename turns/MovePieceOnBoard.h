@@ -9,6 +9,7 @@
 #include "Action.h"
 #include "../gameBits/boards/Board.h"
 #include "ChoosePieceOnBoard.h"
+#include "ChooseTileOnBoard.h"
 
 class MovePieceOnBoard : public ChoosePieceOnBoard {
 public:
@@ -17,6 +18,10 @@ public:
     virtual void update_options() override;
 
     virtual string get_description() const override;
+
+private:
+    shared_ptr<GameBit> _selected_bit;
+    shared_ptr<ChooseTileOnBoard> _choose_tile_on_board;
 };
 
 

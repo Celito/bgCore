@@ -17,10 +17,11 @@ string ChoosePieceOnSet::get_description() const {
 
 void ChoosePieceOnSet::update_options() {
     _options.clear();
+    //assert(_required_bits.count(e_piece_set) != 0 && !_required_bits[e_piece_set].expired());
 
-    auto pieces_pool = dynamic_pointer_cast<PieceSet>(_required_bits[e_piece_set]);
+    auto pieces_pool = dynamic_pointer_cast<PieceSet>(_required_bits[e_piece_set].lock());
 
-    if(pieces_pool == nullptr) return;
+    //assert(pieces_pool != nullptr);
 
     //TODO: Need to test rules that could filter this options;
     vector< shared_ptr<Piece> > pieces = pieces_pool->get_available_pieces();

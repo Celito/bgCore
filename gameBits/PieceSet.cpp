@@ -3,7 +3,6 @@
 //
 
 #include <algorithm>
-#include <assert.h>
 #include "PieceSet.h"
 #include "../Game.h"
 #include "../BitsManager.h"
@@ -25,6 +24,6 @@ vector< shared_ptr<Piece> > PieceSet::get_available_pieces() const {
 }
 
 void PieceSet::receive(shared_ptr<GameBit> bit) {
-    assert(dynamic_pointer_cast<Piece>(bit));
+    //assert(dynamic_pointer_cast<Piece>(bit));
     BitHolder::receive(bit);
 }

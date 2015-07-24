@@ -22,7 +22,7 @@ public:
 
 protected:
 
-    void remove(shared_ptr<GameBit> bit);
+    virtual void remove(shared_ptr<GameBit> bit);
     vector< shared_ptr<GameBit> > _bits;
 };
 
