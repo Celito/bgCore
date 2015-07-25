@@ -129,10 +129,10 @@ shared_ptr<Player> Game::get_player(uint32_t id) {
 }
 
 shared_ptr<GameBit> Game::get_table_bit(string bit_id) const {
-    vector<shared_ptr<GameBit>>::const_iterator it;
+    vector<weak_ptr<GameBit>>::const_iterator it;
     it = find_if(_bits.begin(), _bits.end(),
-                 [bit_id](shared_ptr<GameBit> const& bit) -> bool { return bit->get_bit_id() == bit_id;});
-    return *it;
+                 [bit_id](weak_ptr<GameBit> const& bit) -> bool { return bit.expired()? false : bit.lock()->get_bit_id() == bit_id;});
+    return it->expired()? nullptr : it->lock();
 }
 
 void Game::register_new_bit(shared_ptr<GameBit> bit) {

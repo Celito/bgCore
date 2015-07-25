@@ -2,6 +2,7 @@
 // Created by Celito on 7/14/2015.
 //
 
+#include <c++/iostream>
 #include "Tile.h"
 
 Tile::Tile(Board &board, TilePos location, vector<TilePos> directions) :
@@ -49,7 +50,8 @@ void Tile::populate_neighbours() {
 }
 
 shared_ptr<Piece> Tile::get_top_piece() const {
-    return dynamic_pointer_cast<Piece>(_bits.empty()? nullptr : _bits[_bits.size() - 1]);
+    return dynamic_pointer_cast<Piece>(
+            _bits.empty() || _bits[_bits.size() - 1].expired()? nullptr : _bits[_bits.size() - 1].lock());
 }
 
 void Tile::remove(shared_ptr<GameBit> bit) {

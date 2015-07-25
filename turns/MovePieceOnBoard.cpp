@@ -31,11 +31,11 @@ string MovePieceOnBoard::get_description() const {
 void MovePieceOnBoard::update_options() {
     _options.clear();
 
-    //assert(_required_bits.count(e_board) != 0 && !_required_bits[e_board].expired());
+    if(!(_required_bits.count(e_board) != 0 && !_required_bits[e_board].expired())) throw;
 
     shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board].lock());
 
-    //assert(board != nullptr);
+    if(!(board != nullptr)) throw;
 
     vector< shared_ptr<Piece> > pieces = board.get()->get_available_pieces(_curr_player);
     for (auto piece : pieces) {

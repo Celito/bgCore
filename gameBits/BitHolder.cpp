@@ -3,7 +3,6 @@
 //
 
 #include "BitHolder.h"
-#include "GameBit.h"
 #include <algorithm>
 
 void BitHolder::receive(shared_ptr<GameBit> bit) {
@@ -18,5 +17,7 @@ bool BitHolder::is_empty() const {
 }
 
 void BitHolder::remove(shared_ptr<GameBit> bit) {
-    _bits.erase(std::remove(_bits.begin(),_bits.end(),bit), _bits.end());
+    _bits.erase(std::remove_if(
+            _bits.begin(),_bits.end(),
+            [&bit](weak_ptr<GameBit> &b) -> bool { return b.expired()? false : b.lock() == bit; }), _bits.end());
 }

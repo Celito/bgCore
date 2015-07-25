@@ -17,10 +17,10 @@ Player::Player(Game &game, unsigned int id) : _game(game), _id(id) {
 }
 
 shared_ptr<GameBit> Player::get_bit(string bit_id) const {
-    vector<shared_ptr<GameBit>>::const_iterator it;
+    vector<weak_ptr<GameBit>>::const_iterator it;
     it = find_if(_bits.begin(), _bits.end(),
-                          [bit_id](shared_ptr<GameBit> const& bit) -> bool { return bit->get_bit_id() == bit_id;});
-    return *it;
+                          [bit_id](weak_ptr<GameBit> const& bit) -> bool { return bit.lock()->get_bit_id() == bit_id;});
+    return it->expired() ? nullptr : it->lock();
 }
 
 void Player::set_controller(shared_ptr<PlayerController> controller) {

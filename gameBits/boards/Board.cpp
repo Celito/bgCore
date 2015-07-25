@@ -73,9 +73,9 @@ vector<shared_ptr<Piece> > Board::get_available_pieces(shared_ptr<Player> player
 
 void Board::remove_tile(TilePos pos) {
     if(_tile_grid.count(pos) < 1) return;
-    cout << "removing tile in " << pos.to_string() << " refs: " << _tile_grid[pos].use_count() << endl;
-    remove(_tile_grid[pos]);
-    _game.bits_manager()->remove_bit(_tile_grid[pos]);
+    shared_ptr<Tile> tile = _tile_grid[pos];
+    remove(tile);
+    _game.bits_manager()->remove_bit(tile);
 
     _tile_grid.erase(pos);
 

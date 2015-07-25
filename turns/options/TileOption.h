@@ -17,10 +17,10 @@ public:
 
     virtual string get_description() override;
 
-    shared_ptr<Tile> get_tile() const { return _tile; }
+    shared_ptr<Tile> get_tile() const { return _tile.expired() ? nullptr : _tile.lock(); }
 
 private:
-    shared_ptr<Tile> _tile;
+    weak_ptr<Tile> _tile;
 };
 
 

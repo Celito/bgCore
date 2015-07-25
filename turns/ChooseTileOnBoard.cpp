@@ -16,15 +16,12 @@ string ChooseTileOnBoard::get_description() const {
 void ChooseTileOnBoard::update_options() {
     _options.clear();
 
-    //assert(_required_bits.count(e_board) != 0 && !_required_bits[e_board].expired());
+    if(!(_required_bits.count(e_board) != 0 && !_required_bits[e_board].expired())) throw;
 
     shared_ptr<Board> target = (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board].lock());
 
-    //assert(target != nullptr);
+    if(!(target != nullptr)) throw;
 
-    shared_ptr<Piece> piece =
-            dynamic_pointer_cast<Piece>(_required_bits.count(e_piece) && !_required_bits[e_piece].expired()?
-                                        _required_bits[e_piece].lock() : nullptr);
 
     //TODO: load the options base on the placement rules for the piece
     vector< shared_ptr<Tile> > tiles = target.get()->get_available_titles(e_for_placement);

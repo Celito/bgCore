@@ -16,14 +16,15 @@ vector< shared_ptr<Piece> > PieceSet::get_available_pieces() const {
     // get only one piece by type
     for(auto iter = _bits.cbegin(); iter != _bits.cend(); iter++)
     {
-        ret.push_back(dynamic_pointer_cast<Piece>(*iter));
+        if(iter->expired()) break;
+        ret.push_back((shared_ptr<Piece>)dynamic_pointer_cast<Piece>(iter->lock()));
         // Skip the pieces with the same bit_id
-        while((iter+1) != _bits.cend() && (*iter)->get_bit_id() == (*(iter+1))->get_bit_id()) iter++;
+        while((iter+1) != _bits.cend() && (*iter).lock()->get_bit_id() == (*(iter+1)).lock()->get_bit_id()) iter++;
     }
     return ret;
 }
 
 void PieceSet::receive(shared_ptr<GameBit> bit) {
-    //assert(dynamic_pointer_cast<Piece>(bit));
+    if(!dynamic_pointer_cast<Piece>(bit)) throw;
     BitHolder::receive(bit);
 }

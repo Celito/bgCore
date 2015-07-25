@@ -5,5 +5,5 @@
 #include "TileOption.h"
 
 string TileOption::get_description() {
-    return "[ " + to_string(_tile->x()) + ", " + to_string(_tile->y()) + " ]";
+    return "[ " + to_string(get_tile()->x()) + ", " + to_string(get_tile()->y()) + " ]";
 }
