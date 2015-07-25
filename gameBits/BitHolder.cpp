@@ -4,10 +4,12 @@
 
 #include "BitHolder.h"
 #include <algorithm>
+#include "../Game.h"
 
 void BitHolder::receive(shared_ptr<GameBit> bit) {
-    if(bit->get_parent() == this) return;
+    if(bit->get_parent().get() == this) return;
     if(bit->get_parent()) bit->get_parent()->remove(bit);
+    else bit->get_game().remove(bit);
     bit->set_parent(this);
     _bits.push_back(bit);
 }

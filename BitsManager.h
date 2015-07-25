@@ -21,15 +21,19 @@ class BitsManager {
 public:
     BitsManager(Game & game);
 
-    uint32_t register_bit(shared_ptr<GameBit> bit);
+    void register_bit(shared_ptr<GameBit> bit);
 
     void remove_bit(shared_ptr<GameBit> bit);
 
+    shared_ptr<GameBit> get_bit(uint32_t unique_id);
+
     //This is a nested map with the first key being the bit id and the second one being the bit refId
-    map<string, vector< shared_ptr<GameBit> > > _all_bits;
+    map<uint32_t, shared_ptr<GameBit> > _all_bits;
 
 private:
     Game &_game;
+
+    uint32_t _unique_id = 1;
 
 };
 

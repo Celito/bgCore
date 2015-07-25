@@ -21,7 +21,7 @@ public:
 
     virtual ~GameBit() {};
 
-    string get_unique_id() const;
+    uint32_t get_unique_id() const;
 
     Attribute get_attr(string id) const;
 
@@ -29,11 +29,11 @@ public:
 
     void set_attr(string id, uint32_t value);
 
-    void set_ref_id(const uint32_t _ref_id) {GameBit::_ref_id = _ref_id; }
+    void set_ref_id(const uint32_t ref_id) { if(_ref_id == 0) _ref_id = ref_id; }
 
     const string &get_bit_id() const { return _bit_id; }
 
-    BitHolder *get_parent() const { return _parent; }
+    shared_ptr<BitHolder> get_parent() const;
 
     void set_parent(BitHolder *parent) { _parent = parent; }
 
@@ -41,7 +41,7 @@ public:
 
 protected:
     Game &_game;
-    uint32_t _ref_id;
+    uint32_t _ref_id = 0;
     string _bit_id;
     map<uint32_t, Attribute> _attributes;
 

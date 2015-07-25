@@ -9,7 +9,6 @@
 #include <c++/sstream>
 #include "PlayerTUI.h"
 #include "../gameBits/boards/Tile.h"
-#include "../player/PlayerInterface.h"
 #include "../turns/Action.h"
 #include "../turns/options/Option.h"
 #include "../turns/ChooseTileOnBoard.h"
@@ -94,8 +93,9 @@ void PlayerTUI::print_board(const vector<shared_ptr<Option>> &options, const sha
         else {
             shared_ptr<Piece> piece = tile->get_top_piece();
             uint32_t color = piece->get_attr("Color").get_value();
-            string name = piece->get_unique_id();
-            string short_name = name.substr(0, 1) + name.substr(name.size() - 1, 1);
+            string name = piece->get_bit_id();
+            uint32_t id = piece->get_unique_id();
+            string short_name = name.substr(0, 1) + to_string(id);
             if(color == 0){
                 lines[j] += "-" + short_name  + "-";
             }

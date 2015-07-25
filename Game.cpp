@@ -136,5 +136,5 @@ shared_ptr<GameBit> Game::get_table_bit(string bit_id) const {
 }
 
 void Game::register_new_bit(shared_ptr<GameBit> bit) {
-    bit.get()->set_ref_id(_bits_manager->register_bit(bit));
+    _bits_manager->register_bit(bit);
 }
