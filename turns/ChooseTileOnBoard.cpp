@@ -23,8 +23,21 @@ void ChooseTileOnBoard::update_options() {
     if(!(target != nullptr)) throw;
 
 
-    //TODO: load the options base on the placement rules for the piece
-    vector< shared_ptr<Tile> > tiles = target.get()->get_available_titles(e_for_placement);
+    //TODO: load the options base on the placement/movement rules for the piece
+    vector< shared_ptr<Tile> > tiles;
+    
+    if(_reason == e_for_placement) {
+        tiles = target->get_tiles_for_placement();
+    }
+    else if(_reason == e_for_movement){
+        assert(_required_bits.count(e_piece) != 0 && !_required_bits[e_piece].expired());
+        assert(_required_bits.count(e_tile) != 0 && !_required_bits[e_tile].expired());
+
+        shared_ptr<Tile> last_tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(_required_bits[e_tile].lock());
+        shared_ptr<Piece> piece = (shared_ptr<Piece>)dynamic_pointer_cast<Piece>(_required_bits[e_piece].lock());
+
+        tiles = target->get_tiles_for_movement(piece, last_tile);
+    }
     for_each(tiles.begin(), tiles.end(), [this](shared_ptr<Tile> tile){
         _options.push_back(make_shared<TileOption>(tile));
     });

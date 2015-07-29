@@ -38,9 +38,10 @@ void PlayerTUI::resolve_action(shared_ptr<Action> action) {
 
 void PlayerTUI::print_board(const vector<shared_ptr<Option>> &options, const shared_ptr<Board> &board) const {
     vector< shared_ptr<Tile> > tiles = board.get()->get_tiles();
-    sort(tiles.begin(), tiles.end(), [](shared_ptr<Tile> &t1, shared_ptr<Tile> &t2) {
-                return t1->y() == t2->y() ? t1->x() < t2->x() : t1->y() > t2->y();
-            });
+    sort(tiles.begin(), tiles.end(),
+        [](const shared_ptr<Tile> &t1, const shared_ptr<Tile> &t2) -> bool {
+            return t1->y() == t2->y() ? t1->x() < t2->x() : t1->y() > t2->y();
+        });
     vector<string> lines;
     int curr_x = tiles[0]->x();
     int min_x = curr_x;

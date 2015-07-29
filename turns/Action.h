@@ -14,6 +14,7 @@ using namespace std;
 class Option;
 
 enum required_bit_t{
+    e_tile,
     e_piece,
     e_piece_set,
     e_board

@@ -19,6 +19,13 @@ public:
     shared_ptr<Board> get_board() {
         return (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board].lock());
     }
+
+    void set_reason(const available_tiles_t &_reason) {
+        ChooseTileOnBoard::_reason = _reason;
+    }
+
+private:
+    available_tiles_t _reason = e_for_placement;
 };
 
 

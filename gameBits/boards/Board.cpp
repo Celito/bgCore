@@ -9,20 +9,15 @@
 #include "../../Game.h"
 #include "../../BitsManager.h"
 
-vector<shared_ptr<Tile> > Board::get_available_titles(available_tiles_t reason) {
+vector<shared_ptr<Tile> > Board::get_tiles_for_placement() {
     vector< shared_ptr<Tile> > ret;
-    if(reason == e_for_placement) {
-        // find all available tiles on the board
-        for_each(_tile_grid.begin(), _tile_grid.end(), [&ret](pair< TilePos, shared_ptr<Tile> > tile_entry){
-            if(tile_entry.second->is_empty()){
-                ret.push_back(tile_entry.second);
-            }
-        });
-    }
-    else if(reason == e_for_movement) {
-        // find tiles starting from the piece position
-
-    }
+    //TODO: load placement rules to filter the right tiles
+    // find all available tiles on the board
+    for_each(_tile_grid.begin(), _tile_grid.end(), [&ret](pair< TilePos, shared_ptr<Tile> > tile_entry){
+        if(tile_entry.second->is_empty()){
+            ret.push_back(tile_entry.second);
+        }
+    });
 
     return ret;
 }
@@ -79,4 +74,18 @@ void Board::remove_tile(TilePos pos) {
 
     _tile_grid.erase(pos);
 
+}
+
+vector<shared_ptr<Tile> > Board::get_tiles_for_movement(shared_ptr<Piece> piece, shared_ptr<Tile> last_tile) {
+    vector< shared_ptr<Tile> > ret;
+    //TODO: load movement rules to filter the right tiles
+    // find all available tiles on the board
+    for(uint32_t i = 0; i < last_tile->get_num_of_neighbours(); i++){
+        shared_ptr<Tile> neighbour = last_tile->get_neighbour(i);
+        if(neighbour != nullptr && neighbour->is_empty()) {
+            ret.push_back(neighbour);
+        }
+    }
+
+    return ret;
 }

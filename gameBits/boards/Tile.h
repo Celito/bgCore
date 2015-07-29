@@ -32,6 +32,10 @@ public:
         return _neighbours[dir].expired()? nullptr : _neighbours[dir].lock();
     }
 
+    uint64_t get_num_of_neighbours(){
+        return _neighbours.size();
+    }
+
     void set_neighbour(uint32_t dir, shared_ptr<Tile> tile) {
         _neighbours[dir] = tile;
     }

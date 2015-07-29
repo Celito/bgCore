@@ -9,11 +9,18 @@
 
 MovePieceOnBoard::MovePieceOnBoard(shared_ptr<BitReference> target_board) : ChoosePieceOnBoard(target_board) {
     _choose_tile_on_board = make_shared<ChooseTileOnBoard>(target_board);
+    _choose_tile_on_board->set_reason(e_for_movement);
     set_next_action(_choose_tile_on_board);
     concat_action(_choose_tile_on_board);
     on_option_taken([this](shared_ptr<Option> opt){
         auto bit_opt = dynamic_pointer_cast<BitOption>(opt);
         _selected_bit = bit_opt->get_bit();
+        _choose_tile_on_board->set_required_bit(e_piece, _selected_bit);
+
+        assert(dynamic_pointer_cast<Tile>(_selected_bit->get_parent()));
+
+        shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(_selected_bit->get_parent());
+        _choose_tile_on_board->set_required_bit(e_tile, tile);
         _curr_player->receive(_selected_bit);
     });
     _choose_tile_on_board->on_option_taken([this](shared_ptr<Option> opt){
@@ -31,7 +38,7 @@ string MovePieceOnBoard::get_description() const {
 void MovePieceOnBoard::update_options() {
     _options.clear();
 
-    if(!(_required_bits.count(e_board) != 0 && !_required_bits[e_board].expired())) throw;
+    assert(_required_bits.count(e_board) != 0 && !_required_bits[e_board].expired());
 
     shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board].lock());
 
