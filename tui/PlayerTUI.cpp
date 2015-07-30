@@ -51,6 +51,8 @@ void PlayerTUI::print_board(const vector<shared_ptr<Option>> &options, const sha
     int curr_x = tiles[0]->x();
     int min_x = curr_x;
     int curr_y = tiles[0]->y();
+    map<uint32_t, map<string, uint32_t> > pieces_count;
+
     for (int i = 0, j = 0; i < tiles.size(); ++i) {
         shared_ptr<Tile> tile = tiles[i];
         bool new_line = false;
@@ -100,7 +102,9 @@ void PlayerTUI::print_board(const vector<shared_ptr<Option>> &options, const sha
             shared_ptr<Piece> piece = tile->get_top_piece();
             uint32_t color = piece->get_attr("Color").get_value();
             string name = piece->get_bit_id();
-            uint32_t id = piece->get_unique_id();
+            if(pieces_count[color].count(name) == 0) pieces_count[color][name] = 0;
+            else pieces_count[color][name]++;
+            uint32_t id = pieces_count[color][name];
             string short_name = name.substr(0, 1) + to_string(id);
             if(color == 0){
                 lines[j] += "-" + short_name  + "-";
