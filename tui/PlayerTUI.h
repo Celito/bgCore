@@ -7,15 +7,21 @@
 
 
 #include "../player/PlayerController.h"
+#include "GameTUI.h"
 
 class Option;
 class Board;
 
 class PlayerTUI : public PlayerController {
+public:
+    PlayerTUI(GameTUI & gameTUI): _gameTUI(gameTUI) {}
 
     virtual void resolve_action(shared_ptr<Action> action) override;
 
     void print_board(const vector <shared_ptr<Option>> &options, const shared_ptr<Board> &board) const;
+
+private:
+    GameTUI &_gameTUI;
 };
 
 

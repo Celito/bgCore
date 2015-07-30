@@ -27,11 +27,16 @@ void PlayerTUI::resolve_action(shared_ptr<Action> action) {
     for (int i = 0; i < options.size(); ++i) {
         cout << i << ") " << options[i]->get_description() << endl;
     }
-    uint32_t option_id;
-    while(!(cin >> option_id) || option_id >= options.size()){
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Invalid input.  Try again: ";
+    int32_t option_id = _gameTUI.get_next_pre_loaded_option();
+    if(option_id == -1) {
+        while (!(cin >> option_id) || option_id >= options.size()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input.  Try again: ";
+        }
+    }
+    else {
+        cout << option_id << endl;
     }
     action->choose(options[option_id]);
 }

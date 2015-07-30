@@ -6,6 +6,7 @@
 #define BGCORE_GAMETUI_H
 
 
+#include <queue>
 #include "../Game.h"
 #include "../GameController.h"
 
@@ -23,10 +24,14 @@ public:
 
     void run();
 
+    int32_t get_next_pre_loaded_option();
+
 private:
     Game &_game;
 
     vector< shared_ptr<PlayerTUI> > _player_TUIS;
+
+    queue< int > pre_loaded_opt;
 };
 
 
