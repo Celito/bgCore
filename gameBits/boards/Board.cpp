@@ -24,6 +24,7 @@ vector<shared_ptr<Tile> > Board::get_tiles_for_placement() {
 
 void Board::add_new_tile(TilePos pos) {
     if(_tile_grid[pos] != nullptr) return;
+    cout << "ADDING TILE " << pos.to_string() << endl;
     shared_ptr<Tile> tile = make_shared<Tile>(*this, pos, _default_directions);
     _tile_grid[pos] = tile;
     _game.register_new_bit(tile);
@@ -68,6 +69,8 @@ vector<shared_ptr<Piece> > Board::get_available_pieces(shared_ptr<Player> player
 
 void Board::remove_tile(TilePos pos) {
     if(_tile_grid.count(pos) < 1) return;
+
+    cout << "REMOVING TILE " << pos.to_string() << endl;
     shared_ptr<Tile> tile = _tile_grid[pos];
     remove(tile);
     _game.bits_manager()->remove_bit(tile);
@@ -80,7 +83,7 @@ vector<shared_ptr<Tile> > Board::get_tiles_for_movement(shared_ptr<Piece> piece,
     vector< shared_ptr<Tile> > ret;
     //TODO: load movement rules to filter the right tiles
     // find all available tiles on the board
-    for(uint32_t i = 0; i < last_tile->get_num_of_neighbours(); i++){
+    for(uint32_t i = 0; i < last_tile->get_num_of_directions(); i++){
         shared_ptr<Tile> neighbour = last_tile->get_neighbour(i);
         if(neighbour != nullptr && neighbour->is_empty()) {
             ret.push_back(neighbour);
