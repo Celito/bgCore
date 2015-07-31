@@ -12,7 +12,7 @@ void MovementFilterRule::filter_positions(vector<shared_ptr<Option> > &options, 
     set< TilePos > tested_pos;
     tested_pos.insert(initial_tile->get_pos());
     shared_ptr<TileOption> initial_opt = make_shared<TileOption>(initial_tile);
-    initial_opt->add_path(initial_tile);
+    initial_opt->add_path_node(initial_tile);
     possible_options.push(initial_opt);
 
     while(available_opts) {
@@ -25,8 +25,8 @@ void MovementFilterRule::filter_positions(vector<shared_ptr<Option> > &options, 
             if(neighbour != nullptr && neighbour->is_empty() &&
                     tested_pos.find(neighbour->get_pos()) == tested_pos.end()) {
                 shared_ptr<TileOption> new_opt = make_shared<TileOption>(neighbour);
-                new_opt->add_path(opt->get_path());
-                new_opt->add_path(neighbour);
+                new_opt->concat_path(opt->get_path());
+                new_opt->add_path_node(neighbour);
                 possible_options.push(new_opt);
                 tested_pos.insert(neighbour->get_pos());
                 //TODO: test if the path is bigger than a min a smaller than a max

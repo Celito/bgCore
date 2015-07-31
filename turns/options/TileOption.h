@@ -22,8 +22,8 @@ public:
 
     vector< weak_ptr<Tile> > get_path() { return _path; }
 
-    void add_path(weak_ptr<Tile> item) { _path.push_back(_tile); }
-    void add_path(vector< weak_ptr<Tile> > other_path);
+    void add_path_node(weak_ptr<Tile> item) { _path.push_back(item); }
+    void concat_path(vector<weak_ptr<Tile> >  const &other_path);
 
 private:
     weak_ptr<Tile> _tile;
