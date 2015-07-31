@@ -6,6 +6,7 @@
 #include "options/Option.h"
 #include "../gameBits/PieceSet.h"
 #include "../gameBits/boards/Board.h"
+#include "../gameBits/boards/Tile.h"
 #include "options/BitOption.h"
 #include "ChooseTileOnBoard.h"
 #include "options/TileOption.h"

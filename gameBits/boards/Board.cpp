@@ -8,8 +8,10 @@
 #include "Tile.h"
 #include "../../Game.h"
 #include "../../BitsManager.h"
+#include "../../turns/options/TileOption.h"
+#include "../../rules/MovementFilterRule.h"
 
-vector<shared_ptr<Tile> > Board::get_tiles_for_placement() {
+vector< shared_ptr<Tile> > Board::get_tiles_for_placement() {
     vector< shared_ptr<Tile> > ret;
     //TODO: load placement rules to filter the right tiles
     // find all available tiles on the board
@@ -37,7 +39,7 @@ void Board::add_new_tile(TilePos pos) {
     });
 }
 
-vector<shared_ptr<Tile> > Board::get_tiles() {
+vector< shared_ptr<Tile> > Board::get_tiles() {
     vector< shared_ptr<Tile> > ret;
     for_each(_tile_grid.begin(), _tile_grid.end(), [&ret](pair< TilePos, shared_ptr<Tile> > tile_entry){
         ret.push_back(tile_entry.second);
@@ -45,7 +47,7 @@ vector<shared_ptr<Tile> > Board::get_tiles() {
     return ret;
 }
 
-vector<shared_ptr<Piece> > Board::get_pieces() {
+vector< shared_ptr<Piece> > Board::get_pieces() {
     vector< shared_ptr<Tile> > tiles = get_tiles();
     vector< shared_ptr<Piece> > ret;
     for_each(tiles.begin(), tiles.end(), [&ret]( shared_ptr<Tile> tile){
@@ -55,7 +57,7 @@ vector<shared_ptr<Piece> > Board::get_pieces() {
     return ret;
 }
 
-vector<shared_ptr<Piece> > Board::get_available_pieces(shared_ptr<Player> player) {
+vector< shared_ptr<Piece> > Board::get_available_pieces(shared_ptr<Player> player) {
     vector< shared_ptr<Tile> > tiles = get_tiles();
     vector< shared_ptr<Piece> > ret;
     for_each(tiles.begin(), tiles.end(), [&ret, &player]( shared_ptr<Tile> tile){
@@ -79,15 +81,16 @@ void Board::remove_tile(TilePos pos) {
 
 }
 
-vector<shared_ptr<Tile> > Board::get_tiles_for_movement(shared_ptr<Piece> piece, shared_ptr<Tile> last_tile) {
-    vector< shared_ptr<Tile> > ret;
+vector< shared_ptr<Option> > Board::get_options_for_movement(shared_ptr<Piece> piece, shared_ptr<Tile> last_tile) {
+    vector< shared_ptr<Option> > ret;
     //TODO: load movement rules to filter the right tiles
     // find all available tiles on the board
-    for(uint32_t i = 0; i < last_tile->get_num_of_directions(); i++){
-        shared_ptr<Tile> neighbour = last_tile->get_neighbour(i);
-        if(neighbour != nullptr && neighbour->is_empty()) {
-            ret.push_back(neighbour);
-        }
+    vector< shared_ptr<MovementFilterRule> > movement_rule = piece->get_movement_rules();
+
+    if(movement_rule.size() == 0) throw new exception();
+
+    for (auto rule : movement_rule) {
+        rule->filter_positions(ret, last_tile);
     }
 
     return ret;

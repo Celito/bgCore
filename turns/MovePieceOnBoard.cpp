@@ -4,6 +4,7 @@
 
 #include <c++/iostream>
 #include "MovePieceOnBoard.h"
+#include "../gameBits/boards/Tile.h"
 #include "options/BitOption.h"
 #include "options/TileOption.h"
 

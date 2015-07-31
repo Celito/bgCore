@@ -5,10 +5,13 @@
 #ifndef BGCORE_PIECE_H
 #define BGCORE_PIECE_H
 
+#include <vector>
 #include "GameBit.h"
-#include "../player/Player.h"
-#include "../rules/Rule.h"
-#include "../rules/PlayerAttrComparison.h"
+#include "../rules/MovementFilterRule.h"
+
+class Player;
+class PlayerAttrComparison;
+class MovementFilterRule;
 
 class Piece : public GameBit {
 public:
@@ -20,8 +23,16 @@ public:
         _availability_for_movement.push_back(rule);
     }
 
+    void add_movement_rule(shared_ptr<MovementFilterRule> rule) {
+        _movement_rules.push_back(rule);
+    }
+
+    vector< shared_ptr<MovementFilterRule> > get_movement_rules() { return _movement_rules; }
+
 private:
     vector< shared_ptr<PlayerAttrComparison> > _availability_for_movement;
+
+    vector< shared_ptr<MovementFilterRule> > _movement_rules;
 };
 
 

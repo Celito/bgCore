@@ -31,7 +31,7 @@ public:
 
     weak_ptr<Action> get_next_action() const { return _next_action; }
 
-    void set_required_bit(required_bit_t bit_type, shared_ptr<GameBit> bit) { _required_bits[bit_type] = bit; }
+    void set_required_bit(required_bit_t bit_type, shared_ptr<GameBit> bit);
 
     /*
      * Pass the generated bits of this action to the required bits of the concated action;

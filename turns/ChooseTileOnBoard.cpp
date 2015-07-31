@@ -4,6 +4,8 @@
 
 #include "ChooseTileOnBoard.h"
 #include "options/TileOption.h"
+#include "../gameBits/Piece.h"
+#include "../gameBits/boards/Tile.h"
 
 ChooseTileOnBoard::ChooseTileOnBoard(shared_ptr<BitReference> target) {
     _bit_refs[e_board] = target;
@@ -28,6 +30,9 @@ void ChooseTileOnBoard::update_options() {
     
     if(_reason == e_for_placement) {
         tiles = target->get_tiles_for_placement();
+        for_each(tiles.begin(), tiles.end(), [this](shared_ptr<Tile> tile){
+            _options.push_back(make_shared<TileOption>(tile));
+        });
     }
     else if(_reason == e_for_movement){
         assert(_required_bits.count(e_piece) != 0 && !_required_bits[e_piece].expired());
@@ -36,9 +41,6 @@ void ChooseTileOnBoard::update_options() {
         shared_ptr<Tile> last_tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(_required_bits[e_tile].lock());
         shared_ptr<Piece> piece = (shared_ptr<Piece>)dynamic_pointer_cast<Piece>(_required_bits[e_piece].lock());
 
-        tiles = target->get_tiles_for_movement(piece, last_tile);
+        _options = target->get_options_for_movement(piece, last_tile);
     }
-    for_each(tiles.begin(), tiles.end(), [this](shared_ptr<Tile> tile){
-        _options.push_back(make_shared<TileOption>(tile));
-    });
 }

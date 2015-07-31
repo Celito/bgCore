@@ -9,11 +9,12 @@
 #include "../GameBit.h"
 #include "../BitHolder.h"
 #include "TilePos.h"
-#include "../Piece.h"
-#include "../../player/Player.h"
 #include <map>
 
 class Tile;
+class Piece;
+class Player;
+class Option;
 
 using namespace std;
 
@@ -28,7 +29,7 @@ public:
 
     vector< shared_ptr<Tile> > get_tiles_for_placement();
 
-    vector< shared_ptr<Tile> > get_tiles_for_movement(shared_ptr<Piece> piece, shared_ptr<Tile> last_tile);
+    vector< shared_ptr<Option> > get_options_for_movement(shared_ptr<Piece> piece, shared_ptr<Tile> last_tile);
 
     vector< shared_ptr<Tile> > get_tiles();
 

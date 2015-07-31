@@ -2,8 +2,12 @@
 // Created by Celito on 2015-05-29.
 //
 
-#include <iostream>
 #include "Piece.h"
+#include <iostream>
+#include "../player/Player.h"
+#include "../rules/Rule.h"
+#include "../rules/PlayerAttrComparison.h"
+#include "../rules/MovementFilterRule.h"
 
 using namespace std;
 

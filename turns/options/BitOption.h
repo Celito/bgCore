@@ -11,7 +11,7 @@ class GameBit;
 
 class BitOption : public Option {
 public:
-    BitOption(shared_ptr<GameBit> game_bit) : _selected_bit(game_bit) {}
+    BitOption(shared_ptr<GameBit> game_bit);
 
     virtual string get_description() override;
 

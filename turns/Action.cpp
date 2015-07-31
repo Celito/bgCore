@@ -38,3 +38,7 @@ void Action::concat_action(shared_ptr<Action> other_action) {
         }
     });
 }
+
+void Action::set_required_bit(required_bit_t bit_type, shared_ptr<GameBit> bit) {
+    _required_bits[bit_type] = bit;
+}

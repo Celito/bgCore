@@ -17,6 +17,7 @@
 #include "turns/PutPieceOnBoard.h"
 #include "turns/MultiActions.h"
 #include "turns/MovePieceOnBoard.h"
+#include "rules/PlayerAttrComparison.h"
 
 using namespace std;
 
@@ -47,6 +48,8 @@ Game::Game() {
     shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);
     is_player_color->set_tested_attr(COLOR_ATTR);
 
+    shared_ptr<MovementFilterRule> ant_movement = make_shared<MovementFilterRule>();
+
     for (uint32_t i = 0; i < _num_of_players; i++) {
 
         shared_ptr<Player> player = make_shared<Player>(*this, i+1);
@@ -64,6 +67,7 @@ Game::Game() {
                 register_new_bit(new_piece);
                 new_piece->set_attr(COLOR_ATTR, i);
                 new_piece->add_movement_availability_rule(is_player_color);
+                new_piece->add_movement_rule(ant_movement);
                 player_set->receive(new_piece);
             }
         }

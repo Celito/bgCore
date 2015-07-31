@@ -4,6 +4,7 @@
 
 #include "ChoosePieceOnBoard.h"
 #include "../gameBits/boards/Board.h"
+#include "../gameBits/Piece.h"
 #include "options/BitOption.h"
 
 ChoosePieceOnBoard::ChoosePieceOnBoard(shared_ptr<BitReference> target_board) {
