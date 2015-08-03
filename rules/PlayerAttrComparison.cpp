@@ -4,7 +4,7 @@
 
 #include "PlayerAttrComparison.h"
 #include "../Game.h"
-#include "../turns/actions/Action.h"
+#include "../turns/actions/ActionDef.h"
 
 bool PlayerAttrComparison::test(GameBit const &bit) {
     return _player->get_attr(_attr_id).get_value() == bit.get_attr(_attr_id).get_value();

@@ -8,18 +8,18 @@
 #include <vector>
 #include <memory>
 
-class Action;
+class ActionDef;
 
 using namespace std;
 
 class Turn {
 public:
-    void add_action(shared_ptr<Action>);
+    void add_action(shared_ptr<ActionDef>);
 
-    shared_ptr<Action> get_first_action();
+    shared_ptr<ActionDef> get_first_action();
 
 private:
-    vector<shared_ptr<Action> > _actions;
+    vector<shared_ptr<ActionDef> > _actions;
 };
 
 

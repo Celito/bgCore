@@ -6,11 +6,11 @@
 #define BGCORE_CHOOSEPIECE_H
 
 
-#include "Action.h"
+#include "ActionDef.h"
 
 class BitReference;
 
-class ChoosePieceOnSet : public Action {
+class ChoosePieceOnSet : public ActionDef {
 public:
     ChoosePieceOnSet(shared_ptr<BitReference> pieces_pool);
 

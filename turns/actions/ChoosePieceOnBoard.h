@@ -6,9 +6,9 @@
 #define BGCORE_CHOOSEPIECEONBOARD_H
 
 
-#include "Action.h"
+#include "ActionDef.h"
 
-class ChoosePieceOnBoard : public Action  {
+class ChoosePieceOnBoard : public ActionDef {
 public:
     ChoosePieceOnBoard(shared_ptr<BitReference> target_board);
 

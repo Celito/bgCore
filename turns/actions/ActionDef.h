@@ -21,23 +21,23 @@ enum required_bit_t{
     e_board
 };
 
-class Action {
+class ActionDef {
 public:
 
-    virtual ~Action() {}
+    virtual ~ActionDef() {}
 
     virtual void init(shared_ptr<Player> player);
 
-    void set_next_action(shared_ptr<Action> next_action) { _next_action = next_action; }
+    void set_next_action(shared_ptr<ActionDef> next_action) { _next_action = next_action; }
 
-    weak_ptr<Action> get_next_action() const { return _next_action; }
+    weak_ptr<ActionDef> get_next_action() const { return _next_action; }
 
     void set_required_bit(required_bit_t bit_type, shared_ptr<GameBit> bit);
 
     /*
      * Pass the generated bits of this action to the required bits of the concated action;
      */
-    virtual void concat_action(shared_ptr<Action> other_action);
+    virtual void concat_action(shared_ptr<ActionDef> other_action);
 
     virtual bool self_resolve()  { return false; }
 
@@ -61,7 +61,7 @@ protected:
     map< required_bit_t, weak_ptr<GameBit> > _required_bits;
     map< required_bit_t, shared_ptr<BitReference> > _bit_refs;
     shared_ptr<Player> _curr_player;
-    weak_ptr<Action> _next_action;
+    weak_ptr<ActionDef> _next_action;
 
     boost::signals2::signal<void(shared_ptr<Option>)> _option_taken;
 };

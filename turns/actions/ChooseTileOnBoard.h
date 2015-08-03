@@ -5,10 +5,10 @@
 #ifndef BGCORE_MOVEBITTO_H
 #define BGCORE_MOVEBITTO_H
 
-#include "Action.h"
+#include "ActionDef.h"
 #include "../../gameBits/boards/Board.h"
 
-class ChooseTileOnBoard : public Action {
+class ChooseTileOnBoard : public ActionDef {
 public:
     ChooseTileOnBoard(shared_ptr<BitReference> target);
 

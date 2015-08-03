@@ -6,14 +6,14 @@
 #define BGCORE_MULTACTIONS_H
 
 
-#include "Action.h"
+#include "ActionDef.h"
 
 using namespace std;
 
-class MultiActions : public Action {
+class MultiActions : public ActionDef {
 public:
 
-    void add_sub_action(shared_ptr<Action> action);
+    void add_sub_action(shared_ptr<ActionDef> action);
 
     virtual void update_options() override;
 
@@ -29,7 +29,7 @@ public:
 
 private:
 
-    vector<shared_ptr<Action> > _sub_actions;
+    vector<shared_ptr<ActionDef> > _sub_actions;
 };
 
 

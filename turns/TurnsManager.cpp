@@ -6,7 +6,7 @@
 #include "TurnsManager.h"
 #include "../Game.h"
 #include "Turn.h"
-#include "actions/Action.h"
+#include "actions/ActionDef.h"
 #include "../player/PlayerController.h"
 #include "../player/Player.h"
 
@@ -24,7 +24,7 @@ void TurnsManager::next_turn() {
     //TODO: choose the turn according to the conditions to choose the turn type;
     shared_ptr<Turn> turn = _possible_turns[0];
 
-    shared_ptr<Action> curr_action = turn->get_first_action();
+    shared_ptr<ActionDef> curr_action = turn->get_first_action();
 
     shared_ptr<PlayerController> controller = curr_player->get_controller();
 

@@ -7,7 +7,7 @@
 
 #include <memory>
 
-class Action;
+class ActionDef;
 class PlayerInterface;
 
 using  namespace std;
@@ -15,15 +15,8 @@ using  namespace std;
 class PlayerController {
 public:
 
-    weak_ptr<PlayerInterface> get_interface() { return _interface; }
+    virtual void resolve_action(shared_ptr<ActionDef> action) = 0;
 
-    void set_interface(weak_ptr<PlayerInterface> interface) { _interface = interface; }
-
-    virtual void resolve_action(shared_ptr<Action> action) = 0;
-
-private:
-
-    weak_ptr<PlayerInterface> _interface;
 };
 
 

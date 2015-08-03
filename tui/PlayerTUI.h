@@ -16,7 +16,7 @@ class PlayerTUI : public PlayerController {
 public:
     PlayerTUI(GameTUI & gameTUI): _gameTUI(gameTUI) {}
 
-    virtual void resolve_action(shared_ptr<Action> action) override;
+    virtual void resolve_action(shared_ptr<ActionDef> action) override;
 
     void print_board(const vector <shared_ptr<Option>> &options, const shared_ptr<Board> &board) const;
 

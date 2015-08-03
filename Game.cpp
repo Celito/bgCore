@@ -12,7 +12,7 @@
 #include "gameBits/PieceSet.h"
 #include "turns/TurnsManager.h"
 #include "turns/Turn.h"
-#include "turns/actions/Action.h"
+#include "turns/actions/ActionDef.h"
 #include "gameBits/boards/HexBoard.h"
 #include "turns/actions/PutPieceOnBoard.h"
 #include "turns/actions/MultiActions.h"

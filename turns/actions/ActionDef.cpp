@@ -2,10 +2,10 @@
 // Created by Celito on 2015-06-27.
 //
 
-#include "Action.h"
+#include "ActionDef.h"
 #include "../../gameBits/BitReference.h"
 
-void Action::init(shared_ptr<Player> player) {
+void ActionDef::init(shared_ptr<Player> player) {
     _curr_player = player;
     for (auto item : _bit_refs) {
         item.second->set_curr_player(_curr_player);
@@ -14,23 +14,23 @@ void Action::init(shared_ptr<Player> player) {
     update_options();
 }
 
-const vector<shared_ptr<Option> > &Action::get_options() const {
+const vector<shared_ptr<Option> > &ActionDef::get_options() const {
     return _options;
 }
 
-boost::signals2::connection Action::on_option_taken(boost::signals2::slot<void(shared_ptr<Option>)> slot) {
+boost::signals2::connection ActionDef::on_option_taken(boost::signals2::slot<void(shared_ptr<Option>)> slot) {
     return _option_taken.connect(slot);
 }
 
-void Action::choose(shared_ptr<Option> option) {
+void ActionDef::choose(shared_ptr<Option> option) {
     _option_taken(option);
 }
 
-bool Action::is_available() const {
+bool ActionDef::is_available() const {
     return _options.size() > 0;
 }
 
-void Action::concat_action(shared_ptr<Action> other_action) {
+void ActionDef::concat_action(shared_ptr<ActionDef> other_action) {
     _next_action = other_action;
     _option_taken.connect([this](shared_ptr<Option> opt){
         for (auto bit_pair : _selected_bits) {
@@ -40,6 +40,6 @@ void Action::concat_action(shared_ptr<Action> other_action) {
     });
 }
 
-void Action::set_required_bit(required_bit_t bit_type, shared_ptr<GameBit> bit) {
+void ActionDef::set_required_bit(required_bit_t bit_type, shared_ptr<GameBit> bit) {
     _required_bits[bit_type] = bit;
 }

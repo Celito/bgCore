@@ -6,7 +6,7 @@
 #define BGCORE_PUTPIECEONBOARD_H
 
 
-#include "Action.h"
+#include "ActionDef.h"
 #include "ChoosePieceOnSet.h"
 
 class Board;

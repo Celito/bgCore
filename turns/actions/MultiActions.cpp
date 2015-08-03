@@ -15,12 +15,12 @@ bool MultiActions::is_available() const {
     return available;
 }
 
-void MultiActions::add_sub_action(shared_ptr<Action> action) {
+void MultiActions::add_sub_action(shared_ptr<ActionDef> action) {
     _sub_actions.push_back(action);
 }
 
 void MultiActions::init(shared_ptr<Player> player) {
-    Action::init(player);
+    ActionDef::init(player);
 }
 
 string MultiActions::get_description() const {
@@ -29,9 +29,9 @@ string MultiActions::get_description() const {
 
 void MultiActions::choose(shared_ptr<Option> option) {
     auto action_chosen = dynamic_pointer_cast<ActionOption>(option);
-    shared_ptr<Action> next_action = action_chosen->get_selected_action();
+    shared_ptr<ActionDef> next_action = action_chosen->get_selected_action();
     set_next_action(next_action);
-    Action::choose(option);
+    ActionDef::choose(option);
 }
 
 bool MultiActions::self_resolve() {
@@ -40,13 +40,13 @@ bool MultiActions::self_resolve() {
         choose(_options[0]);
         return true;
     }
-    return Action::self_resolve();
+    return ActionDef::self_resolve();
 }
 
 void MultiActions::update_options() {
     _options.clear();
     if(_curr_player == nullptr) return;
-    for_each(_sub_actions.begin(), _sub_actions.end(), [this](shared_ptr<Action> action) -> void{
+    for_each(_sub_actions.begin(), _sub_actions.end(), [this](shared_ptr<ActionDef> action) -> void{
         action->init(_curr_player);
         if(action->is_available()) _options.push_back(make_shared<ActionOption>(action));
     });

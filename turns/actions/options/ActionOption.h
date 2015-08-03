@@ -10,20 +10,20 @@
 
 using namespace std;
 
-class Action;
+class ActionDef;
 
 class ActionOption : public  Option{
 public:
-    ActionOption(shared_ptr<Action> action) : _selected_action(action) {}
+    ActionOption(shared_ptr<ActionDef> action) : _selected_action(action) {}
 
     string get_description();
 
-    const shared_ptr<Action> &get_selected_action() const {
+    const shared_ptr<ActionDef> &get_selected_action() const {
         return _selected_action;
     }
 
 private:
-    shared_ptr<Action> _selected_action;
+    shared_ptr<ActionDef> _selected_action;
 };
 
 
