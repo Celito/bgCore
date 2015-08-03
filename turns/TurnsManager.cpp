@@ -4,9 +4,11 @@
 
 #include <c++/iostream>
 #include "TurnsManager.h"
+#include "../Game.h"
 #include "Turn.h"
-#include "Action.h"
+#include "actions/Action.h"
 #include "../player/PlayerController.h"
+#include "../player/Player.h"
 
 TurnsManager::TurnsManager(Game &game) : _game(game) {
     _current_player_id = 0;

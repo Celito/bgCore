@@ -3,6 +3,7 @@
 //
 
 #include "Action.h"
+#include "../../gameBits/BitReference.h"
 
 void Action::init(shared_ptr<Player> player) {
     _curr_player = player;

@@ -12,11 +12,11 @@
 #include "gameBits/PieceSet.h"
 #include "turns/TurnsManager.h"
 #include "turns/Turn.h"
-#include "turns/Action.h"
+#include "turns/actions/Action.h"
 #include "gameBits/boards/HexBoard.h"
-#include "turns/PutPieceOnBoard.h"
-#include "turns/MultiActions.h"
-#include "turns/MovePieceOnBoard.h"
+#include "turns/actions/PutPieceOnBoard.h"
+#include "turns/actions/MultiActions.h"
+#include "turns/actions/MovePieceOnBoard.h"
 #include "rules/PlayerAttrComparison.h"
 
 using namespace std;

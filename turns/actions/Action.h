@@ -5,13 +5,14 @@
 #ifndef BGCORE_ACTION_H
 #define BGCORE_ACTION_H
 
-#include "../player/Player.h"
-#include "../gameBits/BitReference.h"
 #include <boost/signals2.hpp>
 
 using namespace std;
 
 class Option;
+class Player;
+class GameBit;
+class BitReference;
 
 enum required_bit_t{
     e_tile,

@@ -4,8 +4,7 @@
 
 #include "ChooseTileOnBoard.h"
 #include "options/TileOption.h"
-#include "../gameBits/Piece.h"
-#include "../gameBits/boards/Tile.h"
+#include "../../gameBits/Piece.h"
 
 ChooseTileOnBoard::ChooseTileOnBoard(shared_ptr<BitReference> target) {
     _bit_refs[e_board] = target;

@@ -5,9 +5,9 @@
 #ifndef BGCORE_MOVEPIECEONBOARD_H
 #define BGCORE_MOVEPIECEONBOARD_H
 
-#include "../gameBits/BitReference.h"
+#include "../../gameBits/BitReference.h"
 #include "Action.h"
-#include "../gameBits/boards/Board.h"
+#include "../../gameBits/boards/Board.h"
 #include "ChoosePieceOnBoard.h"
 #include "ChooseTileOnBoard.h"
 

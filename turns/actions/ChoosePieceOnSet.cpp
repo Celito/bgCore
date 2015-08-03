@@ -4,7 +4,7 @@
 
 #include <algorithm>
 #include "ChoosePieceOnSet.h"
-#include "../gameBits/PieceSet.h"
+#include "../../gameBits/PieceSet.h"
 #include "options/BitOption.h"
 
 ChoosePieceOnSet::ChoosePieceOnSet(shared_ptr<BitReference> pieces_pool) {

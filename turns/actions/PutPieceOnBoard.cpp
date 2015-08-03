@@ -4,12 +4,9 @@
 
 #include "PutPieceOnBoard.h"
 #include "options/Option.h"
-#include "../gameBits/PieceSet.h"
-#include "../gameBits/boards/Board.h"
-#include "../gameBits/boards/Tile.h"
+#include "../../gameBits/PieceSet.h"
 #include "options/BitOption.h"
 #include "ChooseTileOnBoard.h"
-#include "options/TileOption.h"
 
 PutPieceOnBoard::PutPieceOnBoard(shared_ptr<BitReference> pieces_pool, shared_ptr<BitReference> target_board) :
         ChoosePieceOnSet(pieces_pool) {

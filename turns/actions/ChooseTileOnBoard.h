@@ -6,7 +6,7 @@
 #define BGCORE_MOVEBITTO_H
 
 #include "Action.h"
-#include "../gameBits/boards/Board.h"
+#include "../../gameBits/boards/Board.h"
 
 class ChooseTileOnBoard : public Action {
 public:

@@ -9,10 +9,8 @@
 #include <c++/sstream>
 #include "PlayerTUI.h"
 #include "../gameBits/boards/Tile.h"
-#include "../turns/Action.h"
-#include "../turns/options/Option.h"
-#include "../turns/ChooseTileOnBoard.h"
-#include "../turns/options/TileOption.h"
+#include "../turns/actions/Action.h"
+#include "../turns/actions/ChooseTileOnBoard.h"
 
 void PlayerTUI::resolve_action(shared_ptr<Action> action) {
     //system("cls");

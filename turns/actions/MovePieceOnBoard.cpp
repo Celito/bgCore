@@ -4,9 +4,8 @@
 
 #include <c++/iostream>
 #include "MovePieceOnBoard.h"
-#include "../gameBits/boards/Tile.h"
+#include "../../gameBits/boards/Tile.h"
 #include "options/BitOption.h"
-#include "options/TileOption.h"
 
 MovePieceOnBoard::MovePieceOnBoard(shared_ptr<BitReference> target_board) : ChoosePieceOnBoard(target_board) {
     _choose_tile_on_board = make_shared<ChooseTileOnBoard>(target_board);

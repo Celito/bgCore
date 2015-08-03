@@ -3,7 +3,6 @@
 //
 
 #include "MultiActions.h"
-#include <algorithm>
 #include "options/Option.h"
 #include "options/ActionOption.h"
 
