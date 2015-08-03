@@ -9,19 +9,6 @@
 #include "../../Game.h"
 #include "../../BitsManager.h"
 
-vector< shared_ptr<Tile> > Board::get_tiles_for_placement() {
-    vector< shared_ptr<Tile> > ret;
-    //TODO: load placement rules to filter the right tiles
-    // find all available tiles on the board
-    for_each(_tile_grid.begin(), _tile_grid.end(), [&ret](pair< TilePos, shared_ptr<Tile> > tile_entry){
-        if(tile_entry.second->is_empty()){
-            ret.push_back(tile_entry.second);
-        }
-    });
-
-    return ret;
-}
-
 void Board::add_new_tile(TilePos pos) {
     if(_tile_grid[pos] != nullptr) return;
     shared_ptr<Tile> tile = make_shared<Tile>(*this, pos, _default_directions);
@@ -74,19 +61,4 @@ void Board::remove_tile(TilePos pos) {
 
     _tile_grid.erase(pos);
 
-}
-
-vector< shared_ptr<Option> > Board::get_options_for_movement(shared_ptr<Piece> piece, shared_ptr<Tile> last_tile) {
-    vector< shared_ptr<Option> > ret;
-    //TODO: load movement rules to filter the right tiles
-    // find all available tiles on the board
-    vector< shared_ptr<MovementFilterRule> > movement_rule = piece->get_movement_rules();
-
-    if(movement_rule.size() == 0) throw new exception();
-
-    for (auto rule : movement_rule) {
-        rule->filter_positions(ret, last_tile);
-    }
-
-    return ret;
 }

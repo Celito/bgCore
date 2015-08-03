@@ -27,10 +27,6 @@ class Board : public GameBit, public BitHolder{
 public:
     Board(Game &game, const string &bit_id) : GameBit(game, bit_id) { }
 
-    vector< shared_ptr<Tile> > get_tiles_for_placement();
-
-    vector< shared_ptr<Option> > get_options_for_movement(shared_ptr<Piece> piece, shared_ptr<Tile> last_tile);
-
     vector< shared_ptr<Tile> > get_tiles();
 
     vector< shared_ptr<Piece> > get_available_pieces(shared_ptr<Player> player);
