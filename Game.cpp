@@ -45,10 +45,20 @@ Game::Game() {
         {3, "Ant"},
     };
 
+    map<string, shared_ptr<MovementFilterRule> > movement_rules;
+
+
     shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);
     is_player_color->set_tested_attr(COLOR_ATTR);
 
-    shared_ptr<MovementFilterRule> ant_movement = make_shared<MovementFilterRule>();
+    movement_rules["Queen"] = make_shared<MovementFilterRule>();
+    movement_rules["Queen"]->set_max_steps(1);
+    movement_rules["Beetle"] = make_shared<MovementFilterRule>();
+    movement_rules["Spider"] = make_shared<MovementFilterRule>();
+    movement_rules["Spider"]->set_max_steps(3);
+    movement_rules["Spider"]->set_min_steps(3);
+    movement_rules["GrassHooper"] = make_shared<MovementFilterRule>();
+    movement_rules["Ant"] = make_shared<MovementFilterRule>();
 
     for (uint32_t i = 0; i < _num_of_players; i++) {
 
@@ -67,7 +77,7 @@ Game::Game() {
                 register_new_bit(new_piece);
                 new_piece->set_attr(COLOR_ATTR, i);
                 new_piece->add_movement_availability_rule(is_player_color);
-                new_piece->add_movement_rule(ant_movement);
+                new_piece->add_movement_rule(movement_rules[iter->second]);
                 player_set->receive(new_piece);
             }
         }

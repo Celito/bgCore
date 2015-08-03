@@ -21,19 +21,29 @@ void MovementFilterRule::filter_positions(vector<shared_ptr<Option> > &options, 
         shared_ptr<Tile> tile = opt->get_tile();
         for (uint32_t i = 0; i < tile->get_num_of_directions(); ++i) {
             shared_ptr<Tile> neighbour = tile->get_neighbour(i);
-            //auto iter = tested_pos.find(tile->get_pos());
-            if(neighbour != nullptr && neighbour->is_empty() &&
-                    tested_pos.find(neighbour->get_pos()) == tested_pos.end()) {
+            if(neighbour != nullptr && (!_restricted_steps || (opt->get_path().size() <= _max_steps)) &&
+                    neighbour->is_empty() && tested_pos.find(neighbour->get_pos()) == tested_pos.end()) {
                 shared_ptr<TileOption> new_opt = make_shared<TileOption>(neighbour);
                 new_opt->concat_path(opt->get_path());
                 new_opt->add_path_node(neighbour);
                 possible_options.push(new_opt);
                 tested_pos.insert(neighbour->get_pos());
-                //TODO: test if the path is bigger than a min a smaller than a max
-                options.push_back(new_opt);
+                if (!_restricted_steps || new_opt->get_path().size() > _min_steps){
+                    options.push_back(new_opt);
+                }
             }
         }
         //keep going while there are available options to process;
         available_opts = possible_options.size() != 0;
     }
+}
+
+void MovementFilterRule::set_max_steps(uint32_t value) {
+    _restricted_steps = true;
+    _max_steps = value;
+}
+
+void MovementFilterRule::set_min_steps(uint32_t value) {
+    _restricted_steps = true;
+    _min_steps = value;
 }
