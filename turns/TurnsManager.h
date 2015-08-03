@@ -11,7 +11,7 @@
 #include <stdint-gcc.h>
 
 class Game;
-class Turn;
+class TurnDef;
 
 using  namespace std;
 
@@ -19,14 +19,14 @@ class TurnsManager {
 public:
     TurnsManager(Game &game);
 
-    void register_turn(shared_ptr<Turn> turn);
+    void register_turn(shared_ptr<TurnDef> turn);
 
     void next_turn();
 private:
     Game &_game;
     uint32_t _current_player_id;
 
-    vector<shared_ptr<Turn> > _possible_turns;
+    vector<shared_ptr<TurnDef> > _possible_turns;
 };
 
 

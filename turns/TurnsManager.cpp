@@ -5,7 +5,7 @@
 #include <c++/iostream>
 #include "TurnsManager.h"
 #include "../Game.h"
-#include "Turn.h"
+#include "TurnDef.h"
 #include "actions/ActionDef.h"
 #include "../player/PlayerController.h"
 #include "../player/Player.h"
@@ -22,7 +22,7 @@ void TurnsManager::next_turn() {
     if(_current_player_id + 1 > _game.get_num_of_players()) _current_player_id = 0;
 
     //TODO: choose the turn according to the conditions to choose the turn type;
-    shared_ptr<Turn> turn = _possible_turns[0];
+    shared_ptr<TurnDef> turn = _possible_turns[0];
 
     shared_ptr<ActionDef> curr_action = turn->get_first_action();
 
@@ -40,6 +40,6 @@ void TurnsManager::next_turn() {
     }
 }
 
-void TurnsManager::register_turn(shared_ptr<Turn> turn) {
+void TurnsManager::register_turn(shared_ptr<TurnDef> turn) {
     _possible_turns.push_back(turn);
 }

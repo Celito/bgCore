@@ -12,7 +12,7 @@ class ActionDef;
 
 using namespace std;
 
-class Turn {
+class TurnDef {
 public:
     void add_action(shared_ptr<ActionDef>);
 

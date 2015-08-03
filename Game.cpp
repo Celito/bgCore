@@ -11,7 +11,7 @@
 #include "BitsManager.h"
 #include "gameBits/PieceSet.h"
 #include "turns/TurnsManager.h"
-#include "turns/Turn.h"
+#include "turns/TurnDef.h"
 #include "turns/actions/ActionDef.h"
 #include "gameBits/boards/HexBoard.h"
 #include "turns/actions/PutPieceOnBoard.h"
@@ -90,7 +90,7 @@ Game::Game() {
     receive(board);
 
     // TEMP create the normal turn with the possible actions in it;
-    shared_ptr<Turn> normal_turn = make_shared<Turn>();
+    shared_ptr<TurnDef> normal_turn = make_shared<TurnDef>();
 
     auto put_piece_on_board =
             make_shared<PutPieceOnBoard>(
