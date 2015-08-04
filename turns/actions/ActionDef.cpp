@@ -3,15 +3,19 @@
 //
 
 #include "ActionDef.h"
+#include "Action.h"
 #include "../../gameBits/BitReference.h"
+#include "../Turn.h"
 
-void ActionDef::init(shared_ptr<Player> player) {
-    _curr_player = player;
+shared_ptr<Action> ActionDef::generate_action(shared_ptr<Turn> turn) {
+    _curr_player = turn->get_player();
     for (auto item : _bit_refs) {
         item.second->set_curr_player(_curr_player);
         _required_bits[item.first] = item.second->get_bit();
     }
     update_options();
+
+    return make_shared<Action>(turn);
 }
 
 const vector<shared_ptr<Option> > &ActionDef::get_options() const {

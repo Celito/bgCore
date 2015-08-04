@@ -1,0 +1,17 @@
+//
+// Created by Celito on 2015-08-03.
+//
+
+#include "Turn.h"
+#include "../player/Player.h"
+#include "actions/Action.h"
+
+Turn::Turn(shared_ptr<Player> player) : _player(player) {}
+
+void Turn::register_action(shared_ptr<Action> action) {
+    _actions_taken.push_back(action);
+}
+
+shared_ptr<Player> Turn::get_player() {
+    return _player.lock();
+}

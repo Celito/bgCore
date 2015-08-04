@@ -3,6 +3,7 @@
 //
 
 #include "MultiActions.h"
+#include "Action.h"
 #include "options/Option.h"
 #include "options/ActionOption.h"
 
@@ -17,10 +18,6 @@ bool MultiActions::is_available() const {
 
 void MultiActions::add_sub_action(shared_ptr<ActionDef> action) {
     _sub_actions.push_back(action);
-}
-
-void MultiActions::init(shared_ptr<Player> player) {
-    ActionDef::init(player);
 }
 
 string MultiActions::get_description() const {
@@ -44,10 +41,15 @@ bool MultiActions::self_resolve() {
 }
 
 void MultiActions::update_options() {
+    //TODO: update this function based on the new logic;
+    return;
+}
+
+shared_ptr<Action> MultiActions::generate_action(shared_ptr<Turn> turn) {
     _options.clear();
-    if(_curr_player == nullptr) return;
-    for_each(_sub_actions.begin(), _sub_actions.end(), [this](shared_ptr<ActionDef> action) -> void{
-        action->init(_curr_player);
-        if(action->is_available()) _options.push_back(make_shared<ActionOption>(action));
+    for_each(_sub_actions.begin(), _sub_actions.end(), [this, &turn](shared_ptr<ActionDef> action_def) -> void{
+        shared_ptr<Action> action = action_def->generate_action(turn);
+        if(action_def->is_available()) _options.push_back(make_shared<ActionOption>(action_def));
     });
+    return ActionDef::generate_action(turn);
 }

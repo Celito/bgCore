@@ -19,7 +19,7 @@ public:
 
     virtual bool is_available() const override;
 
-    virtual void init(shared_ptr<Player> player) override;
+    virtual shared_ptr<Action> generate_action(shared_ptr<Turn> turn) override;
 
     virtual string get_description() const override;
 

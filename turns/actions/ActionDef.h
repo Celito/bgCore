@@ -2,8 +2,8 @@
 // Created by Celito on 2015-06-27.
 //
 
-#ifndef BGCORE_ACTION_H
-#define BGCORE_ACTION_H
+#ifndef BGCORE_ACTIONDEF_H
+#define BGCORE_ACTIONDEF_H
 
 #include <boost/signals2.hpp>
 
@@ -12,7 +12,9 @@ using namespace std;
 class Option;
 class Player;
 class GameBit;
+class Action;
 class BitReference;
+class Turn;
 
 enum required_bit_t{
     e_tile,
@@ -26,7 +28,7 @@ public:
 
     virtual ~ActionDef() {}
 
-    virtual void init(shared_ptr<Player> player);
+    virtual shared_ptr<Action> generate_action(shared_ptr<Turn> turn);
 
     void set_next_action(shared_ptr<ActionDef> next_action) { _next_action = next_action; }
 

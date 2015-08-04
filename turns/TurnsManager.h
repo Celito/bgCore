@@ -12,6 +12,7 @@
 
 class Game;
 class TurnDef;
+class Turn;
 
 using  namespace std;
 
@@ -19,14 +20,15 @@ class TurnsManager {
 public:
     TurnsManager(Game &game);
 
-    void register_turn(shared_ptr<TurnDef> turn);
+    void register_turn_def(shared_ptr<TurnDef> turn);
 
     void next_turn();
 private:
     Game &_game;
     uint32_t _current_player_id;
 
-    vector<shared_ptr<TurnDef> > _possible_turns;
+    vector< shared_ptr<TurnDef> > _turn_definitions;
+    vector< shared_ptr<Turn> > _match_turns;
 };
 
 

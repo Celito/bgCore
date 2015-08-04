@@ -109,9 +109,9 @@ Game::Game() {
 
     first_action->add_sub_action(move_piece_on_board);
 
-    normal_turn->add_action(first_action);
+    normal_turn->add_action_def(first_action);
 
-    _turns->register_turn(normal_turn);
+    _turns->register_turn_def(normal_turn);
 
     _is_over = false;
 
