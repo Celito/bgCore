@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+#include <queue>
 
 class Player;
 class Action;
@@ -19,13 +20,18 @@ public:
 
     void register_action(shared_ptr<Action> action);
 
+    void add_next_action(shared_ptr<Action> action);
+
     shared_ptr<Player> get_player();
 
-private:
+    shared_ptr<Action> get_next_action();
 
+private:
     weak_ptr<Player> _player;
 
-    vector<shared_ptr<Action> > _actions_taken;
+    vector< shared_ptr<Action> > _actions_taken;
+
+    queue< shared_ptr<Action> > _next_actions;
 };
 
 

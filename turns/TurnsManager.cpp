@@ -7,6 +7,7 @@
 #include "../Game.h"
 #include "TurnDef.h"
 #include "actions/ActionDef.h"
+#include "actions/Action.h"
 #include "../player/PlayerController.h"
 #include "../player/Player.h"
 #include "Turn.h"
@@ -31,17 +32,15 @@ void TurnsManager::next_turn() {
 
     shared_ptr<Turn> curr_turn = turn_def->generate_turn(curr_player);
 
-    while(curr_action_def != nullptr) {
-        shared_ptr<Action> action = curr_action_def->generate_action(curr_turn);
-        while(curr_action_def->self_resolve()) {
-            curr_action_def = curr_action_def->get_next_action().lock();
-        }
-        if(curr_action_def) {
-            player_controller->resolve_action(curr_action_def);
-            curr_action_def = curr_action_def->get_next_action().lock();
+    shared_ptr<Action> curr_action;
+
+    while(curr_action = curr_turn->get_next_action()) {
+        //shared_ptr<Action> action = curr_action_def->generate_action(curr_turn);
+        if(!curr_action->self_resolve()) {
+            player_controller->resolve_action(curr_action);
         }
 
-        curr_turn.get()->register_action(action);
+        curr_turn->register_action(curr_action);
     }
 
     _match_turns.push_back(curr_turn);

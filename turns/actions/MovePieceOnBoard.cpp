@@ -6,46 +6,53 @@
 #include "MovePieceOnBoard.h"
 #include "../../gameBits/boards/Tile.h"
 #include "options/BitOption.h"
+#include "../Turn.h"
 
 MovePieceOnBoard::MovePieceOnBoard(shared_ptr<BitReference> target_board) : ChoosePieceOnBoard(target_board) {
     _choose_tile_on_board = make_shared<ChooseTileOnBoard>(target_board);
     _choose_tile_on_board->set_reason(e_for_movement);
-    set_next_action(_choose_tile_on_board);
-    concat_action(_choose_tile_on_board);
-    on_option_taken([this](shared_ptr<Option> opt){
-        auto bit_opt = dynamic_pointer_cast<BitOption>(opt);
-        _selected_bit = bit_opt->get_bit();
-        _choose_tile_on_board->set_required_bit(e_piece, _selected_bit);
-
-        assert(dynamic_pointer_cast<Tile>(_selected_bit->get_parent()));
-
-        shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(_selected_bit->get_parent());
-        _choose_tile_on_board->set_required_bit(e_tile, tile);
-        _curr_player->receive(_selected_bit);
-    });
-    _choose_tile_on_board->on_option_taken([this](shared_ptr<Option> opt){
-        auto tile_opt = dynamic_pointer_cast<TileOption>(opt);
-        shared_ptr<Tile> tile = tile_opt->get_tile();
-        tile->receive(_selected_bit);
-        cout << "PIECE " << _selected_bit->get_unique_id() << " MOVED TO " << tile->get_pos().to_string() << endl;
-    });
 }
 
 string MovePieceOnBoard::get_description() const {
     return "Choose a piece to move on the board";
 }
 
-void MovePieceOnBoard::update_options() {
-    _options.clear();
+void MovePieceOnBoard::update_options(Action &action) {
 
-    assert(_required_bits.count(e_board) != 0 && !_required_bits[e_board].expired());
+    shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(action.get_req_bit(e_board));
 
-    shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board].lock());
-
-    if(!(board != nullptr)) throw;
+    if(board == nullptr) throw new exception();
 
     vector< shared_ptr<Piece> > pieces = board.get()->get_available_pieces(_curr_player);
     for (auto piece : pieces) {
-        _options.push_back(make_shared<BitOption>(piece));
+        action.add_option(make_shared<BitOption>(piece));
     }
+}
+
+void MovePieceOnBoard::choose(Action &action) {
+    ActionDef::choose(action);
+
+    auto bit_opt = dynamic_pointer_cast<BitOption>(action.get_choose_opt());
+    shared_ptr<GameBit> selected_bit = bit_opt->get_bit();
+
+    if(!(dynamic_pointer_cast<Tile>(selected_bit->get_parent()))) throw new exception();
+
+    shared_ptr<Turn> turn = action.get_turn();
+
+    shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(selected_bit->get_parent());
+    turn->get_player()->receive(selected_bit);
+
+    shared_ptr<Action> next_action = make_shared<Action>(turn, _choose_tile_on_board );
+
+    next_action->add_req_bit(e_tile, tile);
+    next_action->add_req_bit(e_piece, selected_bit);
+
+    next_action->on_option_taken([this, &selected_bit](shared_ptr<Option> opt){
+        auto tile_opt = dynamic_pointer_cast<TileOption>(opt);
+        shared_ptr<Tile> new_tile = tile_opt->get_tile();
+        new_tile->receive(selected_bit);
+        cout << "PIECE " << _selected_bit->get_unique_id() << " MOVED TO " << new_tile->get_pos().to_string() << endl;
+    });
+
+    turn->add_next_action(next_action);
 }

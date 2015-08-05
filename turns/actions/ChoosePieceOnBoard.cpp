@@ -15,14 +15,12 @@ string ChoosePieceOnBoard::get_description() const {
     return "Choose a piece from the board";
 }
 
-void ChoosePieceOnBoard::update_options() {
-    _options.clear();
-    if(_required_bits.count(e_board) == 0 && _required_bits[e_board].expired()) return;
+void ChoosePieceOnBoard::update_options(Action &action) {
 
-    shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board].lock());
+    shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(action.get_req_bit(e_board));
 
     vector< shared_ptr<Piece> > pieces = board.get()->get_pieces();
     for (auto piece : pieces) {
-        _options.push_back(make_shared<BitOption>(piece));
+        action.add_option(make_shared<BitOption>(piece));
     }
 }

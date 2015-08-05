@@ -19,6 +19,8 @@ public:
 
     virtual string get_description() const override;
 
+    virtual void choose(Action &action) override;
+
 private:
     shared_ptr<GameBit> _selected_bit;
     shared_ptr<ChooseTileOnBoard> _choose_tile_on_board;

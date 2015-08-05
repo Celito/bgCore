@@ -15,17 +15,11 @@ public:
 
     void add_sub_action(shared_ptr<ActionDef> action);
 
-    virtual void update_options() override;
-
-    virtual bool is_available() const override;
-
-    virtual shared_ptr<Action> generate_action(shared_ptr<Turn> turn) override;
+    virtual void update_options(Action &action) override;
 
     virtual string get_description() const override;
 
-    virtual void choose(shared_ptr<Option> option) override;
-
-    virtual bool self_resolve() override;
+    virtual void choose(Action &action) override;
 
 private:
 

@@ -3,7 +3,7 @@
 //
 
 #include "BitOption.h"
-#include "../../gameBits/GameBit.h"
+#include "../../../gameBits/GameBit.h"
 
 BitOption::BitOption(shared_ptr<GameBit> game_bit)  : _selected_bit(game_bit) {}
 

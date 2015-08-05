@@ -12,13 +12,9 @@ class ChooseTileOnBoard : public ActionDef {
 public:
     ChooseTileOnBoard(shared_ptr<BitReference> target);
 
-    virtual void update_options() override;
+    virtual void update_options(Action &action) override;
 
     virtual string get_description() const override;
-
-    shared_ptr<Board> get_board() {
-        return (shared_ptr<Board>)dynamic_pointer_cast<Board>(_required_bits[e_board].lock());
-    }
 
     void set_reason(const available_tiles_t &_reason) {
         ChooseTileOnBoard::_reason = _reason;

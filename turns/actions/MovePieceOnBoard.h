@@ -15,9 +15,12 @@ class MovePieceOnBoard : public ChoosePieceOnBoard {
 public:
     MovePieceOnBoard(shared_ptr<BitReference> target_board);
 
-    virtual void update_options() override;
+    virtual void update_options(Action &action) override;
 
     virtual string get_description() const override;
+
+
+    virtual void choose(Action &action) override;
 
 private:
     shared_ptr<GameBit> _selected_bit;

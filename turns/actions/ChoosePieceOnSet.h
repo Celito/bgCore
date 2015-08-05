@@ -16,7 +16,7 @@ public:
 
     virtual string get_description() const override;
 
-    virtual void update_options() override;
+    virtual void update_options(Action &action) override;
 
 };
 

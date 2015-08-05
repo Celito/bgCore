@@ -15,19 +15,17 @@ string ChoosePieceOnSet::get_description() const {
     return "Choose a piece from this piece set";
 }
 
-void ChoosePieceOnSet::update_options() {
-    _options.clear();
-    if(!(_required_bits.count(e_piece_set) != 0 && !_required_bits[e_piece_set].expired())) throw;
+void ChoosePieceOnSet::update_options(Action &action) {
 
     shared_ptr<PieceSet> pieces_pool =
-            (shared_ptr<PieceSet>)dynamic_pointer_cast<PieceSet>(_required_bits[e_piece_set].lock());
+            (shared_ptr<PieceSet>)dynamic_pointer_cast<PieceSet>(action.get_req_bit(e_piece_set));
 
-    if(pieces_pool == nullptr) throw;
+    if(pieces_pool == nullptr) throw new exception();
 
     //TODO: Need to test rules that could filter this options;
     vector< shared_ptr<Piece> > pieces = pieces_pool->get_available_pieces();
     for(auto iter = pieces.begin(); iter != pieces.end(); iter++) {
         //TODO: Test if the concat action is available
-        _options.push_back(make_shared<BitOption>((*iter)));
+        action.add_option(make_shared<BitOption>((*iter)));
     }
 }

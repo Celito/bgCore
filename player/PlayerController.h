@@ -7,7 +7,7 @@
 
 #include <memory>
 
-class ActionDef;
+class Action;
 class PlayerInterface;
 
 using  namespace std;
@@ -15,7 +15,7 @@ using  namespace std;
 class PlayerController {
 public:
 
-    virtual void resolve_action(shared_ptr<ActionDef> action) = 0;
+    virtual void resolve_action(shared_ptr<Action> action) = 0;
 
 };
 

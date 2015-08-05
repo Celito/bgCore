@@ -9,14 +9,14 @@
 #include <c++/sstream>
 #include "PlayerTUI.h"
 #include "../gameBits/boards/Tile.h"
-#include "../turns/actions/ActionDef.h"
+#include "../turns/actions/Action.h"
 #include "../turns/actions/ChooseTileOnBoard.h"
 
-void PlayerTUI::resolve_action(shared_ptr<ActionDef> action) {
+void PlayerTUI::resolve_action(shared_ptr<Action> action) {
     //system("cls");
     vector<shared_ptr<Option>> const &options = action->get_options();
-    if(ChooseTileOnBoard * board_action = dynamic_cast<ChooseTileOnBoard *>(action.get())) {
-        shared_ptr<Board> board = board_action->get_board();
+    if(action->get_type() == e_choose_tile) {
+        shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(action->get_req_bit(e_board));
         if(board != nullptr){
             print_board(options, board);
         }

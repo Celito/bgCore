@@ -15,3 +15,13 @@ void Turn::register_action(shared_ptr<Action> action) {
 shared_ptr<Player> Turn::get_player() {
     return _player.lock();
 }
+
+void Turn::add_next_action(shared_ptr<Action> action) {
+    _next_actions.push(action);
+}
+
+shared_ptr<Action> Turn::get_next_action() {
+    shared_ptr<Action> next = _next_actions.front();
+    _next_actions.pop();
+    return next;
+}

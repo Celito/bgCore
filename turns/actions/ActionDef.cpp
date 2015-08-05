@@ -3,47 +3,18 @@
 //
 
 #include "ActionDef.h"
-#include "Action.h"
 #include "../../gameBits/BitReference.h"
 #include "../Turn.h"
 
-shared_ptr<Action> ActionDef::generate_action(shared_ptr<Turn> turn) {
-    _curr_player = turn->get_player();
+void ActionDef::init(Action & action) {
+    _curr_player = action.get_turn()->get_player();
     for (auto item : _bit_refs) {
         item.second->set_curr_player(_curr_player);
-        _required_bits[item.first] = item.second->get_bit();
+        const shared_ptr<GameBit> &bit = item.second->get_bit();
+        if(bit) action.add_req_bit(item.first, bit);
     }
-    update_options();
-
-    return make_shared<Action>(turn);
+    update_options(action);
 }
 
-const vector<shared_ptr<Option> > &ActionDef::get_options() const {
-    return _options;
-}
+void ActionDef::choose(Action &action) { }
 
-boost::signals2::connection ActionDef::on_option_taken(boost::signals2::slot<void(shared_ptr<Option>)> slot) {
-    return _option_taken.connect(slot);
-}
-
-void ActionDef::choose(shared_ptr<Option> option) {
-    _option_taken(option);
-}
-
-bool ActionDef::is_available() const {
-    return _options.size() > 0;
-}
-
-void ActionDef::concat_action(shared_ptr<ActionDef> other_action) {
-    _next_action = other_action;
-    _option_taken.connect([this](shared_ptr<Option> opt){
-        for (auto bit_pair : _selected_bits) {
-            if(!_next_action.expired() && !bit_pair.second.expired())
-                _next_action.lock()->set_required_bit(bit_pair.first, bit_pair.second.lock());
-        }
-    });
-}
-
-void ActionDef::set_required_bit(required_bit_t bit_type, shared_ptr<GameBit> bit) {
-    _required_bits[bit_type] = bit;
-}

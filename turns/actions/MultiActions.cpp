@@ -6,15 +6,7 @@
 #include "Action.h"
 #include "options/Option.h"
 #include "options/ActionOption.h"
-
-bool MultiActions::is_available() const {
-    bool available = false;
-    for(auto it = _sub_actions.cbegin(); it != _sub_actions.cend(); it++)
-    {
-        available = available || it->get()->is_available();
-    }
-    return available;
-}
+#include "../Turn.h"
 
 void MultiActions::add_sub_action(shared_ptr<ActionDef> action) {
     _sub_actions.push_back(action);
@@ -24,32 +16,19 @@ string MultiActions::get_description() const {
     return "Choose your next action";
 }
 
-void MultiActions::choose(shared_ptr<Option> option) {
-    auto action_chosen = dynamic_pointer_cast<ActionOption>(option);
-    shared_ptr<ActionDef> next_action = action_chosen->get_selected_action();
-    set_next_action(next_action);
-    ActionDef::choose(option);
+void MultiActions::choose(Action &action) {
+    ActionDef::choose(action);
+    auto action_chosen = dynamic_pointer_cast<ActionOption>(action.get_choose_opt());
+    shared_ptr<ActionDef> next_action_def = action_chosen->get_selected_action();
+
+    shared_ptr<Action> next_action = make_shared<Action>(action.get_turn(), next_action_def);
+
+    action.get_turn()->add_next_action(next_action);
 }
 
-bool MultiActions::self_resolve() {
-    if(_options.size() == 1)
-    {
-        choose(_options[0]);
-        return true;
+void MultiActions::update_options(Action &action) {
+    for (auto sub_action : _sub_actions) {
+        action.add_option(make_shared<ActionOption>(sub_action));
     }
-    return ActionDef::self_resolve();
-}
-
-void MultiActions::update_options() {
-    //TODO: update this function based on the new logic;
     return;
-}
-
-shared_ptr<Action> MultiActions::generate_action(shared_ptr<Turn> turn) {
-    _options.clear();
-    for_each(_sub_actions.begin(), _sub_actions.end(), [this, &turn](shared_ptr<ActionDef> action_def) -> void{
-        shared_ptr<Action> action = action_def->generate_action(turn);
-        if(action_def->is_available()) _options.push_back(make_shared<ActionOption>(action_def));
-    });
-    return ActionDef::generate_action(turn);
 }
