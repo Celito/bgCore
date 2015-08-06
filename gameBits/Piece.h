@@ -27,7 +27,9 @@ public:
         _movement_rules.push_back(rule);
     }
 
-    vector< shared_ptr<MovementFilterRule> > get_movement_rules() { return _movement_rules; }
+    const vector< shared_ptr<MovementFilterRule> > &get_movement_rules() { return _movement_rules; }
+
+    const vector< shared_ptr<PlayerAttrComparison> > &get_availability_for_movement_rules() { return _availability_for_movement; }
 
 private:
     vector< shared_ptr<PlayerAttrComparison> > _availability_for_movement;

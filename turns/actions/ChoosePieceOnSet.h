@@ -14,6 +14,8 @@ class ChoosePieceOnSet : public ActionDef {
 public:
     ChoosePieceOnSet(shared_ptr<BitReference> pieces_pool);
 
+    virtual bool is_available(shared_ptr<Player> player);
+
     virtual string get_description() const override;
 
     virtual void update_options(Action &action) override;

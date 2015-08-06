@@ -19,6 +19,8 @@ public:
 
     virtual string get_description() const override;
 
+    virtual bool is_available(shared_ptr<Player> player);
+
     virtual void choose(Action &action) override;
 
 private:

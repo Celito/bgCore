@@ -21,10 +21,12 @@ public:
     BitReference(string bit_id, Game &game, bool player_targeted = false):
             _bit_id(bit_id), _game(game), _player_targeted(player_targeted) {}
 
+    shared_ptr<GameBit> get_bit(const shared_ptr<Player> &player);
+
     shared_ptr<GameBit> get_bit();
 
-    void set_curr_player(const shared_ptr<Player> &_curr_player) {
-        BitReference::_curr_player = _curr_player;
+    void set_curr_player(const shared_ptr<Player> &player) {
+        BitReference::_curr_player = player;
     }
 
 private:

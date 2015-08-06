@@ -19,6 +19,7 @@ public:
     virtual ~BitHolder() {}
     virtual void receive(shared_ptr<GameBit> bit);
     bool is_empty() const;
+    const vector< weak_ptr<GameBit> > & get_children();
 
 protected:
 

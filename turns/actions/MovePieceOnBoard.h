@@ -19,8 +19,10 @@ public:
 
     virtual string get_description() const override;
 
-
     virtual void choose(Action &action) override;
+
+
+    virtual bool is_available(shared_ptr<Player> player) override;
 
 private:
     shared_ptr<GameBit> _selected_bit;

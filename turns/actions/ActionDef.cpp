@@ -17,4 +17,3 @@ void ActionDef::init(Action & action) {
 }
 
 void ActionDef::choose(Action &action) { }
-

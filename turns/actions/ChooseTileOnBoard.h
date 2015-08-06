@@ -16,6 +16,9 @@ public:
 
     virtual string get_description() const override;
 
+
+    virtual bool is_available(shared_ptr<Player> player);
+
     void set_reason(const available_tiles_t &_reason) {
         ChooseTileOnBoard::_reason = _reason;
     }

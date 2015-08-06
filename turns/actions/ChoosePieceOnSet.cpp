@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "ChoosePieceOnSet.h"
 #include "../../gameBits/PieceSet.h"
+#include "../../gameBits/BitReference.h"
 #include "options/BitOption.h"
 
 ChoosePieceOnSet::ChoosePieceOnSet(shared_ptr<BitReference> pieces_pool) {
@@ -28,4 +29,11 @@ void ChoosePieceOnSet::update_options(Action &action) {
         //TODO: Test if the concat action is available
         action.add_option(make_shared<BitOption>((*iter)));
     }
+}
+
+bool ChoosePieceOnSet::is_available(shared_ptr<Player> player) {
+    shared_ptr<PieceSet> piece_set =
+            (shared_ptr<PieceSet>)dynamic_pointer_cast<PieceSet>(_bit_refs[e_piece_set].get()->get_bit(player));
+
+    return piece_set != nullptr && !piece_set->is_empty();
 }

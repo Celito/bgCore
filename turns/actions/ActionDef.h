@@ -25,7 +25,7 @@ public:
 
     virtual void update_options(Action &action) = 0;
 
-    //Interface:
+    virtual bool is_available(shared_ptr<Player> player) = 0;
 
     virtual string get_description() const = 0;
 

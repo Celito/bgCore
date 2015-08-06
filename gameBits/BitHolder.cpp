@@ -23,3 +23,7 @@ void BitHolder::remove(shared_ptr<GameBit> bit) {
             _bits.begin(),_bits.end(),
             [&bit](weak_ptr<GameBit> &b) -> bool { return b.expired()? false : b.lock() == bit; }), _bits.end());
 }
+
+const vector<weak_ptr<GameBit> > &BitHolder::get_children() {
+    return _bits;
+}

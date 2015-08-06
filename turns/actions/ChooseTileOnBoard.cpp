@@ -5,6 +5,7 @@
 #include "ChooseTileOnBoard.h"
 #include "options/TileOption.h"
 #include "../../gameBits/Piece.h"
+#include "../../gameBits/BitReference.h"
 
 ChooseTileOnBoard::ChooseTileOnBoard(shared_ptr<BitReference> target) {
     _bit_refs[e_board] = target;
@@ -49,4 +50,10 @@ void ChooseTileOnBoard::update_options(Action &action) {
         }
 
     }
+}
+
+bool ChooseTileOnBoard::is_available(shared_ptr<Player> player) {
+    shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(_bit_refs[e_board].get()->get_bit(player));
+
+    return board != nullptr && !board->is_empty();
 }

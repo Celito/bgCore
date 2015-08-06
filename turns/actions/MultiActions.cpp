@@ -27,8 +27,13 @@ void MultiActions::choose(Action &action) {
 }
 
 void MultiActions::update_options(Action &action) {
-    for (auto sub_action : _sub_actions) {
-        action.add_option(make_shared<ActionOption>(sub_action));
+    for (auto sub_action_def : _sub_actions) {
+        if(sub_action_def->is_available(action.get_turn()->get_player()))
+            action.add_option(make_shared<ActionOption>(sub_action_def));
     }
     return;
+}
+
+bool MultiActions::is_available(shared_ptr<Player> player) {
+    return true;
 }

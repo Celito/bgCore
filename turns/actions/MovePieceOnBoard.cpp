@@ -7,6 +7,7 @@
 #include "../../gameBits/boards/Tile.h"
 #include "options/BitOption.h"
 #include "../Turn.h"
+#include "../../rules/PlayerAttrComparison.h"
 
 MovePieceOnBoard::MovePieceOnBoard(shared_ptr<BitReference> target_board) : ChoosePieceOnBoard(target_board) {
     _choose_tile_on_board = make_shared<ChooseTileOnBoard>(target_board);
@@ -55,4 +56,36 @@ void MovePieceOnBoard::choose(Action &action) {
     });
 
     turn->add_next_action(next_action);
+}
+
+bool MovePieceOnBoard::is_available(shared_ptr<Player> player) {
+    shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(_bit_refs[e_board].get()->get_bit(player));
+    if(board == nullptr) return false;
+
+    const vector<weak_ptr<GameBit>> &tiles = board->get_children();
+
+    bool movable_piece_found = false;
+
+    for (auto tile_bit_ptr : tiles) {
+        if(tile_bit_ptr.expired()) continue;
+        shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(tile_bit_ptr.lock());
+        const shared_ptr<Piece> &piece = tile->get_top_piece();
+        if(piece == nullptr) continue;
+        const vector<shared_ptr<PlayerAttrComparison>> &rules = piece->get_availability_for_movement_rules();
+        bool can_be_moved = true;
+        for (auto enable_to_move_rule : rules) {
+            can_be_moved &= enable_to_move_rule.get()->test(*piece.get());
+            if(!can_be_moved) break;
+        }
+        if(!can_be_moved){
+            continue;
+        }
+        else {
+            //TODO: test if there are available spots for that piece to move;
+            movable_piece_found = true;
+            break;
+        }
+    }
+
+    return movable_piece_found;
 }

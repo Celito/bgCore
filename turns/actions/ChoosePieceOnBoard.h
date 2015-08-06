@@ -14,6 +14,8 @@ public:
 
     virtual void update_options(Action &action) override;
 
+    virtual bool is_available(shared_ptr<Player> player);
+
     virtual string get_description() const override;
 };
 
