@@ -3,7 +3,6 @@
 //
 
 #include "MultiActions.h"
-#include "Action.h"
 #include "options/Option.h"
 #include "options/ActionOption.h"
 #include "../Turn.h"
@@ -22,6 +21,8 @@ void MultiActions::choose(Action &action) {
     shared_ptr<ActionDef> next_action_def = action_chosen->get_selected_action();
 
     shared_ptr<Action> next_action = make_shared<Action>(action.get_turn(), next_action_def);
+
+    next_action->init();
 
     action.get_turn()->add_next_action(next_action);
 }

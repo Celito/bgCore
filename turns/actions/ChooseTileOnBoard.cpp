@@ -6,6 +6,8 @@
 #include "options/TileOption.h"
 #include "../../gameBits/Piece.h"
 #include "../../gameBits/BitReference.h"
+#include "../../gameBits/boards/Tile.h"
+#include "../../rules/MovementFilterRule.h"
 
 ChooseTileOnBoard::ChooseTileOnBoard(shared_ptr<BitReference> target) {
     _bit_refs[e_board] = target;
@@ -48,7 +50,9 @@ void ChooseTileOnBoard::update_options(Action &action) {
         for (auto rule : movement_rule) {
             rule->filter_positions(options, start_tile);
         }
-
+        for (auto option : options) {
+            action.add_option(option);
+        }
     }
 }
 

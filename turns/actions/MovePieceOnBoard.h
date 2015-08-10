@@ -21,11 +21,9 @@ public:
 
     virtual void choose(Action &action) override;
 
-
     virtual bool is_available(shared_ptr<Player> player) override;
 
 private:
-    shared_ptr<GameBit> _selected_bit;
     shared_ptr<ChooseTileOnBoard> _choose_tile_on_board;
 };
 

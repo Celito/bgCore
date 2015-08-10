@@ -7,11 +7,10 @@
 
 #include <vector>
 #include "GameBit.h"
-#include "../rules/MovementFilterRule.h"
 
 class Player;
-class PlayerAttrComparison;
 class MovementFilterRule;
+class TestableRule;
 
 class Piece : public GameBit {
 public:
@@ -19,7 +18,7 @@ public:
 
     bool available_for_movement(shared_ptr<Player> player) const;
 
-    void add_movement_availability_rule(shared_ptr<PlayerAttrComparison> rule){
+    void add_movement_availability_rule(shared_ptr<TestableRule> rule){
         _availability_for_movement.push_back(rule);
     }
 
@@ -29,10 +28,10 @@ public:
 
     const vector< shared_ptr<MovementFilterRule> > &get_movement_rules() { return _movement_rules; }
 
-    const vector< shared_ptr<PlayerAttrComparison> > &get_availability_for_movement_rules() { return _availability_for_movement; }
+    const vector< shared_ptr<TestableRule> > &get_availability_for_movement_rules() { return _availability_for_movement; }
 
 private:
-    vector< shared_ptr<PlayerAttrComparison> > _availability_for_movement;
+    vector< shared_ptr<TestableRule> > _availability_for_movement;
 
     vector< shared_ptr<MovementFilterRule> > _movement_rules;
 };

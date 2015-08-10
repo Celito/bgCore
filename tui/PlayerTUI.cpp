@@ -11,6 +11,8 @@
 #include "../gameBits/boards/Tile.h"
 #include "../turns/actions/Action.h"
 #include "../turns/actions/ChooseTileOnBoard.h"
+#include "../turns/actions/options/Option.h"
+#include "../turns/actions/options/TileOption.h"
 
 void PlayerTUI::resolve_action(shared_ptr<Action> action) {
     //system("cls");

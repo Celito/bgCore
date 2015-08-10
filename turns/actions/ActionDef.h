@@ -34,7 +34,7 @@ public:
     virtual action_type_e get_type() { return e_not_defined; }
 
 protected:
-    map<required_bit_e, shared_ptr<BitReference> > _bit_refs;
+    map<bit_types_e, shared_ptr<BitReference> > _bit_refs;
     shared_ptr<Player> _curr_player;
 };
 

@@ -18,6 +18,7 @@
 #include "turns/actions/MultiActions.h"
 #include "turns/actions/MovePieceOnBoard.h"
 #include "rules/PlayerAttrComparison.h"
+#include "rules/MovementFilterRule.h"
 
 using namespace std;
 
@@ -47,9 +48,9 @@ Game::Game() {
 
     map<string, shared_ptr<MovementFilterRule> > movement_rules;
 
-
     shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);
     is_player_color->set_tested_attr(COLOR_ATTR);
+    is_player_color->set_bit_type(e_piece);
 
     movement_rules["Queen"] = make_shared<MovementFilterRule>();
     movement_rules["Queen"]->set_max_steps(1);

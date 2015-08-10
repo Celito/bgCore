@@ -21,6 +21,7 @@ void Turn::add_next_action(shared_ptr<Action> action) {
 }
 
 shared_ptr<Action> Turn::get_next_action() {
+    if(_next_actions.size() == 0) return nullptr;
     shared_ptr<Action> next = _next_actions.front();
     _next_actions.pop();
     return next;

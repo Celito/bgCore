@@ -7,7 +7,7 @@
 
 Action::Action(const weak_ptr<Turn> &turn, const weak_ptr<ActionDef> &definition)
         : _turn(turn), _definition(definition) {
-    _definition.lock()->init(*this);
+    _initialized = false;
 }
 
 const vector<shared_ptr<Option> > &Action::get_options() const {
@@ -15,6 +15,7 @@ const vector<shared_ptr<Option> > &Action::get_options() const {
 }
 
 bool Action::self_resolve() {
+    if(!_initialized) throw new exception();
     if(_options.size() == 0) throw new exception();
 
     if(_options.size() == 1){
@@ -42,11 +43,11 @@ action_type_e Action::get_type() const {
     return _definition.lock()->get_type();
 }
 
-shared_ptr<GameBit> Action::get_req_bit(required_bit_e bit_type) {
+shared_ptr<GameBit> Action::get_req_bit(bit_types_e bit_type) {
     return _required_bits.count(bit_type)? _required_bits[bit_type].lock() : nullptr;
 }
 
-void Action::add_req_bit(required_bit_e bit_type, shared_ptr<GameBit> ptr) {
+void Action::add_req_bit(bit_types_e bit_type, shared_ptr<GameBit> ptr) {
     _required_bits[bit_type] = ptr;
 }
 
@@ -64,4 +65,10 @@ shared_ptr<Option> Action::get_choose_opt() const {
 
 boost::signals2::connection Action::on_option_taken(boost::signals2::slot<void(shared_ptr<Option>)> slot) {
     return _option_taken.connect(slot);
+}
+
+void Action::init() {
+    if(_initialized) throw new exception();
+    _definition.lock()->init(*this);
+    _initialized = true;
 }

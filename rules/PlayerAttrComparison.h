@@ -6,21 +6,22 @@
 #define BGCORE_ENABLEMOVEMENTRULE_H
 
 
-#include "Rule.h"
 #include "../player/Player.h"
+#include "TestableRule.h"
 
-class PlayerAttrComparison : public Rule {
+class PlayerAttrComparison : public TestableRule {
 public:
     PlayerAttrComparison(Game &game): _game(game) {}
 
-    bool test(GameBit const &bit);
+    virtual bool test();
 
     void set_tested_attr(string attr);
 
-    void set_curr_player(shared_ptr<Player> player) { _player = player; }
+    void set_bit_type(bit_types_e bit_type);
 
 private:
-    shared_ptr<Player> _player;
+    bit_types_e _bit_type = e_bit;
+
     uint32_t _attr_id;
 
     Game &_game;

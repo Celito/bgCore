@@ -14,6 +14,7 @@ void ActionDef::init(Action & action) {
         if(bit) action.add_req_bit(item.first, bit);
     }
     update_options(action);
+    if(action.get_options().size() == 0) throw new exception();
 }
 
 void ActionDef::choose(Action &action) { }

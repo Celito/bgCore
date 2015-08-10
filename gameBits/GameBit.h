@@ -15,6 +15,14 @@ using namespace std;
 class Game;
 class BitHolder;
 
+enum bit_types_e {
+    e_bit,
+    e_tile,
+    e_piece,
+    e_piece_set,
+    e_board
+};
+
 class GameBit {
 public:
     GameBit(Game &game, string bit_id);
