@@ -32,13 +32,13 @@ Game::Game() {
     _attr_manager = make_shared<AttrManager>();
     _rules_manager = make_shared<RulesManager>();
 
-    //TEMP starting to manual load the game configuration
+    // TEMP starting to manual load the game configuration
     _num_of_players = 2;
     string PLAYER_PIECES = "PiecesSet";
     string COLOR_ATTR = "Color";
     string HEX_BOARD_NAME = "Table";
 
-    //TEMP vector with the quantity of each piece on the set and its bit id
+    // TEMP vector with the quantity of each piece on the set and its bit id
     vector<pair<uint32_t , string> > pieces_info =
     {
         {1, "Queen"},
@@ -48,11 +48,9 @@ Game::Game() {
         {3, "Ant"},
     };
 
-    //TODO: load the game bits
+    // TEMP creating the game pieces and making its setup
 
     //TODO: create the group of pieces
-
-    //TODO: create the player inventory
 
     //TODO: separate the bits loading from the game setup
 
