@@ -19,6 +19,7 @@
 #include "turns/actions/MovePieceOnBoard.h"
 #include "rules/PlayerAttrComparison.h"
 #include "rules/MovementFilterRule.h"
+#include "rules/RulesManager.h"
 
 using namespace std;
 
@@ -29,6 +30,7 @@ Game::Game() {
     _bits_manager = make_shared<BitsManager>(*this);
     _turns = make_shared<TurnsManager>(*this);
     _attr_manager = make_shared<AttrManager>();
+    _rules_manager = make_shared<RulesManager>();
 
     //TEMP starting to manual load the game configuration
     _num_of_players = 2;
@@ -46,20 +48,13 @@ Game::Game() {
         {3, "Ant"},
     };
 
-    map<string, shared_ptr<MovementFilterRule> > movement_rules;
+    //TODO: load the game bits
 
-    shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);
-    is_player_color->set_tested_attr(COLOR_ATTR);
-    is_player_color->set_bit_type(e_piece);
+    //TODO: create the group of pieces
 
-    movement_rules["Queen"] = make_shared<MovementFilterRule>();
-    movement_rules["Queen"]->set_max_steps(1);
-    movement_rules["Beetle"] = make_shared<MovementFilterRule>();
-    movement_rules["Spider"] = make_shared<MovementFilterRule>();
-    movement_rules["Spider"]->set_max_steps(3);
-    movement_rules["Spider"]->set_min_steps(3);
-    movement_rules["GrassHooper"] = make_shared<MovementFilterRule>();
-    movement_rules["Ant"] = make_shared<MovementFilterRule>();
+    //TODO: create the player inventory
+
+    //TODO: separate the bits loading from the game setup
 
     for (uint32_t i = 0; i < _num_of_players; i++) {
 
@@ -77,8 +72,6 @@ Game::Game() {
                 shared_ptr<Piece> new_piece = make_shared<Piece>(*this, iter->second);
                 register_new_bit(new_piece);
                 new_piece->set_attr(COLOR_ATTR, i);
-                new_piece->add_movement_availability_rule(is_player_color);
-                new_piece->add_movement_rule(movement_rules[iter->second]);
                 player_set->receive(new_piece);
             }
         }
@@ -91,6 +84,8 @@ Game::Game() {
     receive(board);
 
     // TEMP create the normal turn with the possible actions in it;
+
+    //TODO: create the turn structure
     shared_ptr<TurnDef> normal_turn = make_shared<TurnDef>();
 
     auto put_piece_on_board =
@@ -98,9 +93,6 @@ Game::Game() {
                     make_shared<BitReference>(PLAYER_PIECES, *this, true),
                     make_shared<BitReference>(HEX_BOARD_NAME, *this)
             );
-
-    //put_piece_on_board->add_enable_movement_rule();
-
     auto move_piece_on_board =
             make_shared<MovePieceOnBoard>(make_shared<BitReference>(HEX_BOARD_NAME, *this));
 
@@ -116,17 +108,39 @@ Game::Game() {
 
     _is_over = false;
 
-    //TODO: create a sample of rules (hive)
-
-    //TODO: load the game bits
-
-    //TODO: create the turn structure
+    // TEMP adding the rules to the rules dictionary
 
     //TODO: load the rules
+    //TODO: add the e_movement_enable_rule that does not allow the player to split the hive
+    //TODO: create events to allow the game to add and remove rules after a certain amount of rounds
+    //TODO: add the e_placement_rule that does not allow the player to put pieces where they touch the other color from the second round on
 
-    //TODO: create the group of pieces
+    shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);
+    is_player_color->set_tested_attr(COLOR_ATTR);
+    is_player_color->set_bit_type(e_piece);
 
-    //TODO: create the player inventory
+    shared_ptr<MovementFilterRule> queen_movement = make_shared<MovementFilterRule>();
+    queen_movement->set_max_steps(1);
+    _rules_manager.get()->add_rule(e_movement_rule, "Queen", queen_movement);
+    _rules_manager.get()->add_rule(e_movement_enable_rule, "Queen", is_player_color);
+
+    shared_ptr<MovementFilterRule> spider_movement = make_shared<MovementFilterRule>();
+    spider_movement->set_max_steps(3);
+    spider_movement->set_min_steps(3);
+    _rules_manager.get()->add_rule(e_movement_rule, "Spider", spider_movement);
+    _rules_manager.get()->add_rule(e_movement_enable_rule, "Spider", is_player_color);
+
+    shared_ptr<MovementFilterRule> ant_movement = make_shared<MovementFilterRule>();
+    _rules_manager.get()->add_rule(e_movement_rule, "Ant", ant_movement);
+    _rules_manager.get()->add_rule(e_movement_enable_rule, "Ant", is_player_color);
+
+    //TODO: create the proper movement rules for the Beetle
+    _rules_manager.get()->add_rule(e_movement_rule, "Beetle", ant_movement);
+    _rules_manager.get()->add_rule(e_movement_enable_rule, "Beetle", is_player_color);
+
+    //TODO: create the proper movement rules for the GrassHooper
+    _rules_manager.get()->add_rule(e_movement_rule, "GrassHooper", ant_movement);
+    _rules_manager.get()->add_rule(e_movement_enable_rule, "GrassHooper", is_player_color);
 }
 
 void Game::start(GameController &game_controller) {

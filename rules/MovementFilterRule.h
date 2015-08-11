@@ -5,11 +5,17 @@
 #ifndef BGCORE_MOVEMENTFILTERRULE_H
 #define BGCORE_MOVEMENTFILTERRULE_H
 
+#include <stdint.h>
+#include <vector>
+#include <memory>
+#include "Rule.h"
 
-#include "../gameBits/boards/Tile.h"
-#include "../turns/actions/options/TileOption.h"
+class Tile;
+class Option;
 
-class MovementFilterRule {
+using namespace std;
+
+class MovementFilterRule : public Rule {
 public:
     void filter_positions(vector<shared_ptr<Option> > &options, shared_ptr<Tile> initial_tile);
 

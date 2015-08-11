@@ -36,6 +36,8 @@ public:
 protected:
     map<bit_types_e, shared_ptr<BitReference> > _bit_refs;
     shared_ptr<Player> _curr_player;
+
+    //TODO: store a reference to the Game
 };
 
 

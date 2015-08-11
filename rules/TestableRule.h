@@ -11,11 +11,13 @@
 #include "../gameBits/GameBit.h"
 
 class Player;
+class Game;
 
 using namespace std;
 
 class TestableRule : public Rule {
 public:
+    TestableRule(Game &game) : _game(game) {}
 
     virtual bool test() = 0;
 
@@ -27,6 +29,8 @@ protected:
     weak_ptr<Player> _player;
 
     map<bit_types_e, weak_ptr<GameBit> > _required_bits;
+
+    Game &_game;
 };
 
 

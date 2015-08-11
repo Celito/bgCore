@@ -24,10 +24,13 @@ void PutPieceOnBoard::choose(Action &action) {
     ActionDef::choose(action);
     auto bit_opt = dynamic_pointer_cast<BitOption>(action.get_choose_opt());
     _selected_bit = bit_opt->get_bit();
+    shared_ptr<Piece> selected_piece = (shared_ptr<Piece>)dynamic_pointer_cast<Piece>(bit_opt->get_bit());
 
     shared_ptr<Turn> turn = action.get_turn();
 
     const shared_ptr<Action> &next_action = make_shared<Action>(turn, _choose_tile_on_board);
+
+    next_action->add_req_bit(e_piece, selected_piece);
 
     next_action->on_option_taken([this](shared_ptr<Option> opt){
         auto tile_option = dynamic_pointer_cast<TileOption>(opt);

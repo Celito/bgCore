@@ -29,8 +29,6 @@ public:
 
     vector< shared_ptr<Tile> > get_tiles();
 
-    vector< shared_ptr<Piece> > get_available_pieces(shared_ptr<Player> player);
-
     vector< shared_ptr<Piece> > get_pieces();
 
     shared_ptr<Tile> get_tile(TilePos pos) const { return _tile_grid.count(pos) ? _tile_grid.at(pos) : nullptr; }

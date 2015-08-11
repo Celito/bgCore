@@ -11,7 +11,7 @@
 
 class PlayerAttrComparison : public TestableRule {
 public:
-    PlayerAttrComparison(Game &game): _game(game) {}
+    PlayerAttrComparison(Game &game): TestableRule(game) {}
 
     virtual bool test();
 
@@ -23,8 +23,6 @@ private:
     bit_types_e _bit_type = e_bit;
 
     uint32_t _attr_id;
-
-    Game &_game;
 };
 
 

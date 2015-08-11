@@ -7,7 +7,8 @@
 
 
 class Rule {
-
+public:
+    virtual ~Rule() {};
 };
 
 

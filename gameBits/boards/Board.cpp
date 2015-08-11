@@ -41,18 +41,6 @@ vector< shared_ptr<Piece> > Board::get_pieces() {
     return ret;
 }
 
-vector< shared_ptr<Piece> > Board::get_available_pieces(shared_ptr<Player> player) {
-    vector< shared_ptr<Tile> > tiles = get_tiles();
-    vector< shared_ptr<Piece> > ret;
-    for_each(tiles.begin(), tiles.end(), [&ret, &player]( shared_ptr<Tile> tile){
-        shared_ptr<Piece> piece = tile->get_top_piece();
-        if(piece != nullptr && piece->available_for_movement(player)){
-            ret.push_back(piece);
-        }
-    });
-    return ret;
-}
-
 void Board::remove_tile(TilePos pos) {
     if(_tile_grid.count(pos) < 1) return;
     shared_ptr<Tile> tile = _tile_grid[pos];

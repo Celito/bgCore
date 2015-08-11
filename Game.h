@@ -16,6 +16,7 @@ class BitsManager;
 class ConfigManager;
 class GameBit;
 class TurnsManager;
+class RulesManager;
 class PlayerController;
 class GameController;
 
@@ -39,7 +40,9 @@ public:
 
     shared_ptr<AttrManager> get_attr() const { return  _attr_manager; }
 
-    shared_ptr<BitsManager> bits_manager() const { return _bits_manager; }
+    const shared_ptr<BitsManager> &bits_manager() const { return _bits_manager; }
+
+    const shared_ptr<RulesManager> &rules_manager() const { return _rules_manager; }
 
 private:
 //game config:
@@ -51,6 +54,7 @@ private:
     //helper managers:
     shared_ptr<BitsManager> _bits_manager;
     shared_ptr<TurnsManager> _turns;
+    shared_ptr<RulesManager> _rules_manager;
     shared_ptr<AttrManager> _attr_manager;
     bool _is_over;
 };

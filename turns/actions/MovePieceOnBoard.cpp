@@ -8,6 +8,7 @@
 #include "options/BitOption.h"
 #include "../Turn.h"
 #include "../../rules/PlayerAttrComparison.h"
+#include "../../rules/RulesManager.h"
 #include "options/TileOption.h"
 
 MovePieceOnBoard::MovePieceOnBoard(shared_ptr<BitReference> target_board) : ChoosePieceOnBoard(target_board) {
@@ -30,13 +31,16 @@ void MovePieceOnBoard::update_options(Action &action) {
     for (auto tile_bit_ptr : tiles) {
         if (tile_bit_ptr.expired()) continue;
         shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(tile_bit_ptr.lock());
-        const shared_ptr<Piece> &piece = tile->get_top_piece();
+        shared_ptr<Piece> piece = tile->get_top_piece();
         if(piece == nullptr) continue;
-        const vector<shared_ptr<TestableRule>> &rules = piece->get_availability_for_movement_rules();
+        const vector<shared_ptr<Rule>> &rules =
+                piece->get_game().rules_manager()->get_rules(e_movement_enable_rule, piece->get_bit_id());
         bool can_be_moved = true;
-        for (auto enable_to_move_rule : rules) {
-            enable_to_move_rule->add_req_bit(e_piece, piece);
-            can_be_moved &= enable_to_move_rule.get()->test();
+        for (auto rule_ptr : rules) {
+            shared_ptr<TestableRule> enable_to_move =
+                    (shared_ptr<TestableRule>)dynamic_pointer_cast<TestableRule>(rule_ptr);
+            enable_to_move->add_req_bit(e_piece, piece);
+            can_be_moved &= enable_to_move->test();
             if(!can_be_moved) break;
         }
         if(!can_be_moved){
@@ -93,12 +97,15 @@ bool MovePieceOnBoard::is_available(shared_ptr<Player> player) {
         shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(tile_bit_ptr.lock());
         const shared_ptr<Piece> &piece = tile->get_top_piece();
         if(piece == nullptr) continue;
-        const vector<shared_ptr<TestableRule>> &rules = piece->get_availability_for_movement_rules();
+        const vector<shared_ptr<Rule>> &rules =
+                piece->get_game().rules_manager()->get_rules(e_movement_enable_rule, piece->get_bit_id());
         bool can_be_moved = true;
-        for (auto enable_to_move_rule : rules) {
-            enable_to_move_rule->add_req_bit(e_piece, piece);
-            enable_to_move_rule->set_curr_player(player);
-            can_be_moved &= enable_to_move_rule.get()->test();
+        for (auto rule_ptr : rules) {
+            shared_ptr<TestableRule> enable_to_move =
+                    (shared_ptr<TestableRule>)dynamic_pointer_cast<TestableRule>(rule_ptr);
+            enable_to_move->add_req_bit(e_piece, piece);
+            enable_to_move->set_curr_player(player);
+            can_be_moved &= enable_to_move->test();
             if(!can_be_moved) break;
         }
         if(!can_be_moved){

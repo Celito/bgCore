@@ -3,8 +3,12 @@
 //
 
 #include "MovementFilterRule.h"
+#include "../turns/actions/options/TileOption.h"
+#include "../gameBits/boards/TilePos.h"
+#include "../gameBits/boards/Tile.h"
 #include <queue>
 #include <set>
+
 
 void MovementFilterRule::filter_positions(vector<shared_ptr<Option> > &options, shared_ptr<Tile> initial_tile) {
     bool available_opts = true;
