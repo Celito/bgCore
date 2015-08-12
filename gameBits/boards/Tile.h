@@ -16,7 +16,7 @@
 
 using namespace std;
 
-class Tile : public GameBit, public BitHolder {
+class Tile : public GameBit {
 public:
     Tile(Board &board, TilePos location, vector< TilePos > directions);
 

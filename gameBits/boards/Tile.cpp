@@ -10,7 +10,7 @@ Tile::Tile(Board &board, TilePos location, vector<TilePos> directions) :
         GameBit(board.get_game(), board.get_bit_id() + location.to_string()) {}
 
 void Tile::receive(shared_ptr<GameBit> bit) {
-    BitHolder::receive(bit);
+    GameBit::receive(bit);
     _piece_received(*this);
 }
 
@@ -28,12 +28,14 @@ void Tile::populate_neighbours() {
 }
 
 shared_ptr<Piece> Tile::get_top_piece() const {
+    const vector<weak_ptr<GameBit>> &children = get_children();
     return dynamic_pointer_cast<Piece>(
-            _bits.empty() || _bits[_bits.size() - 1].expired()? nullptr : _bits[_bits.size() - 1].lock());
+            children.empty() || children[children.size() - 1].expired()? nullptr : children[children.size() - 1].lock()
+    );
 }
 
 void Tile::remove(shared_ptr<GameBit> bit) {
-    BitHolder::remove(bit);
+    GameBit::remove(bit);
     _piece_removed(*this, *((Piece *)bit.get()));
 }
 

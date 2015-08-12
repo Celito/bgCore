@@ -7,13 +7,13 @@
 #define BGCORE_GAMEBIT_H
 
 #include <memory>
+#include <vector>
 #include <map>
 #include "attributes/Attribute.h"
 
 using namespace std;
 
 class Game;
-class BitHolder;
 
 enum bit_types_e {
     e_bit,
@@ -37,24 +37,29 @@ public:
 
     void set_attr(string id, uint32_t value);
 
-    void set_ref_id(const uint32_t ref_id) { if(_ref_id == 0) _ref_id = ref_id; }
+    void set_ref_id(const uint32_t ref_id) { if(_unique_id == 0) _unique_id = ref_id; }
 
     const string &get_bit_id() const { return _bit_id; }
 
-    shared_ptr<BitHolder> get_parent() const;
-
-    void set_parent(BitHolder *parent) { _parent = parent; }
+    shared_ptr<GameBit> get_parent() const;
 
     Game &get_game() const { return _game; }
 
+    Attribute get_attr(uint32_t id);
+
+    virtual void receive(shared_ptr<GameBit> bit);
+
+    bool is_empty() const;
+
+    const vector< weak_ptr<GameBit> > & get_children() const;
+
 protected:
     Game &_game;
-    uint32_t _ref_id = 0;
+    uint32_t _unique_id = 0;
     string _bit_id;
     map<uint32_t, Attribute> _attributes;
 
-private:
-    BitHolder * _parent;
+    virtual void remove(shared_ptr<GameBit> bit);
 };
 
 

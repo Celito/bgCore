@@ -9,12 +9,11 @@
 #include <vector>
 #include <list>
 #include "GameBit.h"
-#include "BitHolder.h"
 #include "Piece.h"
 
 using namespace std;
 
-class PieceSet : public GameBit, public BitHolder {
+class PieceSet : public GameBit {
 
 public:
     PieceSet(Game &game, string refId);

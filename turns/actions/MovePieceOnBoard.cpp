@@ -7,6 +7,7 @@
 #include "../../gameBits/boards/Tile.h"
 #include "options/BitOption.h"
 #include "../Turn.h"
+#include "../State.h"
 #include "../../rules/PlayerAttrComparison.h"
 #include "../../rules/RulesManager.h"
 #include "options/TileOption.h"
@@ -59,11 +60,17 @@ void MovePieceOnBoard::choose(Action &action) {
     auto bit_opt = dynamic_pointer_cast<BitOption>(action.get_choose_opt());
     shared_ptr<GameBit> selected_bit = bit_opt->get_bit();
 
-    if(!(dynamic_pointer_cast<Tile>(selected_bit->get_parent()))) throw new exception();
+    shared_ptr<GameBit> piece_parent = selected_bit->get_parent();
+    if(piece_parent == nullptr)throw new exception();
 
     shared_ptr<Turn> turn = action.get_turn();
 
-    shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(selected_bit->get_parent());
+    shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(piece_parent);
+    if(tile == nullptr)throw new exception();
+    
+    Game &game = tile->get_game();
+
+    //game.curr_state()->transfer(turn->get_player(), selected_bit);
     turn->get_player()->receive(selected_bit);
 
     shared_ptr<Action> next_action = make_shared<Action>(turn, _choose_tile_on_board );
@@ -75,6 +82,7 @@ void MovePieceOnBoard::choose(Action &action) {
         if(selected_bit == nullptr) throw new exception();
         auto tile_opt = dynamic_pointer_cast<TileOption>(opt);
         shared_ptr<Tile> new_tile = tile_opt->get_tile();
+        //new_tile->get_game().curr_state()->transfer(new_tile, selected_bit);
         new_tile->receive(selected_bit);
         cout << "PIECE " << selected_bit->get_bit_id() << " MOVED TO " << new_tile->get_pos().to_string() << endl;
     });

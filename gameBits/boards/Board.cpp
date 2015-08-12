@@ -8,6 +8,7 @@
 #include "Tile.h"
 #include "../../Game.h"
 #include "../../BitsManager.h"
+#include "../../turns/State.h"
 
 void Board::add_new_tile(TilePos pos) {
     if(_tile_grid[pos] != nullptr) return;

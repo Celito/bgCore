@@ -25,3 +25,11 @@ void BitsManager::remove_bit(shared_ptr<GameBit> bit) {
 shared_ptr<GameBit> BitsManager::get_bit(uint32_t unique_id) {
     return _all_bits[unique_id];
 }
+
+shared_ptr<GameBit> BitsManager::get_first_bit(string bit_id) {
+    for (auto bit_entry : _all_bits) {
+        if(bit_entry.second != nullptr && bit_entry.second->get_bit_id() == bit_id)
+            return bit_entry.second;
+    }
+    return nullptr;
+}

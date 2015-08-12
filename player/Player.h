@@ -8,9 +8,8 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "../gameBits/BitHolder.h"
+#include "../gameBits/GameBit.h"
 
-class GameBit;
 class PlayerInterface;
 class PlayerController;
 class PieceSet;
@@ -18,7 +17,7 @@ class Attribute;
 
 using namespace std;
 
-class Player : public BitHolder {
+class Player : public GameBit {
 public:
     Player(Game &game, unsigned int id);
 
@@ -34,18 +33,11 @@ public:
 
     void set_controller(shared_ptr<PlayerController> controller);
 
-    Attribute get_attr(uint32_t id);
-
-    void set_attr(string id, uint32_t value);
-
 private:
-    Game &_game;
     uint32_t _id;
 
     shared_ptr<PlayerInterface> _interface;
     shared_ptr<PlayerController> _controller;
-
-    map<uint32_t, Attribute> _attributes;
 };
 
 

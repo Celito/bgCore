@@ -7,15 +7,16 @@
 #include "../Game.h"
 #include "../BitsManager.h"
 #include "../player/Player.h"
+#include "../turns/State.h"
 
 using namespace std;
 
-GameBit::GameBit(Game &game, string bit_id) : _game(game), _parent(nullptr) {
+GameBit::GameBit(Game &game, string bit_id) : _game(game) {
     _bit_id = bit_id;
 }
 
 uint32_t GameBit::get_unique_id() const {
-    return _ref_id;
+    return _unique_id;
 }
 
 void GameBit::set_attr(string id, uint32_t value) {
@@ -31,11 +32,26 @@ Attribute GameBit::get_attr(uint32_t id) const {
     return _attributes.at(id);
 }
 
-shared_ptr<BitHolder> GameBit::get_parent() const {
-    if(GameBit* bit = dynamic_cast<GameBit *>(_parent)){
-        return (shared_ptr<BitHolder>)dynamic_pointer_cast<BitHolder>(_game.bits_manager()->get_bit(bit->get_unique_id()));
-    } else if(Player* player = dynamic_cast<Player *>(_parent)) {
-        return (shared_ptr<BitHolder>)dynamic_pointer_cast<BitHolder>(_game.get_player(player->get_id() - 1));
-    }
-    return nullptr ;
+shared_ptr<GameBit> GameBit::get_parent() const {
+    return _game.curr_state()->get_parent(get_unique_id());
+}
+
+Attribute GameBit::get_attr(uint32_t id) {
+    return _attributes[id];
+}
+
+void GameBit::receive(shared_ptr<GameBit> bit) {
+    _game.curr_state()->transfer(_unique_id, bit);
+}
+
+bool GameBit::is_empty() const {
+    return get_children().size() == 0;
+}
+
+const vector<weak_ptr<GameBit> > &GameBit::get_children() const {
+    return _game.curr_state()->get_children(_unique_id);
+}
+
+void GameBit::remove(shared_ptr<GameBit> bit) {
+    _game.curr_state()->remove_from_parent(_unique_id, bit);
 }

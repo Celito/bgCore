@@ -8,7 +8,6 @@
 #include <vector>
 #include <memory>
 #include <map>
-#include "gameBits/BitHolder.h"
 #include "gameBits/attributes/AttrManager.h"
 
 class Player;
@@ -19,10 +18,11 @@ class TurnsManager;
 class RulesManager;
 class PlayerController;
 class GameController;
+class State;
 
 using namespace std;
 
-class Game : public BitHolder{
+class Game {
 public:
     Game();
 
@@ -43,6 +43,8 @@ public:
     const shared_ptr<BitsManager> &bits_manager() const { return _bits_manager; }
 
     const shared_ptr<RulesManager> &rules_manager() const { return _rules_manager; }
+
+    const shared_ptr<State> &curr_state();
 
 private:
 //game config:

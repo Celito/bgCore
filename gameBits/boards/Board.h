@@ -7,7 +7,6 @@
 
 
 #include "../GameBit.h"
-#include "../BitHolder.h"
 #include "TilePos.h"
 #include <map>
 
@@ -23,7 +22,7 @@ enum available_tiles_t {
     e_for_movement
 };
 
-class Board : public GameBit, public BitHolder{
+class Board : public GameBit{
 public:
     Board(Game &game, const string &bit_id) : GameBit(game, bit_id) { }
 

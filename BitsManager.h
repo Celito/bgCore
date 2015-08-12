@@ -27,6 +27,8 @@ public:
 
     shared_ptr<GameBit> get_bit(uint32_t unique_id);
 
+    shared_ptr<GameBit> get_first_bit(string bit_id);
+
     //This is a nested map with the first key being the bit id and the second one being the bit refId
     map<uint32_t, shared_ptr<GameBit> > _all_bits;
 

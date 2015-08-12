@@ -7,13 +7,14 @@
 #include "../Game.h"
 #include "TurnDef.h"
 #include "actions/ActionDef.h"
-#include "actions/Action.h"
 #include "../player/PlayerController.h"
 #include "../player/Player.h"
 #include "Turn.h"
+#include "State.h"
 
 TurnsManager::TurnsManager(Game &game) : _game(game) {
     _current_player_id = 0;
+    _curr_state = make_shared<State>();
 }
 
 void TurnsManager::next_turn() {
@@ -26,26 +27,26 @@ void TurnsManager::next_turn() {
     //TODO: choose the turn according to the conditions to choose the turn type;
     shared_ptr<TurnDef> turn_def = _turn_definitions[0];
 
-    shared_ptr<ActionDef> curr_action_def = turn_def->get_first_action_def();
-
     shared_ptr<PlayerController> player_controller = curr_player->get_controller();
 
-    shared_ptr<Turn> curr_turn = turn_def->generate_turn(curr_player);
+    _curr_turn = turn_def->generate_turn(curr_player);
 
-    shared_ptr<Action> curr_action;
+    while(_curr_action = _curr_turn->get_next_action()) {
 
-    while(curr_action = curr_turn->get_next_action()) {
-        //shared_ptr<Action> action = curr_action_def->generate_action(curr_turn);
-        if(!curr_action->self_resolve()) {
-            player_controller->resolve_action(curr_action);
+        if(!_curr_action->self_resolve()) {
+            player_controller->resolve_action(_curr_action);
         }
 
-        curr_turn->register_action(curr_action);
+        _curr_turn->register_action(_curr_action);
     }
 
-    _match_turns.push_back(curr_turn);
+    _match_turns.push_back(_curr_turn);
 }
 
 void TurnsManager::register_turn_def(shared_ptr<TurnDef> turn) {
     _turn_definitions.push_back(turn);
+}
+
+const shared_ptr<State> &TurnsManager::get_curr_state() {
+    return _curr_state;
 }

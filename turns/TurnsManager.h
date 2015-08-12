@@ -13,6 +13,8 @@
 class Game;
 class TurnDef;
 class Turn;
+class Action;
+class State;
 
 using  namespace std;
 
@@ -23,12 +25,19 @@ public:
     void register_turn_def(shared_ptr<TurnDef> turn);
 
     void next_turn();
+
+    const shared_ptr<State> &get_curr_state();
+
 private:
     Game &_game;
     uint32_t _current_player_id;
 
     vector< shared_ptr<TurnDef> > _turn_definitions;
     vector< shared_ptr<Turn> > _match_turns;
+
+    shared_ptr<Turn> _curr_turn;
+    shared_ptr<Action> _curr_action;
+    shared_ptr<State> _curr_state;
 };
 
 

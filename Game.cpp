@@ -12,6 +12,7 @@
 #include "gameBits/PieceSet.h"
 #include "turns/TurnsManager.h"
 #include "turns/TurnDef.h"
+#include "turns/State.h"
 #include "turns/actions/ActionDef.h"
 #include "gameBits/boards/HexBoard.h"
 #include "turns/actions/PutPieceOnBoard.h"
@@ -57,6 +58,7 @@ Game::Game() {
     for (uint32_t i = 0; i < _num_of_players; i++) {
 
         shared_ptr<Player> player = make_shared<Player>(*this, i+1);
+        register_new_bit(player);
         player->set_attr(COLOR_ATTR, i);
         _players.push_back(player);
 
@@ -70,16 +72,17 @@ Game::Game() {
                 shared_ptr<Piece> new_piece = make_shared<Piece>(*this, iter->second);
                 register_new_bit(new_piece);
                 new_piece->set_attr(COLOR_ATTR, i);
+                //curr_state()->transfer(player_set, new_piece);
                 player_set->receive(new_piece);
             }
         }
+        //curr_state()->transfer(_players[i], player_set);
         _players[i]->receive(player_set);
     }
 
     // TEMP create the board, call it 'Table' and add it to the table objects;
     shared_ptr<HexBoard> board = make_shared<HexBoard>(*this, HEX_BOARD_NAME);
     register_new_bit(board);
-    receive(board);
 
     // TEMP create the normal turn with the possible actions in it;
 
@@ -156,12 +159,13 @@ shared_ptr<Player> Game::get_player(uint32_t id) {
 }
 
 shared_ptr<GameBit> Game::get_table_bit(string bit_id) const {
-    vector<weak_ptr<GameBit>>::const_iterator it;
-    it = find_if(_bits.begin(), _bits.end(),
-                 [bit_id](weak_ptr<GameBit> const& bit) -> bool { return bit.expired()? false : bit.lock()->get_bit_id() == bit_id;});
-    return it->expired()? nullptr : it->lock();
+    return _bits_manager->get_first_bit(bit_id);
 }
 
 void Game::register_new_bit(shared_ptr<GameBit> bit) {
     _bits_manager->register_bit(bit);
+}
+
+const shared_ptr<State> &Game::curr_state() {
+    return _turns->get_curr_state();
 }
