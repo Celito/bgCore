@@ -9,6 +9,7 @@
 #include <vector>
 #include <memory>
 #include <stdint-gcc.h>
+#include <boost/signals2.hpp>
 
 class Game;
 class TurnDef;
@@ -28,6 +29,8 @@ public:
 
     const shared_ptr<State> &get_curr_state();
 
+    boost::signals2::connection on_round_changed(boost::signals2::slot<void(uint32_t)> slot);
+
 private:
     Game &_game;
     uint32_t _current_player_id;
@@ -38,6 +41,8 @@ private:
     shared_ptr<Turn> _curr_turn;
     shared_ptr<Action> _curr_action;
     shared_ptr<State> _curr_state;
+
+    boost::signals2::signal<void(uint32_t)> _round_changed;
 };
 
 

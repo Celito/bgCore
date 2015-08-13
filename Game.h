@@ -45,6 +45,8 @@ public:
 
     const shared_ptr<RulesManager> &rules_manager() const { return _rules_manager; }
 
+    const shared_ptr<TurnsManager> &turns_manager() const { return _turns_manager; }
+
     const shared_ptr<State> &curr_state();
 
 private:
@@ -57,7 +59,7 @@ private:
 
     //helper managers:
     shared_ptr<BitsManager> _bits_manager;
-    shared_ptr<TurnsManager> _turns;
+    shared_ptr<TurnsManager> _turns_manager;
     shared_ptr<RulesManager> _rules_manager;
     shared_ptr<AttrManager> _attr_manager;
 

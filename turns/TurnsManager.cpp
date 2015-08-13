@@ -50,3 +50,7 @@ void TurnsManager::register_turn_def(shared_ptr<TurnDef> turn) {
 const shared_ptr<State> &TurnsManager::get_curr_state() {
     return _curr_state;
 }
+
+boost::signals2::connection TurnsManager::on_round_changed(boost::signals2::slot<void(uint32_t)> slot) {
+    return _round_changed.connect(slot);
+}

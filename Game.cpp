@@ -30,7 +30,7 @@ Game::Game() {
 
     // Initialize the supporting managers;
     _bits_manager = make_shared<BitsManager>(*this);
-    _turns = make_shared<TurnsManager>(*this);
+    _turns_manager = make_shared<TurnsManager>(*this);
     _attr_manager = make_shared<AttrManager>();
     _rules_manager = make_shared<RulesManager>();
 
@@ -106,13 +106,14 @@ Game::Game() {
 
     normal_turn->add_action_def(first_action);
 
-    _turns->register_turn_def(normal_turn);
+    _turns_manager->register_turn_def(normal_turn);
 
     _is_over = false;
 
     // TEMP adding the rules to the rules dictionary
 
-    //TODO: load the rules
+    //TODO: make possible to create conditioned rules that are only used if a condition is reached
+    //TODO: make possible to add rules to a set of bits (like "all Pieces")
     //TODO: add the e_movement_enable_rule that does not allow the player to split the hive
     //TODO: create events to allow the game to add and remove rules after a certain amount of rounds
     //TODO: add the e_placement_rule that does not allow the player to put pieces where they touch the other color from the second round on
@@ -120,36 +121,45 @@ Game::Game() {
     shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);
     is_player_color->set_tested_attr(COLOR_ATTR);
     is_player_color->set_bit_type(e_piece);
+    is_player_color->set_usage(e_movement_enable_rule);
+    is_player_color->add_applicable_bit("Queen");
+    is_player_color->add_applicable_bit("Spider");
+    is_player_color->add_applicable_bit("Ant");
+    is_player_color->add_applicable_bit("Beetle");
+    is_player_color->add_applicable_bit("GrassHooper");
+    _rules_manager.get()->add_static_rule(is_player_color);
 
     shared_ptr<IsEmpty> is_tile_empty = make_shared<IsEmpty>(*this);
+    is_tile_empty->set_usage(e_placement_rule);
+    is_tile_empty->add_applicable_bit("Queen");
+    is_tile_empty->add_applicable_bit("Spider");
+    is_tile_empty->add_applicable_bit("Ant");
+    is_tile_empty->add_applicable_bit("Beetle");
+    is_tile_empty->add_applicable_bit("GrassHooper");
+    _rules_manager.get()->add_static_rule(is_tile_empty);
 
     shared_ptr<MovementFilterRule> queen_movement = make_shared<MovementFilterRule>();
     queen_movement->set_max_steps(1);
-    _rules_manager.get()->add_rule(e_movement_rule, "Queen", queen_movement);
-    _rules_manager.get()->add_rule(e_movement_enable_rule, "Queen", is_player_color);
-    _rules_manager.get()->add_rule(e_placement_rule, "Queen", is_tile_empty);
+    queen_movement->set_usage(e_movement_rule);
+    queen_movement->add_applicable_bit("Queen");
+    _rules_manager.get()->add_static_rule(queen_movement);
 
     shared_ptr<MovementFilterRule> spider_movement = make_shared<MovementFilterRule>();
     spider_movement->set_max_steps(3);
     spider_movement->set_min_steps(3);
-    _rules_manager.get()->add_rule(e_movement_rule, "Spider", spider_movement);
-    _rules_manager.get()->add_rule(e_movement_enable_rule, "Spider", is_player_color);
-    _rules_manager.get()->add_rule(e_placement_rule, "Spider", is_tile_empty);
+    spider_movement->set_usage(e_movement_rule);
+    spider_movement->add_applicable_bit("Spider");
+    _rules_manager.get()->add_static_rule(spider_movement);
 
     shared_ptr<MovementFilterRule> ant_movement = make_shared<MovementFilterRule>();
-    _rules_manager.get()->add_rule(e_movement_rule, "Ant", ant_movement);
-    _rules_manager.get()->add_rule(e_movement_enable_rule, "Ant", is_player_color);
-    _rules_manager.get()->add_rule(e_placement_rule, "Ant", is_tile_empty);
-
+    ant_movement->set_usage(e_movement_rule);
+    ant_movement->add_applicable_bit("Ant");
     //TODO: create the proper movement rules for the Beetle
-    _rules_manager.get()->add_rule(e_movement_rule, "Beetle", ant_movement);
-    _rules_manager.get()->add_rule(e_movement_enable_rule, "Beetle", is_player_color);
-    _rules_manager.get()->add_rule(e_placement_rule, "Beetle", is_tile_empty);
-
+    ant_movement->add_applicable_bit("Beetle");
     //TODO: create the proper movement rules for the GrassHooper
-    _rules_manager.get()->add_rule(e_movement_rule, "GrassHooper", ant_movement);
-    _rules_manager.get()->add_rule(e_movement_enable_rule, "GrassHooper", is_player_color);
-    _rules_manager.get()->add_rule(e_placement_rule, "GrassHooper", is_tile_empty);
+    ant_movement->add_applicable_bit("GrassHooper");
+    _rules_manager.get()->add_static_rule(ant_movement);
+
 }
 
 void Game::start(GameController &game_controller) {
@@ -160,7 +170,7 @@ void Game::start(GameController &game_controller) {
     }
 
     while(!_is_over) {
-        _turns->next_turn();
+        _turns_manager->next_turn();
     }
 }
 
@@ -180,5 +190,5 @@ void Game::register_new_bit(shared_ptr<GameBit> bit) {
 }
 
 const shared_ptr<State> &Game::curr_state() {
-    return _turns->get_curr_state();
+    return _turns_manager->get_curr_state();
 }
