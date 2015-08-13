@@ -21,6 +21,7 @@
 #include "rules/PlayerAttrComparison.h"
 #include "rules/MovementFilterRule.h"
 #include "rules/RulesManager.h"
+#include "rules/IsEmpty.h"
 
 using namespace std;
 
@@ -120,28 +121,35 @@ Game::Game() {
     is_player_color->set_tested_attr(COLOR_ATTR);
     is_player_color->set_bit_type(e_piece);
 
+    shared_ptr<IsEmpty> is_tile_empty = make_shared<IsEmpty>(*this);
+
     shared_ptr<MovementFilterRule> queen_movement = make_shared<MovementFilterRule>();
     queen_movement->set_max_steps(1);
     _rules_manager.get()->add_rule(e_movement_rule, "Queen", queen_movement);
     _rules_manager.get()->add_rule(e_movement_enable_rule, "Queen", is_player_color);
+    _rules_manager.get()->add_rule(e_placement_rule, "Queen", is_tile_empty);
 
     shared_ptr<MovementFilterRule> spider_movement = make_shared<MovementFilterRule>();
     spider_movement->set_max_steps(3);
     spider_movement->set_min_steps(3);
     _rules_manager.get()->add_rule(e_movement_rule, "Spider", spider_movement);
     _rules_manager.get()->add_rule(e_movement_enable_rule, "Spider", is_player_color);
+    _rules_manager.get()->add_rule(e_placement_rule, "Spider", is_tile_empty);
 
     shared_ptr<MovementFilterRule> ant_movement = make_shared<MovementFilterRule>();
     _rules_manager.get()->add_rule(e_movement_rule, "Ant", ant_movement);
     _rules_manager.get()->add_rule(e_movement_enable_rule, "Ant", is_player_color);
+    _rules_manager.get()->add_rule(e_placement_rule, "Ant", is_tile_empty);
 
     //TODO: create the proper movement rules for the Beetle
     _rules_manager.get()->add_rule(e_movement_rule, "Beetle", ant_movement);
     _rules_manager.get()->add_rule(e_movement_enable_rule, "Beetle", is_player_color);
+    _rules_manager.get()->add_rule(e_placement_rule, "Beetle", is_tile_empty);
 
     //TODO: create the proper movement rules for the GrassHooper
     _rules_manager.get()->add_rule(e_movement_rule, "GrassHooper", ant_movement);
     _rules_manager.get()->add_rule(e_movement_enable_rule, "GrassHooper", is_player_color);
+    _rules_manager.get()->add_rule(e_placement_rule, "GrassHooper", is_tile_empty);
 }
 
 void Game::start(GameController &game_controller) {

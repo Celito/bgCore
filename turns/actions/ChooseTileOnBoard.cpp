@@ -8,6 +8,7 @@
 #include "../../gameBits/BitReference.h"
 #include "../../gameBits/boards/Tile.h"
 #include "../../rules/Rule.h"
+#include "../../rules/TestableRule.h"
 #include "../../rules/MovementFilterRule.h"
 #include "../../rules/RulesManager.h"
 
@@ -28,11 +29,24 @@ void ChooseTileOnBoard::update_options(Action &action) {
     if(piece == nullptr) throw new exception();
     
     if(_reason == e_for_placement) {
-        //TODO: take the rules of placement from the piece and apply them to the options
         vector<shared_ptr<Tile> > tiles = target_board->get_tiles();
         // find all available tiles on the board
+        const vector< shared_ptr<Rule> > &placement_rules =
+                piece->get_game().rules_manager()->get_rules(e_placement_rule, piece->get_bit_id());
+
         for (auto tile : tiles) {
-            if(tile->is_empty()) {
+            bool is_available = true;
+            for (auto rule_ptr : placement_rules) {
+                shared_ptr<TestableRule> placement_rule =
+                        (shared_ptr<TestableRule>)dynamic_pointer_cast<TestableRule>(rule_ptr);
+                if(placement_rule == nullptr) throw new exception();
+                placement_rule->add_req_bit(e_tile, tile);
+                if(!placement_rule->test()){
+                    is_available = false;
+                    break;
+                }
+            }
+            if(is_available) {
                 action.add_option(make_shared<TileOption>(tile));
             }
         }
@@ -45,7 +59,6 @@ void ChooseTileOnBoard::update_options(Action &action) {
         // get all the movement rules and apply them to the options;
         const vector< shared_ptr<Rule> > &movement_rules =
                 piece->get_game().rules_manager()->get_rules(e_movement_rule, piece->get_bit_id());
-        //vector< shared_ptr<MovementFilterRule> > movement_rule = piece->get_movement_rules();
 
         if(movement_rules.size() == 0) throw new exception();
 
