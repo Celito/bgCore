@@ -12,10 +12,13 @@ BitsManager::BitsManager(Game &game) : _game(game) {}
 
 
 void BitsManager::register_bit(shared_ptr<GameBit> bit) {
-    bit->set_ref_id(_unique_id);
+    uint32_t bit_unique_id = bit->get_unique_id();
+    _all_bits[bit_unique_id] = bit;
+}
+
+uint32_t BitsManager::get_next_unique_id() {
     _unique_id++;
-    uint32_t bit_id = bit->get_unique_id();
-    _all_bits[bit_id] = bit;
+    return _unique_id;
 }
 
 void BitsManager::remove_bit(shared_ptr<GameBit> bit) {

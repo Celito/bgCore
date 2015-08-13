@@ -18,7 +18,11 @@ bool PlayerAttrComparison::test() {
     shared_ptr<GameBit> bit = (shared_ptr<GameBit>)dynamic_pointer_cast<GameBit>(_required_bits[_bit_type].lock());
     if(bit == nullptr) return false;
 
-    return _player.lock()->get_attr(_attr_id).get_value() == bit->get_attr(_attr_id).get_value();
+    shared_ptr<Player> player_ptr = _player.lock();
+    uint32_t player_attr = player_ptr->get_attr(_attr_id).get_value();
+    uint32_t bit_attr = bit->get_attr(_attr_id).get_value();
+    
+    return player_attr == bit_attr;
 }
 
 void PlayerAttrComparison::set_bit_type(bit_types_e bit_type) {

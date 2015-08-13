@@ -23,6 +23,8 @@ public:
 
     void register_bit(shared_ptr<GameBit> bit);
 
+    uint32_t get_next_unique_id();
+
     void remove_bit(shared_ptr<GameBit> bit);
 
     shared_ptr<GameBit> get_bit(uint32_t unique_id);
@@ -35,7 +37,7 @@ public:
 private:
     Game &_game;
 
-    uint32_t _unique_id = 1;
+    uint32_t _unique_id = 0;
 
 };
 

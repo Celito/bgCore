@@ -70,7 +70,6 @@ void MovePieceOnBoard::choose(Action &action) {
     
     Game &game = tile->get_game();
 
-    //game.curr_state()->transfer(turn->get_player(), selected_bit);
     turn->get_player()->receive(selected_bit);
 
     shared_ptr<Action> next_action = make_shared<Action>(turn, _choose_tile_on_board );
@@ -82,7 +81,6 @@ void MovePieceOnBoard::choose(Action &action) {
         if(selected_bit == nullptr) throw new exception();
         auto tile_opt = dynamic_pointer_cast<TileOption>(opt);
         shared_ptr<Tile> new_tile = tile_opt->get_tile();
-        //new_tile->get_game().curr_state()->transfer(new_tile, selected_bit);
         new_tile->receive(selected_bit);
         cout << "PIECE " << selected_bit->get_bit_id() << " MOVED TO " << new_tile->get_pos().to_string() << endl;
     });
@@ -113,13 +111,12 @@ bool MovePieceOnBoard::is_available(shared_ptr<Player> player) {
                     (shared_ptr<TestableRule>)dynamic_pointer_cast<TestableRule>(rule_ptr);
             enable_to_move->add_req_bit(e_piece, piece);
             enable_to_move->set_curr_player(player);
-            can_be_moved &= enable_to_move->test();
-            if(!can_be_moved) break;
+            if(!enable_to_move->test()){
+                can_be_moved = false;
+                break;
+            }
         }
-        if(!can_be_moved){
-            continue;
-        }
-        else {
+        if(can_be_moved) {
             //TODO: test if there are available spots for that piece to move;
             movable_piece_found = true;
             break;

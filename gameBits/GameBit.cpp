@@ -13,6 +13,7 @@ using namespace std;
 
 GameBit::GameBit(Game &game, string bit_id) : _game(game) {
     _bit_id = bit_id;
+    _unique_id = _game.bits_manager()->get_next_unique_id();
 }
 
 uint32_t GameBit::get_unique_id() const {

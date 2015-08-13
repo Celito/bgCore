@@ -29,6 +29,8 @@ public:
 
     virtual ~GameBit() {};
 
+    virtual void init() {};
+
     uint32_t get_unique_id() const;
 
     Attribute get_attr(string id) const;
@@ -36,8 +38,6 @@ public:
     Attribute get_attr(uint32_t id) const;
 
     void set_attr(string id, uint32_t value);
-
-    void set_ref_id(const uint32_t ref_id) { if(_unique_id == 0) _unique_id = ref_id; }
 
     const string &get_bit_id() const { return _bit_id; }
 

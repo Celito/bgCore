@@ -10,7 +10,7 @@
 #include "PlayerInterface.h"
 #include "PlayerController.h"
 
-Player::Player(Game &game, uint32_t id) : _id(id), GameBit(game, string("Player") + to_string(_id))  {
+Player::Player(Game &game, uint32_t id) : _id(id), GameBit(game, string("Player") + to_string(id))  {
     _interface = make_shared<PlayerInterface>(*this);
     cout << "Creating the player " << id << endl;
 }

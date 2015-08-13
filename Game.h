@@ -8,6 +8,7 @@
 #include <vector>
 #include <memory>
 #include <map>
+#include <boost/signals2.hpp>
 #include "gameBits/attributes/AttrManager.h"
 
 class Player;
@@ -49,6 +50,7 @@ public:
 private:
 //game config:
     uint32_t _num_of_players;
+    bool _is_over;
 
     //game pointers:
     vector< shared_ptr<Player> > _players;
@@ -58,7 +60,9 @@ private:
     shared_ptr<TurnsManager> _turns;
     shared_ptr<RulesManager> _rules_manager;
     shared_ptr<AttrManager> _attr_manager;
-    bool _is_over;
+
+    // important game events
+    boost::signals2::signal<void()> _initialize_pieces;
 };
 
 

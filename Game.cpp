@@ -153,6 +153,8 @@ Game::Game() {
 }
 
 void Game::start(GameController &game_controller) {
+    _initialize_pieces();
+
     for(uint32_t i = 0; i < _players.size(); i++) {
         _players[i]->set_controller(game_controller.get_player_controller(i));
     }
@@ -171,7 +173,10 @@ shared_ptr<GameBit> Game::get_table_bit(string bit_id) const {
 }
 
 void Game::register_new_bit(shared_ptr<GameBit> bit) {
+    // Add bit to the general list of bits and give it an unique id
     _bits_manager->register_bit(bit);
+    // Subscribe the bit to the init signal
+    _initialize_pieces.connect(boost::bind(&GameBit::init, bit.get()));
 }
 
 const shared_ptr<State> &Game::curr_state() {
