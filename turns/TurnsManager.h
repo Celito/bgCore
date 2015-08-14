@@ -29,11 +29,14 @@ public:
 
     const shared_ptr<State> &get_curr_state();
 
+    uint32_t round();
+
     boost::signals2::connection on_round_changed(boost::signals2::slot<void(uint32_t)> slot);
 
 private:
     Game &_game;
-    uint32_t _current_player_id;
+    uint32_t _curr_player_id;
+    uint32_t _curr_round;
 
     vector< shared_ptr<TurnDef> > _turn_definitions;
     vector< shared_ptr<Turn> > _match_turns;

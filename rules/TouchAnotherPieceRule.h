@@ -14,12 +14,14 @@ public:
 
     virtual bool test();
 
-    void add_piece_matching_player_attr(string attr);
+    void add_compared_player_attr(string attr, bool have_to_match);
+
+    void set_reverse(bool do_not_touch) { _do_not_touch = do_not_touch; }
 
 private:
-    bool _do_not_touch = true;
+    bool _do_not_touch = false;
 
-    vector<uint32_t> _matching_attrs_player;
+    vector<pair<uint32_t, bool>> _compared_attrs_player;
 };
 
 

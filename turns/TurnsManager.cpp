@@ -13,16 +13,21 @@
 #include "State.h"
 
 TurnsManager::TurnsManager(Game &game) : _game(game) {
-    _current_player_id = 0;
+    _curr_player_id = 0;
     _curr_state = make_shared<State>();
+    _curr_round = 1;
 }
 
 void TurnsManager::next_turn() {
     //TODO: change the players order if defined by the game
-    cout << "====== PLAYER " << _current_player_id + 1 << " TURN STARTED ========" << endl;
-    auto curr_player = _game.get_player(_current_player_id);
-    _current_player_id++;
-    if(_current_player_id + 1 > _game.get_num_of_players()) _current_player_id = 0;
+    cout << "====== PLAYER " << _curr_player_id + 1 << " TURN STARTED ========" << endl;
+    auto curr_player = _game.get_player(_curr_player_id);
+    _curr_player_id++;
+    bool round_ended = false;
+    if(_curr_player_id + 1 > _game.get_num_of_players()) {
+        round_ended = true;
+        _curr_player_id = 0;
+    }
 
     //TODO: choose the turn according to the conditions to choose the turn type;
     shared_ptr<TurnDef> turn_def = _turn_definitions[0];
@@ -41,6 +46,11 @@ void TurnsManager::next_turn() {
     }
 
     _match_turns.push_back(_curr_turn);
+
+    if(round_ended) {
+        _curr_round++;
+        _round_changed(_curr_round);
+    }
 }
 
 void TurnsManager::register_turn_def(shared_ptr<TurnDef> turn) {
@@ -53,4 +63,8 @@ const shared_ptr<State> &TurnsManager::get_curr_state() {
 
 boost::signals2::connection TurnsManager::on_round_changed(boost::signals2::slot<void(uint32_t)> slot) {
     return _round_changed.connect(slot);
+}
+
+uint32_t TurnsManager::round() {
+    return _curr_round;
 }

@@ -41,6 +41,7 @@ void ChooseTileOnBoard::update_options(Action &action) {
                         (shared_ptr<TestableRule>)dynamic_pointer_cast<TestableRule>(rule_ptr);
                 if(placement_rule == nullptr) throw new exception();
                 placement_rule->add_req_bit(e_tile, tile);
+                placement_rule->set_curr_player(_curr_player);
                 if(!placement_rule->test()){
                     is_available = false;
                     break;

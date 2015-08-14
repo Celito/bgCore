@@ -13,23 +13,30 @@ bool TouchAnotherPieceRule::test() {
     if(_required_bits[e_tile].expired()) throw new exception();
     shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(_required_bits[e_tile].lock());
 
-    bool ret = false;
+    bool touching = false;
     for (uint32_t i = 0; i < tile->get_num_of_directions(); ++i) {
         shared_ptr<Tile> neighbour = tile->get_neighbour(i);
         if(neighbour == nullptr) continue;
         shared_ptr<Piece> piece = neighbour->get_top_piece();
         if(piece == nullptr) continue;
-        ret = true;
-        for (auto matching_attr : _matching_attrs_player){
-            if(piece->get_attr(matching_attr).get_value() != _player.lock()->get_attr(matching_attr).get_value()){
-                ret = false;
+        touching = true;
+        for (auto matching_attr_entry : _compared_attrs_player){
+            uint32_t piece_attr = piece->get_attr(matching_attr_entry.first).get_value();
+            uint32_t player_attr = _player.lock()->get_attr(matching_attr_entry.first).get_value();
+            bool match = piece_attr == player_attr;
+            bool have_to_match = matching_attr_entry.second;
+            if((match && !have_to_match) || (!match && have_to_match)){
+                touching = false;
                 break;
             }
         }
+        if(touching) break;
     }
-    return _do_not_touch == !ret;
+    bool result = _do_not_touch == !touching;
+    return result;
 }
 
-void TouchAnotherPieceRule::add_piece_matching_player_attr(string attr) {
-    _matching_attrs_player.push_back(_game.get_attr().get()->register_id(attr));
+void TouchAnotherPieceRule::add_compared_player_attr(string attr, bool have_to_match) {
+    uint32_t attr_id = _game.get_attr().get()->register_id(attr);
+    _compared_attrs_player.push_back(pair<uint32_t, bool>(attr_id, have_to_match));
 }

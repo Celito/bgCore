@@ -22,6 +22,8 @@
 #include "rules/MovementFilterRule.h"
 #include "rules/RulesManager.h"
 #include "rules/IsEmpty.h"
+#include "rules/TouchAnotherPieceRule.h"
+#include "rules/IsRound.h"
 
 using namespace std;
 
@@ -112,11 +114,9 @@ Game::Game() {
 
     // TEMP adding the rules to the rules dictionary
 
-    //TODO: make possible to create conditioned rules that are only used if a condition is reached
     //TODO: make possible to add rules to a set of bits (like "all Pieces")
     //TODO: add the e_movement_enable_rule that does not allow the player to split the hive
     //TODO: create events to allow the game to add and remove rules after a certain amount of rounds
-    //TODO: add the e_placement_rule that does not allow the player to put pieces where they touch the other color from the second round on
 
     shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);
     is_player_color->set_tested_attr(COLOR_ATTR);
@@ -137,6 +137,21 @@ Game::Game() {
     is_tile_empty->add_applicable_bit("Beetle");
     is_tile_empty->add_applicable_bit("GrassHooper");
     _rules_manager.get()->add_static_rule(is_tile_empty);
+
+    shared_ptr<TouchAnotherPieceRule> not_touch_another_color_piece = make_shared<TouchAnotherPieceRule>(*this);
+    not_touch_another_color_piece->set_usage(e_placement_rule);
+    not_touch_another_color_piece->set_reverse(true);
+    not_touch_another_color_piece->add_compared_player_attr("Color", false);
+    not_touch_another_color_piece->add_applicable_bit("Queen");
+    not_touch_another_color_piece->add_applicable_bit("Spider");
+    not_touch_another_color_piece->add_applicable_bit("Ant");
+    not_touch_another_color_piece->add_applicable_bit("Beetle");
+    not_touch_another_color_piece->add_applicable_bit("GrassHooper");
+    shared_ptr<IsRound> is_second_round = make_shared<IsRound>(*this);
+    is_second_round->is_bigger_then(1);
+    shared_ptr<TimedCondition> is_second_round_cond = make_shared<TimedCondition>(*this);
+    is_second_round_cond->add_condition(is_second_round);
+    _rules_manager->add_conditioned_rule(not_touch_another_color_piece, is_second_round_cond);
 
     shared_ptr<MovementFilterRule> queen_movement = make_shared<MovementFilterRule>();
     queen_movement->set_max_steps(1);
