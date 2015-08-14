@@ -9,9 +9,12 @@
 #include <vector>
 #include <memory>
 #include "Rule.h"
+#include "movement/MovementSubRule.h"
 
 class Tile;
+class TileOption;
 class Option;
+class MovementSubRule;
 
 using namespace std;
 
@@ -23,10 +26,16 @@ public:
 
     void set_min_steps(uint32_t value);
 
+    void add_movement_sub_rule(const shared_ptr<MovementSubRule> &sub_rule);
+
 private:
     uint32_t _max_steps = UINT32_MAX;
     uint32_t _min_steps = 0;
     bool _restricted_steps = false;
+
+    vector<shared_ptr<MovementSubRule>> _movement_sub_rules;
+
+    bool opt_can_be_processed(const shared_ptr<TileOption> &opt) const;
 };
 
 

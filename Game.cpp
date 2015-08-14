@@ -25,6 +25,7 @@
 #include "rules/TouchAnotherPieceRule.h"
 #include "rules/IsRound.h"
 #include "rules/JumpOverNeighbours.h"
+#include "rules/movement/AlwaysTouching.h"
 
 using namespace std;
 
@@ -163,10 +164,13 @@ Game::Game() {
     not_touch_another_color_piece->add_applicable_bit("GrassHooper");
     _rules_manager->add_conditioned_rule(not_touch_another_color_piece, is_second_round_cond);
 
+    shared_ptr<AlwaysTouching> always_touching = make_shared<AlwaysTouching>();
+    
     shared_ptr<MovementFilterRule> queen_movement = make_shared<MovementFilterRule>();
     queen_movement->set_max_steps(1);
     queen_movement->set_usage(e_movement_rule);
     queen_movement->add_applicable_bit("Queen");
+    queen_movement->add_movement_sub_rule(always_touching);
     _rules_manager.get()->add_static_rule(queen_movement);
 
     shared_ptr<MovementFilterRule> spider_movement = make_shared<MovementFilterRule>();
@@ -174,6 +178,7 @@ Game::Game() {
     spider_movement->set_min_steps(3);
     spider_movement->set_usage(e_movement_rule);
     spider_movement->add_applicable_bit("Spider");
+    spider_movement->add_movement_sub_rule(always_touching);
     _rules_manager.get()->add_static_rule(spider_movement);
 
     shared_ptr<MovementFilterRule> ant_movement = make_shared<MovementFilterRule>();
@@ -181,11 +186,13 @@ Game::Game() {
     ant_movement->add_applicable_bit("Ant");
     //TODO: create the proper movement rules for the Beetle
     ant_movement->add_applicable_bit("Beetle");
+    ant_movement->add_movement_sub_rule(always_touching);
     _rules_manager.get()->add_static_rule(ant_movement);
 
     shared_ptr<JumpOverNeighbours> grass_hooper_movement = make_shared<JumpOverNeighbours>();
     grass_hooper_movement->set_usage(e_movement_rule);
     grass_hooper_movement->add_applicable_bit("GrassHooper");
+    grass_hooper_movement->add_movement_sub_rule(always_touching);
     _rules_manager->add_static_rule(grass_hooper_movement);
 
 }

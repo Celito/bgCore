@@ -22,15 +22,13 @@ public:
 
     void populate_neighbours();
 
-    void clear_neighbours();
-
     virtual void receive(shared_ptr<GameBit> bit) override;
 
     shared_ptr<Tile> get_neighbour(uint32_t dir) {
         return _board.get_tile(get_pos() + _directions[dir]);
     }
 
-    uint64_t get_num_of_directions(){
+    uint32_t get_num_of_directions(){
         return _directions.size();
     }
 
@@ -45,10 +43,6 @@ public:
 
     boost::signals2::connection on_piece_received(boost::signals2::slot<void(Tile &)> slot) {
         return _piece_received.connect(slot);
-    }
-
-    boost::signals2::connection on_piece_removed(boost::signals2::slot<void(Tile &, Piece &)> slot) {
-        return _piece_removed.connect(slot);
     }
 
 protected:

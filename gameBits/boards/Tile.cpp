@@ -39,26 +39,6 @@ void Tile::remove(shared_ptr<GameBit> bit) {
     _piece_removed(*this, *((Piece *)bit.get()));
 }
 
-void Tile::clear_neighbours() {
-    for(uint32_t i = 0; i < _directions.size(); i++) {
-        shared_ptr<Tile> neighbour = get_neighbour(i);
-        if(neighbour != nullptr && neighbour->is_empty()){
-            bool all_empty = true;
-            // test if all neighbours are empty
-            for(uint32_t j = 0; j < _directions.size(); j++) {
-                shared_ptr<Tile> neighbour2 = neighbour->get_neighbour(j);
-                if(neighbour2 != nullptr && !neighbour2->is_empty()){
-                    all_empty = false;
-                    break;
-                }
-            }
-            if(all_empty){
-                _board.remove_tile(neighbour->get_pos());
-            }
-        }
-    }
-}
-
 uint32_t Tile::get_direction_of(TilePos neighbour_pos) {
     TilePos direction_to_neighbour = neighbour_pos - _pos;
     for (uint32_t i = 0; i < _directions.size(); ++i) {
