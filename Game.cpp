@@ -139,6 +139,19 @@ Game::Game() {
     is_tile_empty->add_applicable_bit("GrassHooper");
     _rules_manager.get()->add_static_rule(is_tile_empty);
 
+    shared_ptr<TouchAnotherPieceRule> touch_any_piece = make_shared<TouchAnotherPieceRule>(*this);
+    touch_any_piece->set_usage(e_placement_rule);
+    touch_any_piece->add_applicable_bit("Queen");
+    touch_any_piece->add_applicable_bit("Spider");
+    touch_any_piece->add_applicable_bit("Ant");
+    touch_any_piece->add_applicable_bit("Beetle");
+    touch_any_piece->add_applicable_bit("GrassHooper");
+    shared_ptr<IsRound> is_second_round = make_shared<IsRound>(*this);
+    is_second_round->is_bigger_then(1);
+    shared_ptr<TimedCondition> is_second_round_cond = make_shared<TimedCondition>(*this);
+    is_second_round_cond->add_condition(is_second_round);
+    _rules_manager->add_conditioned_rule(touch_any_piece, is_second_round_cond);
+
     shared_ptr<TouchAnotherPieceRule> not_touch_another_color_piece = make_shared<TouchAnotherPieceRule>(*this);
     not_touch_another_color_piece->set_usage(e_placement_rule);
     not_touch_another_color_piece->set_reverse(true);
@@ -148,10 +161,6 @@ Game::Game() {
     not_touch_another_color_piece->add_applicable_bit("Ant");
     not_touch_another_color_piece->add_applicable_bit("Beetle");
     not_touch_another_color_piece->add_applicable_bit("GrassHooper");
-    shared_ptr<IsRound> is_second_round = make_shared<IsRound>(*this);
-    is_second_round->is_bigger_then(1);
-    shared_ptr<TimedCondition> is_second_round_cond = make_shared<TimedCondition>(*this);
-    is_second_round_cond->add_condition(is_second_round);
     _rules_manager->add_conditioned_rule(not_touch_another_color_piece, is_second_round_cond);
 
     shared_ptr<MovementFilterRule> queen_movement = make_shared<MovementFilterRule>();

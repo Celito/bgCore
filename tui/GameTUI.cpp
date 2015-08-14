@@ -4,7 +4,6 @@
 
 #include "GameTUI.h"
 #include "PlayerTUI.h"
-#include <algorithm>
 
 GameTUI::GameTUI(Game &game) : _game(game) {
     auto num = _game.get_num_of_players();
@@ -13,6 +12,9 @@ GameTUI::GameTUI(Game &game) : _game(game) {
     }
     // Ant can't jump test case
 //    const vector<int32_t> t = {1, 0, 1, 4, 0, 1, 7, 0, 1, 6, 0, 1, 3, 0, 3, 9, 0, 3, 7, 1, 3};
+
+    // Bug on placement
+//    const vector<int32_t> t = {0,0,0,3,0,2,1,0,2,2,1,1,0,1,1,0,0,0};
 
 //    const vector<int32_t> t = {1, 0, 1, 4, 1, 0, 0, 0, 1, 6, 1, 0};
 //    for_each(t.cbegin(),t.cend(), [this](int32_t n) { pre_loaded_opt.push(n); });

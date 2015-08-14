@@ -19,9 +19,6 @@ void Board::add_new_tile(TilePos pos) {
     tile->on_piece_received( [](Tile &caller) {
         caller.populate_neighbours();
     });
-    tile->on_piece_removed( [](Tile &caller, Piece &piece_removed) {
-        caller.clear_neighbours();
-    });
 }
 
 vector< shared_ptr<Tile> > Board::get_tiles() {
