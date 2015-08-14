@@ -13,9 +13,12 @@
 #include "../turns/actions/ChooseTileOnBoard.h"
 #include "../turns/actions/options/Option.h"
 #include "../turns/actions/options/TileOption.h"
+#include "../player/PlayerInterface.h"
 
 void PlayerTUI::resolve_action(shared_ptr<Action> action) {
-    //system("cls");
+    system("cls");
+    shared_ptr<PlayerInterface> my_player = get_interface().lock();
+    cout << "============ " << (my_player->get_id() == 1? "-WHITE-" : "<BLACK>") << " PLAYER TURN =============" << endl;
     vector<shared_ptr<Option>> const &options = action->get_options();
     if(action->get_type() == e_choose_tile) {
         shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(action->get_req_bit(e_board));

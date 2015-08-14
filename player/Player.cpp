@@ -26,4 +26,5 @@ shared_ptr<GameBit> Player::get_bit(string bit_id) const {
 
 void Player::set_controller(shared_ptr<PlayerController> controller) {
     _controller = controller;
+    _controller->set_interface(_interface);
 }
