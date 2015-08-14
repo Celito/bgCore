@@ -17,6 +17,8 @@ public:
 
     TilePos operator+(TilePos const &pos) const;
 
+    TilePos operator-(TilePos const &pos) const;
+
     string to_string() const;
 
     int32_t x() const { return first; }

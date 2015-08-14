@@ -17,7 +17,7 @@ using namespace std;
 
 class MovementFilterRule : public Rule {
 public:
-    void filter_positions(vector<shared_ptr<Option> > &options, shared_ptr<Tile> initial_tile);
+    virtual void filter_positions(vector<shared_ptr<Option> > &options, shared_ptr<Tile> initial_tile);
 
     void set_max_steps(uint32_t value);
 

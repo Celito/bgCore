@@ -24,6 +24,7 @@
 #include "rules/IsEmpty.h"
 #include "rules/TouchAnotherPieceRule.h"
 #include "rules/IsRound.h"
+#include "rules/JumpOverNeighbours.h"
 
 using namespace std;
 
@@ -171,9 +172,12 @@ Game::Game() {
     ant_movement->add_applicable_bit("Ant");
     //TODO: create the proper movement rules for the Beetle
     ant_movement->add_applicable_bit("Beetle");
-    //TODO: create the proper movement rules for the GrassHooper
-    ant_movement->add_applicable_bit("GrassHooper");
     _rules_manager.get()->add_static_rule(ant_movement);
+
+    shared_ptr<JumpOverNeighbours> grass_hooper_movement = make_shared<JumpOverNeighbours>();
+    grass_hooper_movement->set_usage(e_movement_rule);
+    grass_hooper_movement->add_applicable_bit("GrassHooper");
+    _rules_manager->add_static_rule(grass_hooper_movement);
 
 }
 

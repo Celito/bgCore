@@ -18,7 +18,7 @@ bool Action::self_resolve() {
     if(!_initialized) throw new exception();
     if(_options.size() == 0) throw new exception();
 
-    if(_options.size() == 1){
+    if(_can_self_resolve && _options.size() == 1){
         choose(_options[0]);
         return true;
     }
@@ -71,4 +71,8 @@ void Action::init() {
     if(_initialized) throw new exception();
     _definition.lock()->init(*this);
     _initialized = true;
+}
+
+void Action::set_self_resolvable(bool self_resolvable) {
+    _can_self_resolve = self_resolvable;
 }

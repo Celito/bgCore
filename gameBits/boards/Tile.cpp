@@ -58,3 +58,11 @@ void Tile::clear_neighbours() {
         }
     }
 }
+
+uint32_t Tile::get_direction_of(TilePos neighbour_pos) {
+    TilePos direction_to_neighbour = neighbour_pos - _pos;
+    for (uint32_t i = 0; i < _directions.size(); ++i) {
+        if(direction_to_neighbour == _directions[i]) return i;
+    }
+    throw new exception();
+}

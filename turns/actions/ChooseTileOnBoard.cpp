@@ -22,6 +22,7 @@ string ChooseTileOnBoard::get_description() const {
 
 void ChooseTileOnBoard::update_options(Action &action) {
 
+    action.set_self_resolvable(false);
     shared_ptr<Board> target_board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(action.get_req_bit(e_board));
     shared_ptr<Piece> piece = (shared_ptr<Piece>)dynamic_pointer_cast<Piece>(action.get_req_bit(e_piece));
 

@@ -49,10 +49,13 @@ public:
 
     shared_ptr<Option> get_choose_opt() const;
 
+    void set_self_resolvable(bool self_resolvable);
+
     boost::signals2::connection on_option_taken(boost::signals2::slot<void(shared_ptr<Option>)> slot);
 
 private:
     bool _initialized;
+    bool _can_self_resolve = true;
     weak_ptr<Turn> _turn;
     weak_ptr<ActionDef> _definition;
     weak_ptr<Option> _choose_option;

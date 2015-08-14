@@ -16,7 +16,6 @@ public:
 
     virtual string get_description() const override;
 
-
     virtual action_type_e get_type() override;
 
     virtual bool is_available(shared_ptr<Player> player);

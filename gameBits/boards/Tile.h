@@ -41,6 +41,8 @@ public:
     int32_t x() const { return _pos.x(); }
     int32_t y() const { return _pos.y(); }
 
+    uint32_t get_direction_of(TilePos neighbour_pos);
+
     boost::signals2::connection on_piece_received(boost::signals2::slot<void(Tile &)> slot) {
         return _piece_received.connect(slot);
     }
