@@ -38,6 +38,8 @@ Game::Game() {
     _attr_manager = make_shared<AttrManager>();
     _rules_manager = make_shared<RulesManager>();
 
+    _is_over = false;
+
     // TEMP starting to manual load the game configuration
     _num_of_players = 2;
     string PLAYER_PIECES = "PiecesSet";
@@ -111,8 +113,6 @@ Game::Game() {
     normal_turn->add_action_def(first_action);
 
     _turns_manager->register_turn_def(normal_turn);
-
-    _is_over = false;
 
     // TEMP adding the rules to the rules dictionary
 

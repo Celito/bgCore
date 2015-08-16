@@ -22,6 +22,8 @@ public:
 
 private:
     GameTUI &_gameTUI;
+
+    void print_opts(const shared_ptr<Action> &action, const vector<shared_ptr<Option>> &options) const;
 };
 
 

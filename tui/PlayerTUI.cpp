@@ -20,15 +20,13 @@ void PlayerTUI::resolve_action(shared_ptr<Action> action) {
     shared_ptr<PlayerInterface> my_player = get_interface().lock();
     cout << "============ " << (my_player->get_id() == 1? "-WHITE-" : "<BLACK>") << " PLAYER TURN =============" << endl;
     vector<shared_ptr<Option>> const &options = action->get_options();
+    print_opts(action, options);
     if(action->get_type() == e_choose_tile) {
         shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(action->get_req_bit(e_board));
         if(board != nullptr){
+            cout << "=======================================================" << endl;
             print_board(options, board);
         }
-    }
-    cout << action->get_description() << ":" << endl;
-    for (int i = 0; i < options.size(); ++i) {
-        cout << i << ") " << options[i]->get_description() << endl;
     }
     int32_t option_id = _gameTUI.get_next_pre_loaded_option();
     if(option_id == -1) {
@@ -42,6 +40,34 @@ void PlayerTUI::resolve_action(shared_ptr<Action> action) {
         cout << option_id << endl;
     }
     action->choose(options[option_id]);
+}
+
+void PlayerTUI::print_opts(const shared_ptr<Action> &action, const vector<shared_ptr<Option>> &options) const {
+    cout << action->get_description() << ":" << endl;
+    queue<string> opts_str;
+    uint16_t biggest_opt_str = 0;
+    for (int i = 0; i < options.size(); ++i) {
+        const string &opt_str = options[i]->get_description();
+        if(opt_str.size() > biggest_opt_str) biggest_opt_str = (uint16_t) opt_str.size();
+        opts_str.push(opt_str);
+    }
+    uint16_t opts_size = (uint16_t) (biggest_opt_str + 6);
+    const int max_per_line = 79;
+    uint16_t opts_per_line = (uint16_t) (max_per_line / opts_size);
+    uint16_t chars_left = (uint16_t) (max_per_line - (opts_per_line * (biggest_opt_str + 6)));
+    uint16_t lines = (uint16_t) ((opts_str.size() / opts_per_line) + 1);
+    uint16_t k = 0;
+    for (int j = 0; j < lines; ++j) {
+        for (int i = 0; i < opts_per_line && !opts_str.empty(); ++i) {
+            cout << k << ") ";
+            k++;
+            cout.width(biggest_opt_str + 3 + (chars_left / opts_per_line));
+            cout << left << opts_str.front();
+            opts_str.pop();
+            cout.width(0);
+        }
+        cout << endl;
+    }
 }
 
 void PlayerTUI::print_board(const vector<shared_ptr<Option>> &options, const shared_ptr<Board> &board) const {
