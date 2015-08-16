@@ -7,13 +7,13 @@
 
 #include "../../gameBits/BitReference.h"
 #include "ActionDef.h"
-#include "../../gameBits/boards/Board.h"
 #include "ChoosePieceOnBoard.h"
-#include "ChooseTileOnBoard.h"
+
+class ChooseTileOnBoard;
 
 class MovePieceOnBoard : public ChoosePieceOnBoard {
 public:
-    MovePieceOnBoard(shared_ptr<BitReference> target_board);
+    MovePieceOnBoard(Game &game, shared_ptr<BitReference> target_board);
 
     virtual void update_options(Action &action) override;
 

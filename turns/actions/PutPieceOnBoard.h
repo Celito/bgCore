@@ -15,7 +15,7 @@ class ChooseTileOnBoard;
 
 class PutPieceOnBoard : public ChoosePieceOnSet {
 public:
-    PutPieceOnBoard(shared_ptr<BitReference> pieces_pool, shared_ptr<BitReference> target_board);
+    PutPieceOnBoard(Game &game, shared_ptr<BitReference> pieces_pool, shared_ptr<BitReference> target_board);
 
     virtual string get_description() const override;
 

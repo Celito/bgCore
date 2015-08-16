@@ -26,6 +26,7 @@
 #include "rules/IsRound.h"
 #include "rules/JumpOverNeighbours.h"
 #include "rules/movement/AlwaysTouching.h"
+#include "rules/OnePiecesGroup.h"
 
 using namespace std;
 
@@ -47,18 +48,21 @@ Game::Game() {
     string HEX_BOARD_NAME = "Table";
 
     // TEMP vector with the quantity of each piece on the set and its bit id
-    vector<pair<uint32_t , string> > pieces_info =
-    {
-        {1, "Queen"},
-        {2, "Beetle"},
-        {2, "Spider"},
-        {3, "GrassHooper"},
-        {3, "Ant"},
+    string GRASSHOPPER_ID = "Grasshopper";
+    string QUEEN_ID = "Queen";
+    string BEETLE_ID = "Beetle";
+    string SPIDER_ID = "Spider";
+    string ANT_ID = "Ant";
+
+    vector<pair<uint32_t , string> > pieces_info = {
+        {1, QUEEN_ID},
+        {2, BEETLE_ID},
+        {2, SPIDER_ID},
+        {3, GRASSHOPPER_ID},
+        {3, ANT_ID},
     };
 
     // TEMP creating the game pieces and making its setup
-
-    //TODO: create the group of pieces
 
     //TODO: separate the bits loading from the game setup
 
@@ -92,19 +96,18 @@ Game::Game() {
     register_new_bit(board);
 
     // TEMP create the normal turn with the possible actions in it;
-
-    //TODO: create the turn structure
     shared_ptr<TurnDef> normal_turn = make_shared<TurnDef>();
 
     auto put_piece_on_board =
             make_shared<PutPieceOnBoard>(
+                    *this,
                     make_shared<BitReference>(PLAYER_PIECES, *this, true),
                     make_shared<BitReference>(HEX_BOARD_NAME, *this)
             );
     auto move_piece_on_board =
-            make_shared<MovePieceOnBoard>(make_shared<BitReference>(HEX_BOARD_NAME, *this));
+            make_shared<MovePieceOnBoard>(*this, make_shared<BitReference>(HEX_BOARD_NAME, *this));
 
-    auto first_action = make_shared<MultiActions>();
+    auto first_action = make_shared<MultiActions>(*this);
 
     first_action->add_sub_action(put_piece_on_board);
 
@@ -117,36 +120,44 @@ Game::Game() {
     // TEMP adding the rules to the rules dictionary
 
     //TODO: make possible to add rules to a set of bits (like "all Pieces")
-    //TODO: add the e_movement_enable_rule that does not allow the player to split the hive
-    //TODO: create events to allow the game to add and remove rules after a certain amount of rounds
+    //TODO: add the rule that the queen must be placed on game if it is the 4th round
 
     shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);
     is_player_color->set_tested_attr(COLOR_ATTR);
     is_player_color->set_bit_type(e_piece);
     is_player_color->set_usage(e_movement_enable_rule);
-    is_player_color->add_applicable_bit("Queen");
-    is_player_color->add_applicable_bit("Spider");
-    is_player_color->add_applicable_bit("Ant");
-    is_player_color->add_applicable_bit("Beetle");
-    is_player_color->add_applicable_bit("GrassHooper");
+    is_player_color->add_applicable_bit(QUEEN_ID);
+    is_player_color->add_applicable_bit(SPIDER_ID);
+    is_player_color->add_applicable_bit(ANT_ID);
+    is_player_color->add_applicable_bit(BEETLE_ID);
+    is_player_color->add_applicable_bit(GRASSHOPPER_ID);
     _rules_manager.get()->add_static_rule(is_player_color);
+
+    shared_ptr<OnePiecesGroup> is_one_hive = make_shared<OnePiecesGroup>(*this);
+    is_one_hive->set_usage(e_movement_enable_rule);
+    is_one_hive->add_applicable_bit(QUEEN_ID);
+    is_one_hive->add_applicable_bit(SPIDER_ID);
+    is_one_hive->add_applicable_bit(ANT_ID);
+    is_one_hive->add_applicable_bit(BEETLE_ID);
+    is_one_hive->add_applicable_bit(GRASSHOPPER_ID);
+    _rules_manager->add_static_rule(is_one_hive);
 
     shared_ptr<IsEmpty> is_tile_empty = make_shared<IsEmpty>(*this);
     is_tile_empty->set_usage(e_placement_rule);
-    is_tile_empty->add_applicable_bit("Queen");
-    is_tile_empty->add_applicable_bit("Spider");
-    is_tile_empty->add_applicable_bit("Ant");
-    is_tile_empty->add_applicable_bit("Beetle");
-    is_tile_empty->add_applicable_bit("GrassHooper");
+    is_tile_empty->add_applicable_bit(QUEEN_ID);
+    is_tile_empty->add_applicable_bit(SPIDER_ID);
+    is_tile_empty->add_applicable_bit(ANT_ID);
+    is_tile_empty->add_applicable_bit(BEETLE_ID);
+    is_tile_empty->add_applicable_bit(GRASSHOPPER_ID);
     _rules_manager.get()->add_static_rule(is_tile_empty);
 
     shared_ptr<TouchAnotherPieceRule> touch_any_piece = make_shared<TouchAnotherPieceRule>(*this);
     touch_any_piece->set_usage(e_placement_rule);
-    touch_any_piece->add_applicable_bit("Queen");
-    touch_any_piece->add_applicable_bit("Spider");
-    touch_any_piece->add_applicable_bit("Ant");
-    touch_any_piece->add_applicable_bit("Beetle");
-    touch_any_piece->add_applicable_bit("GrassHooper");
+    touch_any_piece->add_applicable_bit(QUEEN_ID);
+    touch_any_piece->add_applicable_bit(SPIDER_ID);
+    touch_any_piece->add_applicable_bit(ANT_ID);
+    touch_any_piece->add_applicable_bit(BEETLE_ID);
+    touch_any_piece->add_applicable_bit(GRASSHOPPER_ID);
     shared_ptr<IsRound> is_second_round = make_shared<IsRound>(*this);
     is_second_round->is_bigger_then(1);
     shared_ptr<TimedCondition> is_second_round_cond = make_shared<TimedCondition>(*this);
@@ -157,11 +168,11 @@ Game::Game() {
     not_touch_another_color_piece->set_usage(e_placement_rule);
     not_touch_another_color_piece->set_reverse(true);
     not_touch_another_color_piece->add_compared_player_attr("Color", false);
-    not_touch_another_color_piece->add_applicable_bit("Queen");
-    not_touch_another_color_piece->add_applicable_bit("Spider");
-    not_touch_another_color_piece->add_applicable_bit("Ant");
-    not_touch_another_color_piece->add_applicable_bit("Beetle");
-    not_touch_another_color_piece->add_applicable_bit("GrassHooper");
+    not_touch_another_color_piece->add_applicable_bit(QUEEN_ID);
+    not_touch_another_color_piece->add_applicable_bit(SPIDER_ID);
+    not_touch_another_color_piece->add_applicable_bit(ANT_ID);
+    not_touch_another_color_piece->add_applicable_bit(BEETLE_ID);
+    not_touch_another_color_piece->add_applicable_bit(GRASSHOPPER_ID);
     _rules_manager->add_conditioned_rule(not_touch_another_color_piece, is_second_round_cond);
 
     shared_ptr<AlwaysTouching> always_touching = make_shared<AlwaysTouching>();
@@ -169,7 +180,7 @@ Game::Game() {
     shared_ptr<MovementFilterRule> queen_movement = make_shared<MovementFilterRule>();
     queen_movement->set_max_steps(1);
     queen_movement->set_usage(e_movement_rule);
-    queen_movement->add_applicable_bit("Queen");
+    queen_movement->add_applicable_bit(QUEEN_ID);
     queen_movement->add_movement_sub_rule(always_touching);
     _rules_manager.get()->add_static_rule(queen_movement);
 
@@ -177,21 +188,21 @@ Game::Game() {
     spider_movement->set_max_steps(3);
     spider_movement->set_min_steps(3);
     spider_movement->set_usage(e_movement_rule);
-    spider_movement->add_applicable_bit("Spider");
+    spider_movement->add_applicable_bit(SPIDER_ID);
     spider_movement->add_movement_sub_rule(always_touching);
     _rules_manager.get()->add_static_rule(spider_movement);
 
     shared_ptr<MovementFilterRule> ant_movement = make_shared<MovementFilterRule>();
     ant_movement->set_usage(e_movement_rule);
-    ant_movement->add_applicable_bit("Ant");
+    ant_movement->add_applicable_bit(ANT_ID);
     //TODO: create the proper movement rules for the Beetle
-    ant_movement->add_applicable_bit("Beetle");
+    ant_movement->add_applicable_bit(BEETLE_ID);
     ant_movement->add_movement_sub_rule(always_touching);
     _rules_manager.get()->add_static_rule(ant_movement);
 
     shared_ptr<JumpOverNeighbours> grass_hooper_movement = make_shared<JumpOverNeighbours>();
     grass_hooper_movement->set_usage(e_movement_rule);
-    grass_hooper_movement->add_applicable_bit("GrassHooper");
+    grass_hooper_movement->add_applicable_bit(GRASSHOPPER_ID);
     grass_hooper_movement->add_movement_sub_rule(always_touching);
     _rules_manager->add_static_rule(grass_hooper_movement);
 

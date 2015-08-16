@@ -12,7 +12,7 @@ class BitReference;
 
 class ChoosePieceOnSet : public ActionDef {
 public:
-    ChoosePieceOnSet(shared_ptr<BitReference> pieces_pool);
+    ChoosePieceOnSet(Game &game, shared_ptr<BitReference> pieces_pool);
 
     virtual bool is_available(shared_ptr<Player> player);
 

@@ -10,7 +10,7 @@
 
 class ChooseTileOnBoard : public ActionDef {
 public:
-    ChooseTileOnBoard(shared_ptr<BitReference> target);
+    ChooseTileOnBoard(Game &game, shared_ptr<BitReference> target);
 
     virtual void update_options(Action &action) override;
 

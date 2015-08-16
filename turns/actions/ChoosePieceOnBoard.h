@@ -10,7 +10,7 @@
 
 class ChoosePieceOnBoard : public ActionDef {
 public:
-    ChoosePieceOnBoard(shared_ptr<BitReference> target_board);
+    ChoosePieceOnBoard(Game &game, shared_ptr<BitReference> target_board);
 
     virtual void update_options(Action &action) override;
 

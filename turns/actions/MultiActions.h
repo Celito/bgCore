@@ -13,6 +13,8 @@ using namespace std;
 class MultiActions : public ActionDef {
 public:
 
+    MultiActions(Game &game) : ActionDef(game) { }
+
     void add_sub_action(shared_ptr<ActionDef> action);
 
     virtual void update_options(Action &action) override;

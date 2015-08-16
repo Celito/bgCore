@@ -10,5 +10,6 @@ bool IsEmpty::test() {
     if(_required_bits[e_tile].expired()) throw new exception();
     shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(_required_bits[e_tile].lock());
 
+    _required_bits.clear();
     return tile->is_empty();
 }

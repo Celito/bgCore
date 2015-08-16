@@ -8,7 +8,7 @@
 #include "../../gameBits/BitReference.h"
 #include "options/BitOption.h"
 
-ChoosePieceOnSet::ChoosePieceOnSet(shared_ptr<BitReference> pieces_pool) {
+ChoosePieceOnSet::ChoosePieceOnSet(Game &game, shared_ptr<BitReference> pieces_pool) : ActionDef(game) {
     _bit_refs[e_piece_set] = pieces_pool;
 }
 
@@ -26,7 +26,6 @@ void ChoosePieceOnSet::update_options(Action &action) {
     //TODO: Need to test rules that could filter this options;
     vector< shared_ptr<Piece> > pieces = pieces_pool->get_available_pieces();
     for(auto iter = pieces.begin(); iter != pieces.end(); iter++) {
-        //TODO: Test if the concat action is available
         action.add_option(make_shared<BitOption>((*iter)));
     }
 }

@@ -8,6 +8,7 @@
 
 bool IsRound::test() {
     uint32_t round = _game.turns_manager()->round();
+    _required_bits.clear();
     return round > _min_round;
 }
 

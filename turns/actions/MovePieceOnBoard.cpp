@@ -4,6 +4,7 @@
 
 #include <c++/iostream>
 #include "MovePieceOnBoard.h"
+#include "../../gameBits/boards/Board.h"
 #include "../../gameBits/boards/Tile.h"
 #include "options/BitOption.h"
 #include "../Turn.h"
@@ -11,9 +12,11 @@
 #include "../../rules/PlayerAttrComparison.h"
 #include "../../rules/RulesManager.h"
 #include "options/TileOption.h"
+#include "ChooseTileOnBoard.h"
 
-MovePieceOnBoard::MovePieceOnBoard(shared_ptr<BitReference> target_board) : ChoosePieceOnBoard(target_board) {
-    _choose_tile_on_board = make_shared<ChooseTileOnBoard>(target_board);
+MovePieceOnBoard::MovePieceOnBoard(Game &game, shared_ptr<BitReference> target_board) :
+        ChoosePieceOnBoard(game, target_board) {
+    _choose_tile_on_board = make_shared<ChooseTileOnBoard>(_game, target_board);
     _choose_tile_on_board->set_reason(e_for_movement);
 }
 
@@ -41,6 +44,7 @@ void MovePieceOnBoard::update_options(Action &action) {
             shared_ptr<TestableRule> enable_to_move =
                     (shared_ptr<TestableRule>)dynamic_pointer_cast<TestableRule>(rule_ptr);
             enable_to_move->add_req_bit(e_piece, piece);
+            enable_to_move->add_req_bit(e_tile, tile);
             can_be_moved &= enable_to_move->test();
             if(!can_be_moved) break;
         }
@@ -110,6 +114,7 @@ bool MovePieceOnBoard::is_available(shared_ptr<Player> player) {
             shared_ptr<TestableRule> enable_to_move =
                     (shared_ptr<TestableRule>)dynamic_pointer_cast<TestableRule>(rule_ptr);
             enable_to_move->add_req_bit(e_piece, piece);
+            enable_to_move->add_req_bit(e_tile, tile);
             enable_to_move->set_curr_player(player);
             if(!enable_to_move->test()){
                 can_be_moved = false;

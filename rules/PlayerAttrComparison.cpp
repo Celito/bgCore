@@ -21,7 +21,9 @@ bool PlayerAttrComparison::test() {
     shared_ptr<Player> player_ptr = _player.lock();
     uint32_t player_attr = player_ptr->get_attr(_attr_id).get_value();
     uint32_t bit_attr = bit->get_attr(_attr_id).get_value();
-    
+
+    _required_bits.clear();
+
     return player_attr == bit_attr;
 }
 

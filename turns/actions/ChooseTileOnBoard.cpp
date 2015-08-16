@@ -12,7 +12,7 @@
 #include "../../rules/MovementFilterRule.h"
 #include "../../rules/RulesManager.h"
 
-ChooseTileOnBoard::ChooseTileOnBoard(shared_ptr<BitReference> target) {
+ChooseTileOnBoard::ChooseTileOnBoard(Game &game, shared_ptr<BitReference> target) : ActionDef(game) {
     _bit_refs[e_board] = target;
 }
 

@@ -13,9 +13,10 @@
 #include "../../Game.h"
 #include "options/TileOption.h"
 
-PutPieceOnBoard::PutPieceOnBoard(shared_ptr<BitReference> pieces_pool, shared_ptr<BitReference> target_board) :
-        ChoosePieceOnSet(pieces_pool) {
-    _choose_tile_on_board = make_shared<ChooseTileOnBoard>(target_board);
+PutPieceOnBoard::PutPieceOnBoard(Game &game, shared_ptr<BitReference> pieces_pool,
+                                 shared_ptr<BitReference> target_board)
+        : ChoosePieceOnSet(game, pieces_pool) {
+    _choose_tile_on_board = make_shared<ChooseTileOnBoard>(_game, target_board);
 }
 
 string PutPieceOnBoard::get_description() const {

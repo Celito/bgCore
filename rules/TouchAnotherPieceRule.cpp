@@ -33,6 +33,7 @@ bool TouchAnotherPieceRule::test() {
         if(touching) break;
     }
     bool result = _do_not_touch == !touching;
+    _required_bits.clear();
     return result;
 }
 
