@@ -12,6 +12,10 @@ bool OnePiecesGroup::test() {
 
     shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(_required_bits[e_tile].lock());
 
+    // If the pieces stack is bigger then 1, moving the top piece would not split the group
+    if(tile->get_children().size() > 1)
+        return true;
+
     deque<shared_ptr<Tile>> occupied_neighbours;
 
     for (uint32_t i = 0; i < tile->get_num_of_directions(); ++i){

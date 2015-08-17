@@ -58,7 +58,7 @@ void MovementFilterRule::set_min_steps(uint32_t value) {
 }
 
 bool MovementFilterRule::opt_can_be_processed(const shared_ptr<TileOption> &opt) const {
-    bool result = opt->get_tile()->is_empty();
+    bool result = true;
     for (auto sub_rule : _movement_sub_rules) {
         result &= sub_rule.get()->opt_can_be_processed(opt);
     }

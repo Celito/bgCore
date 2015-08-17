@@ -9,6 +9,7 @@
 
 bool AlwaysTouching::opt_can_be_processed(const shared_ptr<TileOption> &analyzed_option) {
     shared_ptr<Tile> next = analyzed_option.get()->get_tile();
+    if(!next->is_empty()) return true;
     const vector<weak_ptr<Tile>> &path = analyzed_option->get_path();
     if(path.size() < 2) return false;
     const weak_ptr<Tile> &previous_w = path[path.size() - 2];

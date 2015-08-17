@@ -20,7 +20,6 @@ TurnsManager::TurnsManager(Game &game) : _game(game) {
 
 void TurnsManager::next_turn() {
     //TODO: add the configuration option to allow a player to skip a turn or not
-    //TODO: change the players order if defined by the game
 
     cout << "====== PLAYER " << _curr_player_id + 1 << " TURN STARTED ========" << endl;
     auto curr_player = _game.get_player(_curr_player_id);

@@ -27,6 +27,7 @@
 #include "rules/JumpOverNeighbours.h"
 #include "rules/movement/AlwaysTouching.h"
 #include "rules/OnePiecesGroup.h"
+#include "rules/movement/CanStack.h"
 
 using namespace std;
 
@@ -121,6 +122,7 @@ Game::Game() {
 
     //TODO: make possible to add rules to a set of bits (like "all Pieces")
     //TODO: add the rule that the queen must be placed on game if it is the 4th round
+    //TODO: add the victory condition
 
     shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);
     is_player_color->set_tested_attr(COLOR_ATTR);
@@ -176,12 +178,14 @@ Game::Game() {
     _rules_manager->add_conditioned_rule(not_touch_another_color_piece, is_second_round_cond);
 
     shared_ptr<AlwaysTouching> always_touching = make_shared<AlwaysTouching>();
-    
+    shared_ptr<CanStack> cannot_stack = make_shared<CanStack>(false);
+
     shared_ptr<MovementFilterRule> queen_movement = make_shared<MovementFilterRule>();
     queen_movement->set_max_steps(1);
     queen_movement->set_usage(e_movement_rule);
     queen_movement->add_applicable_bit(QUEEN_ID);
     queen_movement->add_movement_sub_rule(always_touching);
+    queen_movement->add_movement_sub_rule(cannot_stack);
     _rules_manager.get()->add_static_rule(queen_movement);
 
     shared_ptr<MovementFilterRule> spider_movement = make_shared<MovementFilterRule>();
@@ -190,20 +194,26 @@ Game::Game() {
     spider_movement->set_usage(e_movement_rule);
     spider_movement->add_applicable_bit(SPIDER_ID);
     spider_movement->add_movement_sub_rule(always_touching);
+    spider_movement->add_movement_sub_rule(cannot_stack);
     _rules_manager.get()->add_static_rule(spider_movement);
 
     shared_ptr<MovementFilterRule> ant_movement = make_shared<MovementFilterRule>();
     ant_movement->set_usage(e_movement_rule);
     ant_movement->add_applicable_bit(ANT_ID);
-    //TODO: create the proper movement rules for the Beetle
-    ant_movement->add_applicable_bit(BEETLE_ID);
     ant_movement->add_movement_sub_rule(always_touching);
+    ant_movement->add_movement_sub_rule(cannot_stack);
     _rules_manager.get()->add_static_rule(ant_movement);
+
+    shared_ptr<MovementFilterRule> beetle_movement = make_shared<MovementFilterRule>();
+    beetle_movement->set_max_steps(1);
+    beetle_movement->set_usage(e_movement_rule);
+    beetle_movement->add_applicable_bit(BEETLE_ID);
+    beetle_movement->add_movement_sub_rule(always_touching);
+    _rules_manager->add_static_rule(beetle_movement);
 
     shared_ptr<JumpOverNeighbours> grass_hooper_movement = make_shared<JumpOverNeighbours>();
     grass_hooper_movement->set_usage(e_movement_rule);
     grass_hooper_movement->add_applicable_bit(GRASSHOPPER_ID);
-    grass_hooper_movement->add_movement_sub_rule(always_touching);
     _rules_manager->add_static_rule(grass_hooper_movement);
 
 }
