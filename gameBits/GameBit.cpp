@@ -8,6 +8,7 @@
 #include "../BitsManager.h"
 #include "../player/Player.h"
 #include "../turns/State.h"
+#include "attributes/AttrManager.h"
 
 using namespace std;
 
@@ -21,12 +22,12 @@ uint32_t GameBit::get_unique_id() const {
 }
 
 void GameBit::set_attr(string id, uint32_t value) {
-    if(!_game.get_attr()->is_registered(id)) _game.get_attr()->register_id(id);
-    _attributes[_game.get_attr()->get_id(id)] = Attribute(value);
+    if(!_game.attr_manager()->is_registered(id)) _game.attr_manager()->register_id(id);
+    _attributes[_game.attr_manager()->get_id(id)] = Attribute(value);
 }
 
 Attribute GameBit::get_attr(string id) const {
-    return get_attr(_game.get_attr()->get_id(id));
+    return get_attr(_game.attr_manager()->get_id(id));
 }
 
 Attribute GameBit::get_attr(uint32_t id) const {

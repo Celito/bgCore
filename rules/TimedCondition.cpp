@@ -3,12 +3,13 @@
 //
 
 #include "TimedCondition.h"
-#include "../Game.h"
 #include "../turns/TurnsManager.h"
 
-TimedCondition::TimedCondition(Game &game): _game(game) {
-    //every game turn the condition check to see if it was satisfied or unsatisfied;
-    _game.turns_manager()->on_round_changed([this](uint32_t turn){
+TimedCondition::TimedCondition(Game &game):TimedCondition(game, e_round_changed) {}
+
+TimedCondition::TimedCondition(Game &game, common_events_t check_on) : _game(game), _check_on(check_on) {
+    //every event [check_on] the condition check to see if it was satisfied or unsatisfied;
+    _game.event_manager()->on_common_event(_check_on, [this](){
         bool is_satisfied = true;
         for (auto condition : _conditions) {
             if(!condition->test()){

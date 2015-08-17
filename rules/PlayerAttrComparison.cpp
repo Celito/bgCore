@@ -5,10 +5,11 @@
 #include "PlayerAttrComparison.h"
 #include "../Game.h"
 #include "../turns/actions/ActionDef.h"
+#include "../gameBits/attributes/AttrManager.h"
 
 
 void PlayerAttrComparison::set_tested_attr(string attr) {
-    _attr_id = _game.get_attr().get()->register_id(attr);
+    _attr_id = _game.attr_manager()->register_id(attr);
 }
 
 bool PlayerAttrComparison::test() {

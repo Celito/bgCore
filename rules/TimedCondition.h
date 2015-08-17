@@ -8,6 +8,7 @@
 #include <iostream>
 #include <boost/signals2.hpp>
 #include "TestableRule.h"
+#include "../events/EventManager.h"
 
 class Game;
 
@@ -17,6 +18,8 @@ class TimedCondition {
 public:
     TimedCondition(Game& game);
 
+    TimedCondition(Game& game, common_events_t check_on);
+
     void add_condition(shared_ptr<TestableRule> condition);
 
     boost::signals2::connection on_satisfied(boost::signals2::slot<void()> slot);
@@ -25,6 +28,8 @@ public:
 
 private:
     vector<shared_ptr<TestableRule>> _conditions;
+
+    common_events_t _check_on;
 
     Game &_game;
 

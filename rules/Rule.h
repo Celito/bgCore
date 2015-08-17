@@ -11,8 +11,8 @@
 enum rule_usage_t {
     e_not_specified,
     e_movement_rule,
-    e_placement_rule,
-    e_movement_enable_rule
+    e_movement_enable_rule,
+    e_placement_rule
 };
 
 using namespace std;

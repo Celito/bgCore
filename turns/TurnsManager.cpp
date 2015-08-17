@@ -47,10 +47,11 @@ void TurnsManager::next_turn() {
     }
 
     _match_turns.push_back(_curr_turn);
+    _turn_changed();
 
     if(round_ended) {
         _curr_round++;
-        _round_changed(_curr_round);
+        _round_changed();
     }
 }
 
@@ -62,10 +63,14 @@ const shared_ptr<State> &TurnsManager::get_curr_state() {
     return _curr_state;
 }
 
-boost::signals2::connection TurnsManager::on_round_changed(boost::signals2::slot<void(uint32_t)> slot) {
+boost::signals2::connection TurnsManager::on_round_changed(boost::signals2::slot<void()> slot) {
     return _round_changed.connect(slot);
 }
 
 uint32_t TurnsManager::round() {
     return _curr_round;
+}
+
+boost::signals2::connection TurnsManager::on_turn_changed(boost::signals2::slot<void()> slot) {
+    return _turn_changed.connect(slot);
 }

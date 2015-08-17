@@ -31,7 +31,9 @@ public:
 
     uint32_t round();
 
-    boost::signals2::connection on_round_changed(boost::signals2::slot<void(uint32_t)> slot);
+    boost::signals2::connection on_round_changed(boost::signals2::slot<void()> slot);
+
+    boost::signals2::connection on_turn_changed(boost::signals2::slot<void()> slot);
 
 private:
     Game &_game;
@@ -45,7 +47,8 @@ private:
     shared_ptr<Action> _curr_action;
     shared_ptr<State> _curr_state;
 
-    boost::signals2::signal<void(uint32_t)> _round_changed;
+    boost::signals2::signal<void()> _turn_changed;
+    boost::signals2::signal<void()> _round_changed;
 };
 
 

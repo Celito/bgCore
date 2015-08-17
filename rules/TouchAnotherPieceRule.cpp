@@ -4,6 +4,7 @@
 
 #include "TouchAnotherPieceRule.h"
 #include "../Game.h"
+#include "../gameBits/attributes/AttrManager.h"
 #include "../gameBits/boards/Tile.h"
 #include "../player/Player.h"
 
@@ -38,6 +39,6 @@ bool TouchAnotherPieceRule::test() {
 }
 
 void TouchAnotherPieceRule::add_compared_player_attr(string attr, bool have_to_match) {
-    uint32_t attr_id = _game.get_attr().get()->register_id(attr);
+    uint32_t attr_id = _game.attr_manager()->register_id(attr);
     _compared_attrs_player.push_back(pair<uint32_t, bool>(attr_id, have_to_match));
 }

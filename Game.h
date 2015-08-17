@@ -9,7 +9,6 @@
 #include <memory>
 #include <map>
 #include <boost/signals2.hpp>
-#include "gameBits/attributes/AttrManager.h"
 
 class Player;
 class BitsManager;
@@ -17,6 +16,8 @@ class ConfigManager;
 class GameBit;
 class TurnsManager;
 class RulesManager;
+class EventManager;
+class AttrManager;
 class PlayerController;
 class GameController;
 class State;
@@ -39,13 +40,15 @@ public:
 
     void register_new_bit(shared_ptr<GameBit> bit);
 
-    shared_ptr<AttrManager> get_attr() const { return  _attr_manager; }
+    const shared_ptr<AttrManager> &attr_manager() const { return  _attr_manager; }
 
     const shared_ptr<BitsManager> &bits_manager() const { return _bits_manager; }
 
     const shared_ptr<RulesManager> &rules_manager() const { return _rules_manager; }
 
     const shared_ptr<TurnsManager> &turns_manager() const { return _turns_manager; }
+
+    const shared_ptr<EventManager> &event_manager() const { return _event_manager; }
 
     const shared_ptr<State> &curr_state();
 
@@ -62,6 +65,7 @@ private:
     shared_ptr<TurnsManager> _turns_manager;
     shared_ptr<RulesManager> _rules_manager;
     shared_ptr<AttrManager> _attr_manager;
+    shared_ptr<EventManager> _event_manager;
 
     // important game events
     boost::signals2::signal<void()> _initialize_pieces;

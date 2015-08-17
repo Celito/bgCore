@@ -28,6 +28,7 @@
 #include "rules/movement/AlwaysTouching.h"
 #include "rules/OnePiecesGroup.h"
 #include "rules/movement/CanStack.h"
+#include "gameBits/attributes/AttrManager.h"
 
 using namespace std;
 
@@ -39,6 +40,7 @@ Game::Game() {
     _turns_manager = make_shared<TurnsManager>(*this);
     _attr_manager = make_shared<AttrManager>();
     _rules_manager = make_shared<RulesManager>();
+    _event_manager = make_shared<EventManager>(*this);
 
     _is_over = false;
 
@@ -55,12 +57,12 @@ Game::Game() {
     string SPIDER_ID = "Spider";
     string ANT_ID = "Ant";
 
-    vector<pair<uint32_t , string> > pieces_info = {
-        {1, QUEEN_ID},
-        {2, BEETLE_ID},
-        {2, SPIDER_ID},
-        {3, GRASSHOPPER_ID},
-        {3, ANT_ID},
+    vector<pair<uint32_t, string> > pieces_info = {
+            {1, QUEEN_ID},
+            {2, BEETLE_ID},
+            {2, SPIDER_ID},
+            {3, GRASSHOPPER_ID},
+            {3, ANT_ID},
     };
 
     // TEMP creating the game pieces and making its setup
@@ -69,7 +71,7 @@ Game::Game() {
 
     for (uint32_t i = 0; i < _num_of_players; i++) {
 
-        shared_ptr<Player> player = make_shared<Player>(*this, i+1);
+        shared_ptr<Player> player = make_shared<Player>(*this, i + 1);
         register_new_bit(player);
         player->set_attr(COLOR_ATTR, i);
         _players.push_back(player);
@@ -77,10 +79,8 @@ Game::Game() {
         shared_ptr<PieceSet> player_set = make_shared<PieceSet>(*this, PLAYER_PIECES);
         register_new_bit(player_set);
 
-        for(auto iter = pieces_info.begin(); iter != pieces_info.end(); iter++ )
-        {
-            for(uint32_t j = 0; j < iter->first; j++)
-            {
+        for (auto iter = pieces_info.begin(); iter != pieces_info.end(); iter++) {
+            for (uint32_t j = 0; j < iter->first; j++) {
                 shared_ptr<Piece> new_piece = make_shared<Piece>(*this, iter->second);
                 register_new_bit(new_piece);
                 new_piece->set_attr(COLOR_ATTR, i);
@@ -121,6 +121,7 @@ Game::Game() {
     // TEMP adding the rules to the rules dictionary
 
     //TODO: make possible to add rules to a set of bits (like "all Pieces")
+    //TODO: add the rule that you cannot move any piece until the queen is in game
     //TODO: add the rule that the queen must be placed on game if it is the 4th round
     //TODO: add the victory condition
 
@@ -153,6 +154,12 @@ Game::Game() {
     is_tile_empty->add_applicable_bit(GRASSHOPPER_ID);
     _rules_manager.get()->add_static_rule(is_tile_empty);
 
+    // TimedCondition
+    shared_ptr<IsRound> is_second_round = make_shared<IsRound>(*this);
+    is_second_round->is_bigger_then(1);
+    shared_ptr<TimedCondition> is_second_round_cond = make_shared<TimedCondition>(*this);
+    is_second_round_cond->add_condition(is_second_round);
+
     shared_ptr<TouchAnotherPieceRule> touch_any_piece = make_shared<TouchAnotherPieceRule>(*this);
     touch_any_piece->set_usage(e_placement_rule);
     touch_any_piece->add_applicable_bit(QUEEN_ID);
@@ -160,10 +167,6 @@ Game::Game() {
     touch_any_piece->add_applicable_bit(ANT_ID);
     touch_any_piece->add_applicable_bit(BEETLE_ID);
     touch_any_piece->add_applicable_bit(GRASSHOPPER_ID);
-    shared_ptr<IsRound> is_second_round = make_shared<IsRound>(*this);
-    is_second_round->is_bigger_then(1);
-    shared_ptr<TimedCondition> is_second_round_cond = make_shared<TimedCondition>(*this);
-    is_second_round_cond->add_condition(is_second_round);
     _rules_manager->add_conditioned_rule(touch_any_piece, is_second_round_cond);
 
     shared_ptr<TouchAnotherPieceRule> not_touch_another_color_piece = make_shared<TouchAnotherPieceRule>(*this);
@@ -216,16 +219,17 @@ Game::Game() {
     grass_hooper_movement->add_applicable_bit(GRASSHOPPER_ID);
     _rules_manager->add_static_rule(grass_hooper_movement);
 
+
 }
 
 void Game::start(GameController &game_controller) {
     _initialize_pieces();
 
-    for(uint32_t i = 0; i < _players.size(); i++) {
+    for (uint32_t i = 0; i < _players.size(); i++) {
         _players[i]->set_controller(game_controller.get_player_controller(i));
     }
 
-    while(!_is_over) {
+    while (!_is_over) {
         _turns_manager->next_turn();
     }
 }
