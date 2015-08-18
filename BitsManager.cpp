@@ -7,7 +7,10 @@
 
 using namespace std;
 
-BitsManager::BitsManager(Game &game) : _game(game) {}
+BitsManager::BitsManager(Game &game) : _game(game) {
+    // set up default bits ids names:
+    _registered_bits_ids_names.push_back("All");
+}
 
 
 
@@ -29,10 +32,24 @@ shared_ptr<GameBit> BitsManager::get_bit(uint32_t unique_id) {
     return _all_bits[unique_id];
 }
 
-shared_ptr<GameBit> BitsManager::get_first_bit(string bit_id) {
+shared_ptr<GameBit> BitsManager::get_first_bit(string bit_name) {
+    uint32_t bit_id = get_bit_id_by_name(bit_name);
     for (auto bit_entry : _all_bits) {
         if(bit_entry.second != nullptr && bit_entry.second->get_bit_id() == bit_id)
             return bit_entry.second;
     }
     return nullptr;
+}
+
+uint32_t BitsManager::get_bit_id_by_name(string bit_name) {
+    for (uint32_t i = 0; i < _registered_bits_ids_names.size(); ++i) {
+        if(_registered_bits_ids_names[i] == bit_name) return i;
+    }
+    _registered_bits_ids_names.push_back(bit_name);
+    return _registered_bits_ids_names.size() - 1;
+}
+
+const string &BitsManager::get_bit_name_by_id(uint32_t bit_id) const {
+    if(bit_id > _registered_bits_ids_names.size() - 1 ) throw new exception();
+    return _registered_bits_ids_names[bit_id];
 }

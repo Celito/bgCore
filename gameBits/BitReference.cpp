@@ -14,7 +14,7 @@ shared_ptr<GameBit> BitReference::get_bit() {
     {
         throw "Tring to access a bit reference from a not defined player player";
     }
-    return _curr_player->get_bit(_bit_id);
+    return _curr_player->get_first_bit_by_name(_bit_id);
 }
 
 shared_ptr<GameBit> BitReference::get_bit(const shared_ptr<Player> &player) {

@@ -33,7 +33,7 @@ void ChooseTileOnBoard::update_options(Action &action) {
         vector<shared_ptr<Tile> > tiles = target_board->get_tiles();
         // find all available tiles on the board
         const vector< shared_ptr<Rule> > &placement_rules =
-                piece->get_game().rules_manager()->get_rules(e_placement_rule, piece->get_bit_id());
+                _game.rules_manager()->get_rules(e_placement_rule, piece->get_bit_name());
 
         for (auto tile : tiles) {
             bool is_available = true;
@@ -60,7 +60,7 @@ void ChooseTileOnBoard::update_options(Action &action) {
 
         // get all the movement rules and apply them to the options;
         const vector< shared_ptr<Rule> > &movement_rules =
-                piece->get_game().rules_manager()->get_rules(e_movement_rule, piece->get_bit_id());
+                piece->get_game().rules_manager()->get_rules(e_movement_rule, piece->get_bit_name());
 
         if(movement_rules.size() == 0) throw new exception();
 

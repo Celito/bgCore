@@ -21,7 +21,7 @@ class Player : public GameBit {
 public:
     Player(Game &game, unsigned int id);
 
-    shared_ptr<GameBit> get_bit(string bit_id) const;
+    shared_ptr<GameBit> get_first_bit_by_name(string bit_name) const;
 
     shared_ptr<PlayerInterface> get_interface() const {
         return _interface;

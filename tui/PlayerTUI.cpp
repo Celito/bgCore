@@ -130,7 +130,7 @@ void PlayerTUI::print_board(const vector<shared_ptr<Option>> &options, const sha
         else {
             shared_ptr<Piece> piece = tile->get_top_piece();
             uint32_t color = piece->get_attr("Color").get_value();
-            string name = piece->get_bit_id();
+            string name = piece->get_bit_name();
             if(pieces_count[color].count(name) == 0) pieces_count[color][name] = 0;
             else pieces_count[color][name]++;
             uint32_t id = pieces_count[color][name];

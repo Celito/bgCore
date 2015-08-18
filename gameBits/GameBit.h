@@ -25,7 +25,7 @@ enum bit_types_e {
 
 class GameBit {
 public:
-    GameBit(Game &game, string bit_id);
+    GameBit(Game &game, string bit_name);
 
     virtual ~GameBit() {};
 
@@ -39,7 +39,9 @@ public:
 
     void set_attr(string id, uint32_t value);
 
-    const string &get_bit_id() const { return _bit_id; }
+    uint32_t get_bit_id() const { return _bit_id; }
+
+    const string &get_bit_name() const;
 
     shared_ptr<GameBit> get_parent() const;
 
@@ -56,7 +58,7 @@ public:
 protected:
     Game &_game;
     uint32_t _unique_id = 0;
-    string _bit_id;
+    uint32_t _bit_id;
     map<uint32_t, Attribute> _attributes;
 
     virtual void remove(shared_ptr<GameBit> bit);

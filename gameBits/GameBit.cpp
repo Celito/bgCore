@@ -12,9 +12,9 @@
 
 using namespace std;
 
-GameBit::GameBit(Game &game, string bit_id) : _game(game) {
-    _bit_id = bit_id;
+GameBit::GameBit(Game &game, string bit_name) : _game(game) {
     _unique_id = _game.bits_manager()->get_next_unique_id();
+    _bit_id = _game.bits_manager()->get_bit_id_by_name(bit_name);
 }
 
 uint32_t GameBit::get_unique_id() const {
@@ -56,4 +56,8 @@ const vector<weak_ptr<GameBit> > &GameBit::get_children() const {
 
 void GameBit::remove(shared_ptr<GameBit> bit) {
     _game.curr_state()->remove_from_parent(_unique_id, bit);
+}
+
+const string &GameBit::get_bit_name() const {
+    return _game.bits_manager()->get_bit_name_by_id(_bit_id);
 }

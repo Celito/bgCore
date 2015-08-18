@@ -120,6 +120,11 @@ Game::Game() {
 
     // TEMP adding the rules to the rules dictionary
 
+    //TODO: create bit_name and retype the bit_id from string to uint32_t
+
+    //TODO: create the custom events
+    //TODO: add and event when the queen is added in game
+
     //TODO: make possible to add rules to a set of bits (like "all Pieces")
     //TODO: add the rule that you cannot move any piece until the queen is in game
     //TODO: add the rule that the queen must be placed on game if it is the 4th round

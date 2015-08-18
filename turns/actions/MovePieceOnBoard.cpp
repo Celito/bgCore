@@ -38,7 +38,7 @@ void MovePieceOnBoard::update_options(Action &action) {
         shared_ptr<Piece> piece = tile->get_top_piece();
         if(piece == nullptr) continue;
         const vector<shared_ptr<Rule>> &rules =
-                piece->get_game().rules_manager()->get_rules(e_movement_enable_rule, piece->get_bit_id());
+                piece->get_game().rules_manager()->get_rules(e_movement_enable_rule, piece->get_bit_name());
         bool can_be_moved = true;
         for (auto rule_ptr : rules) {
             shared_ptr<TestableRule> enable_to_move =
@@ -108,7 +108,7 @@ bool MovePieceOnBoard::is_available(shared_ptr<Player> player) {
         const shared_ptr<Piece> &piece = tile->get_top_piece();
         if(piece == nullptr) continue;
         const vector<shared_ptr<Rule>> &rules =
-                piece->get_game().rules_manager()->get_rules(e_movement_enable_rule, piece->get_bit_id());
+                piece->get_game().rules_manager()->get_rules(e_movement_enable_rule, piece->get_bit_name());
         bool can_be_moved = true;
         for (auto rule_ptr : rules) {
             shared_ptr<TestableRule> enable_to_move =

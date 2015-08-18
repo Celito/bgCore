@@ -7,7 +7,7 @@
 
 Tile::Tile(Board &board, TilePos location, vector<TilePos> directions) :
         _board(board), _pos(location), _directions(directions),_updating(false),
-        GameBit(board.get_game(), board.get_bit_id() + location.to_string()) {}
+        GameBit(board.get_game(), board.get_bit_name() + location.to_string()) {}
 
 void Tile::receive(shared_ptr<GameBit> bit) {
     GameBit::receive(bit);
