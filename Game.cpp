@@ -33,8 +33,6 @@
 using namespace std;
 
 Game::Game() {
-    cout << "Creating the Game" << endl;
-
     // Initialize the supporting managers;
     _bits_manager = make_shared<BitsManager>(*this);
     _turns_manager = make_shared<TurnsManager>(*this);

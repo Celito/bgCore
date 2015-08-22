@@ -9,7 +9,6 @@
 #include "options/BitOption.h"
 #include "ChooseTileOnBoard.h"
 #include "../Turn.h"
-#include "../State.h"
 #include "../../Game.h"
 #include "options/TileOption.h"
 
@@ -38,10 +37,7 @@ void PutPieceOnBoard::choose(Action &action) {
     next_action->on_option_taken([this](shared_ptr<Option> opt){
         auto tile_option = dynamic_pointer_cast<TileOption>(opt);
         shared_ptr<Tile> selected_tile = tile_option->get_tile();
-        //selected_piece->get_game().curr_state()->transfer(selected_tile, _selected_bit);
         selected_tile->receive(_selected_bit);
-        cout << "PIECE: " << _selected_bit->get_bit_id() <<
-            " PLACED ON " << selected_tile->get_pos().to_string() << endl;
     });
 
     next_action->init();

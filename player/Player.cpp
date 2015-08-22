@@ -13,7 +13,6 @@
 
 Player::Player(Game &game, uint32_t id) : _id(id), GameBit(game, string("Player") + to_string(id))  {
     _interface = make_shared<PlayerInterface>(*this);
-    cout << "Creating the player " << id << endl;
 }
 
 shared_ptr<GameBit> Player::get_first_bit_by_name(string bit_name) const {
