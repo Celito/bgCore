@@ -10,15 +10,15 @@
 #include "TestableRule.h"
 #include "../events/EventManager.h"
 
-class Game;
+class BgCore;
 
 using namespace std;
 
 class TimedCondition {
 public:
-    TimedCondition(Game& game);
+    TimedCondition(BgCore & game);
 
-    TimedCondition(Game& game, common_events_t check_on);
+    TimedCondition(BgCore & game, common_events_t check_on);
 
     void add_condition(shared_ptr<TestableRule> condition);
 
@@ -31,7 +31,7 @@ private:
 
     common_events_t _check_on;
 
-    Game &_game;
+    BgCore &_game;
 
     boost::signals2::signal<void()> _satisfied;
     boost::signals2::signal<void()> _unsatisfied;

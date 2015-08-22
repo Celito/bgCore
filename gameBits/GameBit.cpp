@@ -4,7 +4,7 @@
 
 #include <c++/iostream>
 #include "GameBit.h"
-#include "../Game.h"
+#include "../BgCore.h"
 #include "../BitsManager.h"
 #include "../player/Player.h"
 #include "../turns/State.h"
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-GameBit::GameBit(Game &game, string bit_name) : _game(game) {
+GameBit::GameBit(BgCore &game, string bit_name) : _game(game) {
     _unique_id = _game.bits_manager()->get_next_unique_id();
     _bit_id = _game.bits_manager()->get_bit_id_by_name(bit_name);
 }

@@ -24,7 +24,7 @@ enum available_tiles_t {
 
 class Board : public GameBit{
 public:
-    Board(Game &game, const string &bit_id) : GameBit(game, bit_id) { }
+    Board(BgCore &game, const string &bit_id) : GameBit(game, bit_id) { }
 
     vector< shared_ptr<Tile> > get_tiles();
 

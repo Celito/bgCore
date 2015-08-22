@@ -11,7 +11,7 @@
 class OnePiecesGroup : public TestableRule {
 
 public:
-    OnePiecesGroup(Game &game) : TestableRule(game) { }
+    OnePiecesGroup(BgCore &game) : TestableRule(game) { }
 
     virtual bool test();
 };

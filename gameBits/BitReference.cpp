@@ -3,7 +3,6 @@
 //
 
 #include "BitReference.h"
-#include "../Game.h"
 
 shared_ptr<GameBit> BitReference::get_bit() {
     if(!_player_targeted)

@@ -4,7 +4,7 @@
 
 #include <c++/iostream>
 #include "TurnsManager.h"
-#include "../Game.h"
+#include "../BgCore.h"
 #include "TurnDef.h"
 #include "actions/ActionDef.h"
 #include "../player/PlayerController.h"
@@ -12,7 +12,7 @@
 #include "Turn.h"
 #include "State.h"
 
-TurnsManager::TurnsManager(Game &game) : _game(game) {
+TurnsManager::TurnsManager(BgCore &game) : _game(game) {
     _curr_player_id = 0;
     _curr_state = make_shared<State>();
     _curr_round = 1;

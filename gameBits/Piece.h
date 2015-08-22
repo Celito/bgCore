@@ -14,7 +14,7 @@ class TestableRule;
 
 class Piece : public GameBit {
 public:
-    Piece(Game &game, std::string refId);
+    Piece(BgCore &game, std::string refId);
 
 private:
 };

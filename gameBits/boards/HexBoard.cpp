@@ -9,7 +9,7 @@
 
 using namespace std;
 
-HexBoard::HexBoard(Game &game, string refId) : Board(game, refId){
+HexBoard::HexBoard(BgCore &game, string refId) : Board(game, refId){
     auto zero = TilePos(0, 0);
     _default_directions =
             {TilePos(0, 2), TilePos(1, 1), TilePos(1, -1), TilePos(0, -2), TilePos(-1, -1), TilePos(-1, 1)};

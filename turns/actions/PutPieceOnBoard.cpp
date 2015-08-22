@@ -9,10 +9,10 @@
 #include "options/BitOption.h"
 #include "ChooseTileOnBoard.h"
 #include "../Turn.h"
-#include "../../Game.h"
+#include "../../BgCore.h"
 #include "options/TileOption.h"
 
-PutPieceOnBoard::PutPieceOnBoard(Game &game, shared_ptr<BitReference> pieces_pool,
+PutPieceOnBoard::PutPieceOnBoard(BgCore &game, shared_ptr<BitReference> pieces_pool,
                                  shared_ptr<BitReference> target_board)
         : ChoosePieceOnSet(game, pieces_pool) {
     _choose_tile_on_board = make_shared<ChooseTileOnBoard>(_game, target_board);

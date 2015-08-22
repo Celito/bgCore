@@ -4,7 +4,7 @@
 
 #include <algorithm>
 #include "State.h"
-#include "../Game.h"
+#include "../BgCore.h"
 #include "../BitsManager.h"
 
 shared_ptr<GameBit> State::get_parent(uint32_t bit_id) const {

@@ -19,7 +19,7 @@ using namespace std;
 
 class Player : public GameBit {
 public:
-    Player(Game &game, unsigned int id);
+    Player(BgCore &game, unsigned int id);
 
     shared_ptr<GameBit> get_first_bit_by_name(string bit_name) const;
 

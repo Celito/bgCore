@@ -11,7 +11,7 @@
 #include <stdint-gcc.h>
 #include <boost/signals2.hpp>
 
-class Game;
+class BgCore;
 class TurnDef;
 class Turn;
 class Action;
@@ -21,7 +21,7 @@ using  namespace std;
 
 class TurnsManager {
 public:
-    TurnsManager(Game &game);
+    TurnsManager(BgCore &game);
 
     void register_turn_def(shared_ptr<TurnDef> turn);
 
@@ -36,7 +36,7 @@ public:
     boost::signals2::connection on_turn_changed(boost::signals2::slot<void()> slot);
 
 private:
-    Game &_game;
+    BgCore &_game;
     uint32_t _curr_player_id;
     uint32_t _curr_round;
 
