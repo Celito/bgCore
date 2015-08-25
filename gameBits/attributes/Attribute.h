@@ -5,7 +5,7 @@
 #ifndef BGCORE_ATTRIBUTE_H
 #define BGCORE_ATTRIBUTE_H
 
-#include <stdint-gcc.h>
+#include <stdint.h>
 
 class Attribute {
 public:

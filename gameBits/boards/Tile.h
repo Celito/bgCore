@@ -6,7 +6,7 @@
 #define BGCORE_TILE_H
 
 
-#include <stdint-gcc.h>
+#include <stdint.h>
 #include <vector>
 #include <memory>
 #include <boost/signals2.hpp>

@@ -8,7 +8,7 @@
 
 #include <vector>
 #include <memory>
-#include <stdint-gcc.h>
+#include <stdint.h>
 #include <boost/signals2.hpp>
 
 class BgCore;

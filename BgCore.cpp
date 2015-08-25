@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <algorithm>
-#include <stdint-gcc.h>
 #include "BgCore.h"
 #include "GameController.h"
 #include "player/Player.h"
