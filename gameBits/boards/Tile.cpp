@@ -2,7 +2,7 @@
 // Created by Celito on 7/14/2015.
 //
 
-#include <c++/iostream>
+#include <iostream>
 #include "Tile.h"
 
 Tile::Tile(Board &board, TilePos location, vector<TilePos> directions) :

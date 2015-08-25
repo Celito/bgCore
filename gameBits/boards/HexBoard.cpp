@@ -2,7 +2,7 @@
 // Created by Celito on 2015-05-29.
 //
 
-#include <c++/iostream>
+#include <iostream>
 #include <algorithm>
 #include "HexBoard.h"
 #include "../../BitsManager.h"

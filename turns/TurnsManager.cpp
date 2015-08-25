@@ -2,7 +2,7 @@
 // Created by Celito on 2015-06-03.
 //
 
-#include <c++/iostream>
+#include <iostream>
 #include "TurnsManager.h"
 #include "../BgCore.h"
 #include "TurnDef.h"

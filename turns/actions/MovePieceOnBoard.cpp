@@ -2,7 +2,7 @@
 // Created by Celito on 7/20/2015.
 //
 
-#include <c++/iostream>
+#include <iostream>
 #include "MovePieceOnBoard.h"
 #include "../../gameBits/boards/Board.h"
 #include "../../gameBits/boards/Tile.h"
