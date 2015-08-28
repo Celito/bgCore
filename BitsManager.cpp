@@ -8,11 +8,9 @@
 using namespace std;
 
 BitsManager::BitsManager(Game &game) : _game(game) {
-    // set up default bits ids names:
-    _registered_bits_ids_names.push_back("All");
+    // '0' bits id is an empty id:
+    _registered_bits_ids_names.push_back("None");
 }
-
-
 
 void BitsManager::register_bit(shared_ptr<GameBit> bit) {
     uint32_t bit_unique_id = bit->get_unique_id();
