@@ -95,6 +95,7 @@ BgCore::BgCore() {
     // TEMP create the board, call it 'Table' and add it to the table objects;
     shared_ptr<HexBoard> board = make_shared<HexBoard>(*this, HEX_BOARD_NAME);
     register_new_bit(board);
+    board->initialize_tiles(true);
 
     // TEMP create the normal turn with the possible actions in it;
     shared_ptr<TurnDef> normal_turn = make_shared<TurnDef>();
