@@ -51,3 +51,16 @@ const string &BitsManager::get_bit_name_by_id(uint32_t bit_id) const {
     if(bit_id > _registered_bits_ids_names.size() - 1 ) throw new exception();
     return _registered_bits_ids_names[bit_id];
 }
+
+vector<shared_ptr<GameBit>> BitsManager::get_table_bits() {
+    vector<shared_ptr<GameBit>> ret;
+    for (auto bit_entry : _all_bits)
+    {
+        shared_ptr<GameBit> &bit_ptr = bit_entry.second;
+        if(bit_ptr->get_parent() == nullptr)
+        {
+            ret.push_back(bit_ptr);
+        }
+    }
+    return ret;
+}
