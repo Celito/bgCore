@@ -6,6 +6,7 @@
 #include "../Game.h"
 #include "../gameBits/attributes/AttrManager.h"
 #include "../gameBits/boards/Tile.h"
+#include "../gameBits/Piece.h"
 #include "../player/Player.h"
 
 bool TouchAnotherPieceRule::test() {

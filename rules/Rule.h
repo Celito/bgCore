@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <stdint.h>
 
 enum rule_usage_t {
     e_not_specified,

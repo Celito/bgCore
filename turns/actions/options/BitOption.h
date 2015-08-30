@@ -5,6 +5,7 @@
 #ifndef BGCORE_BITOPTION_H
 #define BGCORE_BITOPTION_H
 
+#include <string>
 #include "Option.h"
 
 class GameBit;

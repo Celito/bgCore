@@ -10,9 +10,11 @@
 #include <vector>
 #include <memory>
 #include <boost/signals2.hpp>
-#include "../Piece.h"
-#include "Board.h"
+#include "../GameBit.h"
 #include "TilePos.h"
+
+class Piece;
+class Board;
 
 using namespace std;
 
@@ -24,9 +26,7 @@ public:
 
     virtual void receive(shared_ptr<GameBit> bit) override;
 
-    shared_ptr<Tile> get_neighbour(uint32_t dir) {
-        return _board.get_tile(get_pos() + _directions[dir]);
-    }
+	shared_ptr<Tile> get_neighbour(uint32_t dir);
 
     uint32_t get_num_of_directions(){
         return _directions.size();

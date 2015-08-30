@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include "Tile.h"
+#include "Board.h"
+#include "../Piece.h"
 
 Tile::Tile(Board &board, TilePos location, vector<TilePos> directions) :
         _board(board), _pos(location), _directions(directions),_updating(false),
@@ -45,4 +47,9 @@ uint32_t Tile::get_direction_of(TilePos neighbour_pos) {
         if(direction_to_neighbour == _directions[i]) return i;
     }
     throw new exception();
+}
+
+shared_ptr<Tile> Tile::get_neighbour(uint32_t dir)
+{
+	return (_board.get_tile(get_pos() + _directions[dir]));
 }

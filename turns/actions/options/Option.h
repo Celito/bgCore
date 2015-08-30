@@ -6,6 +6,7 @@
 #define BGCORE_OPTION_H
 
 #include <memory>
+#include <string>
 
 using  namespace std;
 

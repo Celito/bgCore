@@ -6,6 +6,7 @@
 #include "MovePieceOnBoard.h"
 #include "../../gameBits/boards/Board.h"
 #include "../../gameBits/boards/Tile.h"
+#include "../../gameBits/Piece.h"
 #include "options/BitOption.h"
 #include "../Turn.h"
 #include "../State.h"

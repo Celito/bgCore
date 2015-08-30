@@ -6,6 +6,7 @@
 #define BGCORE_ACTIONOPTION_H
 
 #include <memory>
+#include <string>
 #include "Option.h"
 
 using namespace std;
