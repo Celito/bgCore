@@ -3,7 +3,7 @@
 //
 
 #include "TouchAnotherPieceRule.h"
-#include "../Game.h"
+#include "../BgCore.h"
 #include "../gameBits/attributes/AttrManager.h"
 #include "../gameBits/boards/Tile.h"
 #include "../player/Player.h"

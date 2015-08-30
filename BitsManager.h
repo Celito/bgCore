@@ -10,16 +10,16 @@
 #include <vector>
 #include <memory>
 #include "gameBits/GameBit.h"
-#include "Game.h"
+#include "BgCore.h"
 
 using namespace std;
 
-class Game;
+class BgCore;
 
 class BitsManager {
 
 public:
-    BitsManager(Game & game);
+    BitsManager(BgCore & game);
 
     void register_bit(shared_ptr<GameBit> bit);
 
@@ -40,7 +40,7 @@ public:
     vector<shared_ptr<GameBit>> get_table_bits();
 
 private:
-    Game &_game;
+    BgCore &_game;
 
     vector<string> _registered_bits_ids_names;
 

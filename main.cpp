@@ -1,12 +1,12 @@
 #include <iostream>
-#include "Game.h"
+#include "BgCore.h"
 #include "tui/GameTUI.h"
 
 using namespace std;
 
 int main() {
 
-    Game game;
+    BgCore game;
     GameTUI gameTUI(game);
     gameTUI.run();
 

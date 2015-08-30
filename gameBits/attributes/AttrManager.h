@@ -8,7 +8,7 @@
 #include <map>
 #include <string>
 
-class Game;
+class BgCore;
 
 using namespace std;
 

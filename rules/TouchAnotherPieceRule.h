@@ -10,7 +10,7 @@
 
 class TouchAnotherPieceRule : public TestableRule {
 public:
-    TouchAnotherPieceRule(Game &game): TestableRule(game) {}
+    TouchAnotherPieceRule(BgCore &game): TestableRule(game) {}
 
     virtual bool test();
 

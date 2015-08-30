@@ -8,7 +8,7 @@
 #include "../../gameBits/BitReference.h"
 #include "options/BitOption.h"
 
-ChoosePieceOnBoard::ChoosePieceOnBoard(Game &game, shared_ptr<BitReference> target_board) : ActionDef(game) {
+ChoosePieceOnBoard::ChoosePieceOnBoard(BgCore &game, shared_ptr<BitReference> target_board) : ActionDef(game) {
     _bit_refs[e_board] = target_board;
 }
 

@@ -10,7 +10,7 @@
 
 class IsRound : public TestableRule {
 public:
-    IsRound(Game &game) : TestableRule(game) { }
+    IsRound(BgCore &game) : TestableRule(game) { }
 
     void is_bigger_then(uint32_t round);
 

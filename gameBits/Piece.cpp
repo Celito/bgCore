@@ -8,4 +8,4 @@
 
 using namespace std;
 
-Piece::Piece(Game &game, string refId) : GameBit(game, refId){}
+Piece::Piece(BgCore &game, string refId) : GameBit(game, refId){}

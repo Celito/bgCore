@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class Game;
+class BgCore;
 
 enum bit_types_e {
     e_bit,
@@ -25,7 +25,7 @@ enum bit_types_e {
 
 class GameBit {
 public:
-    GameBit(Game &game, string bit_name);
+    GameBit(BgCore &game, string bit_name);
 
     virtual ~GameBit() {};
 
@@ -45,7 +45,7 @@ public:
 
     shared_ptr<GameBit> get_parent() const;
 
-    Game &get_game() const { return _game; }
+    BgCore &get_game() const { return _game; }
 
     Attribute get_attr(uint32_t id);
 
@@ -56,7 +56,7 @@ public:
     const vector< weak_ptr<GameBit> > & get_children() const;
 
 protected:
-    Game &_game;
+    BgCore &_game;
     uint32_t _unique_id = 0;
     uint32_t _bit_id;
     map<uint32_t, Attribute> _attributes;

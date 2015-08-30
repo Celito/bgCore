@@ -4,12 +4,12 @@
 
 #include <algorithm>
 #include "PieceSet.h"
-#include "../Game.h"
+#include "../BgCore.h"
 #include "../BitsManager.h"
 
 using namespace std;
 
-PieceSet::PieceSet(Game &game, std::string refId) : GameBit(game, refId) {}
+PieceSet::PieceSet(BgCore &game, std::string refId) : GameBit(game, refId) {}
 
 vector< shared_ptr<Piece> > PieceSet::get_available_pieces() const {
     vector< shared_ptr<Piece> > ret;

@@ -14,7 +14,7 @@
 #include "options/TileOption.h"
 #include "ChooseTileOnBoard.h"
 
-MovePieceOnBoard::MovePieceOnBoard(Game &game, shared_ptr<BitReference> target_board) :
+MovePieceOnBoard::MovePieceOnBoard(BgCore &game, shared_ptr<BitReference> target_board) :
         ChoosePieceOnBoard(game, target_board) {
     _choose_tile_on_board = make_shared<ChooseTileOnBoard>(_game, target_board);
     _choose_tile_on_board->set_reason(e_for_movement);
@@ -72,7 +72,7 @@ void MovePieceOnBoard::choose(Action &action) {
     shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(piece_parent);
     if(tile == nullptr)throw new exception();
     
-    Game &game = tile->get_game();
+    BgCore &game = tile->get_game();
 
     turn->get_player()->receive(selected_bit);
 
