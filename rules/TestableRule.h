@@ -11,13 +11,13 @@
 #include "../gameBits/GameBit.h"
 
 class Player;
-class Game;
+class BgCore;
 
 using namespace std;
 
 class TestableRule : public Rule {
 public:
-    TestableRule(Game &game) : _game(game) {}
+    TestableRule(BgCore &game) : _game(game) {}
 
     virtual bool test() = 0;
 
@@ -30,7 +30,7 @@ protected:
 
     map<bit_types_e, weak_ptr<GameBit> > _required_bits;
 
-    Game &_game;
+    BgCore &_game;
 };
 
 

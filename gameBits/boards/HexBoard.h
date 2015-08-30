@@ -7,12 +7,12 @@
 
 
 #include "../GameBit.h"
-#include "../../Game.h"
+#include "../../BgCore.h"
 #include "Board.h"
 
 class HexBoard : public Board {
 public:
-    HexBoard(Game &game, std::string refId);
+    HexBoard(BgCore &game, std::string refId);
 };
 
 

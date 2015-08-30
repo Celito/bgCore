@@ -16,7 +16,7 @@ using namespace std;
 class PieceSet : public GameBit {
 
 public:
-    PieceSet(Game &game, string refId);
+    PieceSet(BgCore &game, string refId);
 
     vector< shared_ptr<Piece> > get_available_pieces() const;
 

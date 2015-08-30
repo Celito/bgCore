@@ -5,7 +5,7 @@
 #ifndef BGCORE_EVENTMANAGER_H
 #define BGCORE_EVENTMANAGER_H
 
-#include "../Game.h"
+#include "../BgCore.h"
 
 enum common_events_t {
     e_turn_changed,
@@ -14,12 +14,12 @@ enum common_events_t {
 
 class EventManager {
 public:
-    EventManager(Game &game) : _game(game) {}
+    EventManager(BgCore &game) : _game(game) {}
 
     void on_common_event(common_events_t event, boost::signals2::slot<void()> slot);
 
 private:
-    Game &_game;
+    BgCore &_game;
 };
 
 

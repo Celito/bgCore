@@ -24,9 +24,9 @@ class State;
 
 using namespace std;
 
-class Game {
+class BgCore {
 public:
-    Game();
+    BgCore();
 
     //interface:
     void start(GameController &game_controller);

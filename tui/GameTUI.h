@@ -7,7 +7,7 @@
 
 
 #include <queue>
-#include "../Game.h"
+#include "../BgCore.h"
 #include "../GameController.h"
 
 class PlayerTUI;
@@ -18,7 +18,7 @@ using namespace std;
 class GameTUI : public GameController {
 
 public:
-    GameTUI(Game &game);
+    GameTUI(BgCore &game);
 
     virtual shared_ptr<PlayerController> get_player_controller(uint32_t player_id) override;
 
@@ -27,7 +27,7 @@ public:
     int32_t get_next_pre_loaded_option();
 
 private:
-    Game &_game;
+    BgCore &_game;
 
     vector< shared_ptr<PlayerTUI> > _player_TUIS;
 

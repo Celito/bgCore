@@ -3,7 +3,7 @@
 //
 
 #include "PlayerAttrComparison.h"
-#include "../Game.h"
+#include "../BgCore.h"
 #include "../turns/actions/ActionDef.h"
 #include "../gameBits/attributes/AttrManager.h"
 

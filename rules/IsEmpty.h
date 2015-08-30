@@ -10,7 +10,7 @@
 
 class IsEmpty : public TestableRule {
 public:
-    IsEmpty(Game &game) : TestableRule(game) { }
+    IsEmpty(BgCore &game) : TestableRule(game) { }
 
     virtual bool test();
 };

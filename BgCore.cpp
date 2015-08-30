@@ -5,7 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <stdint.h>
-#include "Game.h"
+#include "BgCore.h"
 #include "GameController.h"
 #include "player/Player.h"
 #include "BitsManager.h"
@@ -32,7 +32,7 @@
 
 using namespace std;
 
-Game::Game() {
+BgCore::BgCore() {
     cout << "Creating the Game" << endl;
 
     // Initialize the supporting managers;
@@ -240,7 +240,7 @@ Game::Game() {
 
 }
 
-void Game::start(GameController &game_controller) {
+void BgCore::start(GameController &game_controller) {
     _initialize_pieces();
 
     for (uint32_t i = 0; i < _players.size(); i++) {
@@ -252,21 +252,21 @@ void Game::start(GameController &game_controller) {
     }
 }
 
-shared_ptr<Player> Game::get_player(uint32_t id) {
+shared_ptr<Player> BgCore::get_player(uint32_t id) {
     return _players[id];
 }
 
-shared_ptr<GameBit> Game::get_table_bit(string bit_id) const {
+shared_ptr<GameBit> BgCore::get_table_bit(string bit_id) const {
     return _bits_manager->get_first_bit(bit_id);
 }
 
-void Game::register_new_bit(shared_ptr<GameBit> bit) {
+void BgCore::register_new_bit(shared_ptr<GameBit> bit) {
     // Add bit to the general list of bits and give it an unique id
     _bits_manager->register_bit(bit);
     // Subscribe the bit to the init signal
     _initialize_pieces.connect(boost::bind(&GameBit::init, bit.get()));
 }
 
-const shared_ptr<State> &Game::curr_state() {
+const shared_ptr<State> &BgCore::curr_state() {
     return _turns_manager->get_curr_state();
 }

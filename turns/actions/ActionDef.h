@@ -19,7 +19,7 @@ class Turn;
 class ActionDef {
 public:
 
-    ActionDef(Game &game) : _game(game) {}
+    ActionDef(BgCore &game) : _game(game) {}
 
     void init(Action & action);
 
@@ -37,7 +37,7 @@ protected:
     map<bit_types_e, shared_ptr<BitReference> > _bit_refs;
     shared_ptr<Player> _curr_player;
 
-    Game &_game;
+    BgCore &_game;
 };
 
 

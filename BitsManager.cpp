@@ -7,7 +7,7 @@
 
 using namespace std;
 
-BitsManager::BitsManager(Game &game) : _game(game) {
+BitsManager::BitsManager(BgCore &game) : _game(game) {
     // '0' bits id is an empty id:
     _registered_bits_ids_names.push_back("None");
 }

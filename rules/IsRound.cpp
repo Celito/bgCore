@@ -3,7 +3,7 @@
 //
 
 #include "IsRound.h"
-#include "../Game.h"
+#include "../BgCore.h"
 #include "../turns/TurnsManager.h"
 
 bool IsRound::test() {

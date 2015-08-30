@@ -13,7 +13,7 @@ class ChooseTileOnBoard;
 
 class MovePieceOnBoard : public ChoosePieceOnBoard {
 public:
-    MovePieceOnBoard(Game &game, shared_ptr<BitReference> target_board);
+    MovePieceOnBoard(BgCore &game, shared_ptr<BitReference> target_board);
 
     virtual void update_options(Action &action) override;
 

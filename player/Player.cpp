@@ -5,13 +5,13 @@
 #include <iostream>
 #include <algorithm>
 #include "Player.h"
-#include "../Game.h"
+#include "../BgCore.h"
 #include "../turns/State.h"
 #include "PlayerInterface.h"
 #include "PlayerController.h"
 #include "../BitsManager.h"
 
-Player::Player(Game &game, uint32_t id) : _id(id), GameBit(game, string("Player") + to_string(id))  {
+Player::Player(BgCore &game, uint32_t id) : _id(id), GameBit(game, string("Player") + to_string(id))  {
     _interface = make_shared<PlayerInterface>(*this);
     cout << "Creating the player " << id << endl;
 }

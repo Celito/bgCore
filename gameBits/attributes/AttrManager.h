@@ -9,7 +9,7 @@
 #include <string>
 #include <stdint.h>
 
-class Game;
+class BgCore;
 
 using namespace std;
 

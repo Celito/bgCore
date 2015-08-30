@@ -11,7 +11,7 @@
 
 class PlayerAttrComparison : public TestableRule {
 public:
-    PlayerAttrComparison(Game &game): TestableRule(game) {}
+    PlayerAttrComparison(BgCore &game): TestableRule(game) {}
 
     virtual bool test();
 

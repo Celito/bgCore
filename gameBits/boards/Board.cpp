@@ -6,7 +6,7 @@
 #include <iostream>
 #include "Board.h"
 #include "Tile.h"
-#include "../../Game.h"
+#include "../../BgCore.h"
 #include "../../BitsManager.h"
 #include "../../turns/State.h"
 
