@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <algorithm>
-#include <stdint-gcc.h>
+#include <stdint.h>
 #include "Game.h"
 #include "GameController.h"
 #include "player/Player.h"

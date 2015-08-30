@@ -6,6 +6,7 @@
 #define BGCORE_CONFIG_H
 
 #include <string>
+#include <stdint.h>
 
 using namespace std;
 
