@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 #include <string>
-#include <c++/bits/stl_pair.h>
+#include <bits/stl_pair.h>
 
 using namespace std;
 

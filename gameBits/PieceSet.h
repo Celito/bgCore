@@ -5,7 +5,7 @@
 #ifndef BGCORE_PIECESET_H
 #define BGCORE_PIECESET_H
 
-#include <c++/iostream>
+#include <iostream>
 #include <vector>
 #include <list>
 #include "GameBit.h"

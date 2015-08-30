@@ -4,9 +4,9 @@
 
 #include <memory>
 #include <iomanip>
-#include <c++/iostream>
+#include <iostream>
 #include <algorithm>
-#include <c++/sstream>
+#include <sstream>
 #include "PlayerTUI.h"
 #include "../gameBits/boards/Tile.h"
 #include "../turns/actions/Action.h"

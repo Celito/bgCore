@@ -2,7 +2,7 @@
 // Created by Celito on 5/27/2015.
 //
 
-#include <c++/iostream>
+#include <iostream>
 #include <algorithm>
 #include "Player.h"
 #include "../Game.h"

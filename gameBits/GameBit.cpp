@@ -2,7 +2,7 @@
 // Created by Celito on 2015-05-29.
 //
 
-#include <c++/iostream>
+#include <iostream>
 #include "GameBit.h"
 #include "../Game.h"
 #include "../BitsManager.h"
