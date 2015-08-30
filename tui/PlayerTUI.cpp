@@ -9,6 +9,7 @@
 #include <sstream>
 #include "PlayerTUI.h"
 #include "../gameBits/boards/Tile.h"
+#include "../gameBits/Piece.h"
 #include "../turns/actions/Action.h"
 #include "../turns/actions/ChooseTileOnBoard.h"
 #include "../turns/actions/options/Option.h"
