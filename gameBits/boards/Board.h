@@ -26,6 +26,8 @@ class Board : public GameBit{
 public:
     Board(BgCore &game, const string &bit_id) : GameBit(game, bit_id) { }
 
+    virtual void initialize_tiles(bool grown_on_usage);
+
     vector< shared_ptr<Tile> > get_tiles();
 
     vector< shared_ptr<Piece> > get_pieces();
@@ -40,6 +42,8 @@ protected:
     map< TilePos, shared_ptr< Tile > > _tile_grid;
 
     vector<TilePos> _default_directions;
+
+    bool _grown_on_usage = false;
 };
 
 

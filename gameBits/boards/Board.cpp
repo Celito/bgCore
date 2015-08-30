@@ -16,9 +16,11 @@ void Board::add_new_tile(TilePos pos) {
     _tile_grid[pos] = tile;
     _game.register_new_bit(tile);
     receive(tile);
-    tile->on_piece_received( [](Tile &caller) {
-        caller.populate_neighbours();
-    });
+    if(_grown_on_usage){
+        tile->on_piece_received( [](Tile &caller) {
+            caller.populate_neighbours();
+        });
+    }
 }
 
 vector< shared_ptr<Tile> > Board::get_tiles() {
@@ -47,4 +49,10 @@ void Board::remove_tile(TilePos pos) {
 
     _tile_grid.erase(pos);
 
+}
+
+void Board::initialize_tiles(bool grown_on_usage) {
+    _grown_on_usage = grown_on_usage;
+    auto zero = TilePos(0, 0);
+    add_new_tile(zero);
 }
