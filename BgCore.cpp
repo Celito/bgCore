@@ -29,6 +29,7 @@
 #include "rules/OnePiecesGroup.h"
 #include "rules/movement/CanStack.h"
 #include "gameBits/attributes/AttrManager.h"
+#include "events/OnBitPlacedAt.h"
 
 using namespace std;
 
@@ -69,6 +70,8 @@ BgCore::BgCore() {
 
     //TODO: separate the bits loading from the game setup
 
+    shared_ptr<Piece> white_queen_piece;
+
     for (uint32_t i = 0; i < _num_of_players; i++) {
 
         shared_ptr<Player> player = make_shared<Player>(*this, i + 1);
@@ -84,11 +87,13 @@ BgCore::BgCore() {
                 shared_ptr<Piece> new_piece = make_shared<Piece>(*this, iter->second);
                 register_new_bit(new_piece);
                 new_piece->set_attr(COLOR_ATTR, i);
-                //curr_state()->transfer(player_set, new_piece);
                 player_set->receive(new_piece);
+                if(i == 0 && iter->second == QUEEN_NAME)
+                {
+                    white_queen_piece = new_piece;
+                }
             }
         }
-        //curr_state()->transfer(_players[i], player_set);
         _players[i]->receive(player_set);
     }
 
@@ -130,6 +135,9 @@ BgCore::BgCore() {
     //TODO: add the rule that you cannot move any piece until the queen is in game
     //TODO: add the rule that the queen must be placed on game if it is the 4th round
     //TODO: add the victory condition
+
+    // WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
+    shared_ptr<OnBitPlacedAt> white_piece_on_table_event = make_shared<OnBitPlacedAt>(white_queen_piece, board);
 
     // PLAYERS CAN ONLY MOVE THEIR COLOR PIECES
     shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);

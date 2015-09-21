@@ -43,7 +43,12 @@ Attribute GameBit::get_attr(uint32_t id) {
 }
 
 void GameBit::receive(shared_ptr<GameBit> bit) {
-    _game.curr_state()->transfer(_unique_id, bit);
+    bit->set_parent(_game.bits_manager()->get_bit(_unique_id));
+}
+
+void GameBit::set_parent(shared_ptr<GameBit> const &new_parent) {
+    _game.curr_state()->transfer(_unique_id, new_parent);
+    _parent_changed(*this);
 }
 
 bool GameBit::is_empty() const {
@@ -60,4 +65,13 @@ void GameBit::remove(shared_ptr<GameBit> bit) {
 
 const string &GameBit::get_bit_name() const {
     return _game.bits_manager()->get_bit_name_by_id(_bit_id);
+}
+
+boost::signals2::connection GameBit::on_parent_change(boost::signals2::slot<void(GameBit const &)> slot) {
+    return _parent_changed.connect(slot);
+}
+
+bool GameBit::is_child_of(shared_ptr<GameBit> const &bit) const {
+    auto parent = get_parent();
+    return parent == bit || parent != nullptr && parent->is_child_of(bit);
 }

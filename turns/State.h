@@ -19,7 +19,7 @@ public:
 
     const vector<weak_ptr<GameBit>> & get_children(uint32_t bit_id) const;
 
-    void transfer(uint32_t parent_id, shared_ptr<GameBit> child);
+    void transfer(uint32_t child_id, shared_ptr<GameBit> parent_ptr);
 
     void remove_from_parent(uint32_t parent_id, shared_ptr<GameBit> child);
 

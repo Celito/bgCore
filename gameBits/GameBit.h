@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 #include <map>
+#include <boost/signals2.hpp>
 #include "attributes/Attribute.h"
 
 using namespace std;
@@ -45,6 +46,8 @@ public:
 
     shared_ptr<GameBit> get_parent() const;
 
+    void set_parent(shared_ptr<GameBit> const& new_parent);
+
     BgCore &get_game() const { return _game; }
 
     Attribute get_attr(uint32_t id);
@@ -53,13 +56,19 @@ public:
 
     bool is_empty() const;
 
-    const vector< weak_ptr<GameBit> > & get_children() const;
+    const vector< weak_ptr<GameBit> >& get_children() const;
+
+    bool is_child_of(shared_ptr<GameBit> const &bit) const;
+
+    boost::signals2::connection on_parent_change(boost::signals2::slot<void(GameBit const &)> slot);
 
 protected:
     BgCore &_game;
     uint32_t _unique_id = 0;
     uint32_t _bit_id;
     map<uint32_t, Attribute> _attributes;
+
+    boost::signals2::signal<void(GameBit const &)> _parent_changed;
 
     virtual void remove(shared_ptr<GameBit> bit);
 };
