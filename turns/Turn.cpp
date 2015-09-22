@@ -26,3 +26,7 @@ shared_ptr<Action> Turn::get_next_action() {
     _next_actions.pop();
     return next;
 }
+
+shared_ptr<Action> Turn::get_action_ptr(const Action &action_ref) {
+
+}

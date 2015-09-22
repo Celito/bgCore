@@ -5,8 +5,8 @@
 #include "EventManager.h"
 #include "../turns/TurnsManager.h"
 
-void EventManager::on_common_event(common_events_t event, boost::signals2::slot<void()> slot) {
-    switch (event){
+void EventManager::on_common_event(common_events_t common_event_type, boost::signals2::slot<void()> slot) {
+    switch (common_event_type){
 
         case e_turn_changed:
             _game.turns_manager()->on_turn_changed(slot);
@@ -17,4 +17,8 @@ void EventManager::on_common_event(common_events_t event, boost::signals2::slot<
         default:
             throw new exception();
     }
+}
+
+void EventManager::add_custom_event(shared_ptr<CustomEvent> event) {
+    _custom_event.push_back(event);
 }

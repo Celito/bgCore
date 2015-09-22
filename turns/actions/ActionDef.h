@@ -29,13 +29,17 @@ public:
 
     virtual string get_description() const = 0;
 
-    virtual void choose(Action &action);
+    virtual void choose(shared_ptr<Action> action);
 
     virtual action_type_e get_type() { return e_not_defined; }
+
+    boost::signals2::connection on_action_taken(boost::signals2::slot<void(shared_ptr<Action>)> slot);
 
 protected:
     map<bit_types_e, shared_ptr<BitReference> > _bit_refs;
     shared_ptr<Player> _curr_player;
+
+    boost::signals2::signal<void(shared_ptr<Action>)> _action_taken;
 
     BgCore &_game;
 };

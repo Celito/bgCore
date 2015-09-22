@@ -42,8 +42,7 @@ void MovePieceOnBoard::update_options(Action &action) {
                 piece->get_game().rules_manager()->get_rules(e_movement_enable_rule, piece->get_bit_id());
         bool can_be_moved = true;
         for (auto rule_ptr : rules) {
-            shared_ptr<TestableRule> enable_to_move =
-                    (shared_ptr<TestableRule>)dynamic_pointer_cast<TestableRule>(rule_ptr);
+            shared_ptr<TestableRule> enable_to_move = dynamic_pointer_cast<TestableRule>(rule_ptr);
             enable_to_move->add_req_bit(e_piece, piece);
             enable_to_move->add_req_bit(e_tile, tile);
             can_be_moved &= enable_to_move->test();
@@ -59,16 +58,16 @@ void MovePieceOnBoard::update_options(Action &action) {
     }
 }
 
-void MovePieceOnBoard::choose(Action &action) {
+void MovePieceOnBoard::choose(shared_ptr<Action> action) {
     ActionDef::choose(action);
 
-    auto bit_opt = dynamic_pointer_cast<BitOption>(action.get_choose_opt());
+    auto bit_opt = dynamic_pointer_cast<BitOption>(action->get_choose_opt());
     shared_ptr<GameBit> selected_bit = bit_opt->get_bit();
 
     shared_ptr<GameBit> piece_parent = selected_bit->get_parent();
     if(piece_parent == nullptr)throw new exception();
 
-    shared_ptr<Turn> turn = action.get_turn();
+    shared_ptr<Turn> turn = action->get_turn();
 
     shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(piece_parent);
     if(tile == nullptr)throw new exception();
@@ -90,7 +89,7 @@ void MovePieceOnBoard::choose(Action &action) {
         cout << "PIECE " << selected_bit->get_bit_id() << " MOVED TO " << new_tile->get_pos().to_string() << endl;
     });
 
-    next_action->init();
+    next_action->init(next_action);
 
     turn->add_next_action(next_action);
 }
@@ -112,8 +111,7 @@ bool MovePieceOnBoard::is_available(shared_ptr<Player> player) {
                 piece->get_game().rules_manager()->get_rules(e_movement_enable_rule, piece->get_bit_id());
         bool can_be_moved = true;
         for (auto rule_ptr : rules) {
-            shared_ptr<TestableRule> enable_to_move =
-                    (shared_ptr<TestableRule>)dynamic_pointer_cast<TestableRule>(rule_ptr);
+            shared_ptr<TestableRule> enable_to_move = dynamic_pointer_cast<TestableRule>(rule_ptr);
             enable_to_move->add_req_bit(e_piece, piece);
             enable_to_move->add_req_bit(e_tile, tile);
             enable_to_move->set_curr_player(player);

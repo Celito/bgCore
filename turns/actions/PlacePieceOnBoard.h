@@ -13,13 +13,13 @@ class Board;
 class BitReference;
 class ChooseTileOnBoard;
 
-class PutPieceOnBoard : public ChoosePieceOnSet {
+class PlacePieceOnBoard : public ChoosePieceOnSet {
 public:
-    PutPieceOnBoard(BgCore &game, shared_ptr<BitReference> pieces_pool, shared_ptr<BitReference> target_board);
+    PlacePieceOnBoard(BgCore &game, shared_ptr<BitReference> pieces_pool, shared_ptr<BitReference> target_board);
 
     virtual string get_description() const override;
 
-    virtual void choose(Action &action) override;
+    virtual void choose(shared_ptr<Action> action) override;
 
 private:
     shared_ptr<GameBit> _selected_bit;

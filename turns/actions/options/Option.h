@@ -10,6 +10,8 @@
 
 using  namespace std;
 
+class Action;
+
 class Option {
 public:
     virtual string get_description() = 0;

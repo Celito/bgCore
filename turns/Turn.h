@@ -26,6 +26,8 @@ public:
 
     shared_ptr<Action> get_next_action();
 
+    shared_ptr<Action> get_action_ptr(Action const &action_ref);
+
 private:
     weak_ptr<Player> _player;
 

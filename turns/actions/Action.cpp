@@ -4,6 +4,7 @@
 
 #include "Action.h"
 #include "ActionDef.h"
+#include "../Turn.h"
 
 Action::Action(const weak_ptr<Turn> &turn, const weak_ptr<ActionDef> &definition)
         : _turn(turn), _definition(definition) {
@@ -28,8 +29,9 @@ bool Action::self_resolve() {
 void Action::choose(shared_ptr<Option> option) {
     // The _choose_option must be null to make sure this action was not already taken
     if(!_choose_option.expired()) throw new exception();
+    if(_self_ptr.expired()) throw new exception();
     _choose_option = option;
-    _definition.lock()->choose(*this);
+    _definition.lock()->choose(_self_ptr.lock());
     _option_taken(option);
 }
 
@@ -67,10 +69,11 @@ boost::signals2::connection Action::on_option_taken(boost::signals2::slot<void(s
     return _option_taken.connect(slot);
 }
 
-void Action::init() {
+void Action::init(const shared_ptr<Action> &self_ptr) {
     if(_initialized) throw new exception();
     _definition.lock()->init(*this);
     _initialized = true;
+    _self_ptr = self_ptr;
 }
 
 void Action::set_self_resolvable(bool self_resolvable) {

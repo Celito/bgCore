@@ -17,4 +17,8 @@ void ActionDef::init(Action & action) {
     if(action.get_options().size() == 0) throw new exception();
 }
 
-void ActionDef::choose(Action &action) { }
+void ActionDef::choose(shared_ptr<Action> action) { }
+
+boost::signals2::connection ActionDef::on_action_taken(boost::signals2::slot<void(shared_ptr<Action>)> slot) {
+    return _action_taken.connect(slot);
+}

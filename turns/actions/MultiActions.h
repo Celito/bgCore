@@ -23,7 +23,7 @@ public:
 
     virtual bool is_available(shared_ptr<Player> player);
 
-    virtual void choose(Action &action) override;
+    virtual void choose(shared_ptr<Action> action) override;
 
 private:
 

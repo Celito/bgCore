@@ -27,7 +27,7 @@ class Action {
 public:
     Action(const weak_ptr<Turn> &turn, const weak_ptr<ActionDef> &definition);
 
-    void init();
+    void init(const shared_ptr<Action> &self_ptr);
 
     bool self_resolve();
 
@@ -63,6 +63,7 @@ private:
     map<bit_types_e, weak_ptr<GameBit> > _required_bits;
 
     boost::signals2::signal<void(shared_ptr<Option>)> _option_taken;
+    weak_ptr<Action> _self_ptr;
 };
 
 

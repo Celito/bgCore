@@ -15,9 +15,9 @@
 #include "turns/State.h"
 #include "turns/actions/ActionDef.h"
 #include "gameBits/boards/HexBoard.h"
-#include "turns/actions/PutPieceOnBoard.h"
 #include "turns/actions/MultiActions.h"
 #include "turns/actions/MovePieceOnBoard.h"
+#include "turns/actions/PlacePieceOnBoard.h"
 #include "rules/PlayerAttrComparison.h"
 #include "rules/MovementFilterRule.h"
 #include "rules/RulesManager.h"
@@ -29,7 +29,7 @@
 #include "rules/OnePiecesGroup.h"
 #include "rules/movement/CanStack.h"
 #include "gameBits/attributes/AttrManager.h"
-#include "events/OnBitPlacedAt.h"
+#include "events/OnPiecePlacedOnBoard.h"
 
 using namespace std;
 
@@ -106,7 +106,7 @@ BgCore::BgCore() {
     shared_ptr<TurnDef> normal_turn = make_shared<TurnDef>();
 
     auto put_piece_on_board =
-            make_shared<PutPieceOnBoard>(
+            make_shared<PlacePieceOnBoard>(
                     *this,
                     make_shared<BitReference>(PLAYER_PIECES, *this, true),
                     make_shared<BitReference>(HEX_BOARD_NAME, *this)
@@ -137,7 +137,9 @@ BgCore::BgCore() {
     //TODO: add the victory condition
 
     // WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
-    shared_ptr<OnBitPlacedAt> white_piece_on_table_event = make_shared<OnBitPlacedAt>(white_queen_piece, board);
+    shared_ptr<OnPiecePlacedOnBoard> white_piece_on_table_event =
+            make_shared<OnPiecePlacedOnBoard>(white_queen_piece, board, put_piece_on_board);
+    _event_manager->add_custom_event(white_piece_on_table_event);
 
     // PLAYERS CAN ONLY MOVE THEIR COLOR PIECES
     shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);
