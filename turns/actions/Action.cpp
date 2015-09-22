@@ -71,7 +71,7 @@ boost::signals2::connection Action::on_option_taken(boost::signals2::slot<void(s
 
 void Action::init(const shared_ptr<Action> &self_ptr) {
     if(_initialized) throw new exception();
-    _definition.lock()->init(*this);
+    _definition.lock()->init_act_instance(*this);
     _initialized = true;
     _self_ptr = self_ptr;
 }

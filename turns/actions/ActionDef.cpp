@@ -6,7 +6,7 @@
 #include "../../gameBits/BitReference.h"
 #include "../Turn.h"
 
-void ActionDef::init(Action & action) {
+void ActionDef::init_act_instance(Action &action) {
     _curr_player = action.get_turn()->get_player();
     for (auto item : _bit_refs) {
         item.second->set_curr_player(_curr_player);

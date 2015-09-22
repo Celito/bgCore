@@ -21,7 +21,7 @@ public:
 
     ActionDef(BgCore &game) : _game(game) {}
 
-    void init(Action & action);
+    void init_act_instance(Action &action);
 
     virtual void update_options(Action &action) = 0;
 

@@ -17,7 +17,7 @@
 #include "../player/PlayerInterface.h"
 
 void PlayerTUI::resolve_action(shared_ptr<Action> action) {
-    system("cls");
+    //system("cls");
     shared_ptr<PlayerInterface> my_player = get_interface().lock();
     cout << "============ " << (my_player->get_id() == 1? "-WHITE-" : "<BLACK>") << " PLAYER TURN =============" << endl;
     vector<shared_ptr<Option>> const &options = action->get_options();

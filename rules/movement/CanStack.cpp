@@ -11,6 +11,6 @@ bool CanStack::opt_can_be_processed(const shared_ptr<TileOption> &analyzed_optio
         return true;
     }
     else {
-        return !analyzed_option->get_tile()->is_empty();
+        return analyzed_option->get_tile()->is_empty();
     }
 }
