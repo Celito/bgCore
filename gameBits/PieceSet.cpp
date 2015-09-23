@@ -19,8 +19,8 @@ vector< shared_ptr<Piece> > PieceSet::get_available_pieces() const {
     {
         if(iter->expired()) break;
         ret.push_back((shared_ptr<Piece>)dynamic_pointer_cast<Piece>(iter->lock()));
-        // Skip the pieces with the same bit_id
-        while((iter+1) != children.cend() && (*iter).lock()->get_bit_id() == (*(iter+1)).lock()->get_bit_id()) iter++;
+//        // Skip the pieces with the same bit_id
+//        while((iter+1) != children.cend() && (*iter).lock()->get_bit_id() == (*(iter+1)).lock()->get_bit_id()) iter++;
     }
     return ret;
 }
