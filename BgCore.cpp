@@ -70,9 +70,14 @@ BgCore::BgCore() {
 
     //TODO: separate the bits loading from the game setup
 
-    shared_ptr<Piece> white_queen_piece;
+    // TEMP create the board, call it 'Table' and add it to the table objects;
+    shared_ptr<HexBoard> board = make_shared<HexBoard>(*this, HEX_BOARD_NAME);
+    register_new_bit(board);
+    board->initialize_tiles(true);
 
-    for (uint32_t i = 0; i < _num_of_players; i++) {
+    for (uint8_t i = 0; i < _num_of_players; i++) {
+
+        shared_ptr<Piece> queen_piece;
 
         shared_ptr<Player> player = make_shared<Player>(*this, i + 1);
         register_new_bit(player);
@@ -88,41 +93,39 @@ BgCore::BgCore() {
                 register_new_bit(new_piece);
                 new_piece->set_attr(COLOR_ATTR, i);
                 player_set->receive(new_piece);
-                if(i == 0 && iter->second == QUEEN_NAME)
+                if(iter->second == QUEEN_NAME)
                 {
-                    white_queen_piece = new_piece;
+                    queen_piece = new_piece;
                 }
             }
         }
         _players[i]->receive(player_set);
+
+        // TEMP create the normal turn with the possible actions in it;
+        shared_ptr<TurnDef> normal_turn = make_shared<TurnDef>();
+
+        auto put_piece_on_board =
+                make_shared<PlacePieceOnBoard>(
+                        *this,
+                        make_shared<BitReference>(PLAYER_PIECES, *this, true),
+                        make_shared<BitReference>(HEX_BOARD_NAME, *this)
+                );
+        auto move_piece_on_board =
+                make_shared<MovePieceOnBoard>(*this, make_shared<BitReference>(HEX_BOARD_NAME, *this));
+
+        auto first_action = make_shared<MultiActions>(*this);
+        first_action->add_sub_action(put_piece_on_board);
+        first_action->add_sub_action(move_piece_on_board);
+        normal_turn->add_action_def(first_action);
+
+        _turns_manager->register_player_turn_def(i, normal_turn);
+
+
+        // WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
+        shared_ptr<OnPiecePlacedOnBoard> white_piece_on_table_event =
+                make_shared<OnPiecePlacedOnBoard>(queen_piece, board, put_piece_on_board);
+        _event_manager->add_custom_event(white_piece_on_table_event);
     }
-
-    // TEMP create the board, call it 'Table' and add it to the table objects;
-    shared_ptr<HexBoard> board = make_shared<HexBoard>(*this, HEX_BOARD_NAME);
-    register_new_bit(board);
-    board->initialize_tiles(true);
-
-    // TEMP create the normal turn with the possible actions in it;
-    shared_ptr<TurnDef> normal_turn = make_shared<TurnDef>();
-
-    auto put_piece_on_board =
-            make_shared<PlacePieceOnBoard>(
-                    *this,
-                    make_shared<BitReference>(PLAYER_PIECES, *this, true),
-                    make_shared<BitReference>(HEX_BOARD_NAME, *this)
-            );
-    auto move_piece_on_board =
-            make_shared<MovePieceOnBoard>(*this, make_shared<BitReference>(HEX_BOARD_NAME, *this));
-
-    auto first_action = make_shared<MultiActions>(*this);
-
-    first_action->add_sub_action(put_piece_on_board);
-
-    first_action->add_sub_action(move_piece_on_board);
-
-    normal_turn->add_action_def(first_action);
-
-    _turns_manager->register_turn_def(normal_turn);
 
     // TEMP adding the rules to the rules dictionary
 
@@ -135,11 +138,6 @@ BgCore::BgCore() {
     //TODO: add the rule that you cannot move any piece until the queen is in game
     //TODO: add the rule that the queen must be placed on game if it is the 4th round
     //TODO: add the victory condition
-
-    // WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
-    shared_ptr<OnPiecePlacedOnBoard> white_piece_on_table_event =
-            make_shared<OnPiecePlacedOnBoard>(white_queen_piece, board, put_piece_on_board);
-    _event_manager->add_custom_event(white_piece_on_table_event);
 
     // PLAYERS CAN ONLY MOVE THEIR COLOR PIECES
     shared_ptr<PlayerAttrComparison> is_player_color = make_shared<PlayerAttrComparison>(*this);

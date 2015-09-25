@@ -23,7 +23,7 @@ class TurnsManager {
 public:
     TurnsManager(BgCore &game);
 
-    void register_turn_def(shared_ptr<TurnDef> turn);
+    void register_player_turn_def(uint8_t player_id, shared_ptr<TurnDef> turn);
 
     void next_turn();
 
@@ -37,11 +37,11 @@ public:
 
 private:
     BgCore &_game;
-    uint32_t _curr_player_id;
+    uint8_t _curr_player_id;
     uint32_t _curr_round;
 
-    vector< shared_ptr<TurnDef> > _turn_definitions;
-    vector< shared_ptr<Turn> > _match_turns;
+    map<uint8_t, vector<shared_ptr<TurnDef>>> _player_turn_defs;
+    vector<shared_ptr<Turn>> _match_turns;
 
     shared_ptr<Turn> _curr_turn;
     shared_ptr<Action> _curr_action;

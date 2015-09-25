@@ -11,9 +11,9 @@
 #include "PlayerController.h"
 #include "../BitsManager.h"
 
-Player::Player(BgCore &game, uint32_t id) : _id(id), GameBit(game, string("Player") + to_string(id))  {
+Player::Player(BgCore &game, uint8_t id) : _id(id), GameBit(game, string("Player") + to_string(id))  {
     _interface = make_shared<PlayerInterface>(*this);
-    cout << "Creating the player " << id << endl;
+    cout << "Creating the player " << (uint16_t)id << endl;
 }
 
 shared_ptr<GameBit> Player::get_first_bit_by_name(string bit_name) const {

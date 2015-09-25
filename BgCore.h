@@ -41,20 +41,16 @@ public:
     void register_new_bit(shared_ptr<GameBit> bit);
 
     const shared_ptr<AttrManager> &attr_manager() const { return  _attr_manager; }
-
     const shared_ptr<BitsManager> &bits_manager() const { return _bits_manager; }
-
     const shared_ptr<RulesManager> &rules_manager() const { return _rules_manager; }
-
     const shared_ptr<TurnsManager> &turns_manager() const { return _turns_manager; }
-
     const shared_ptr<EventManager> &event_manager() const { return _event_manager; }
 
     const shared_ptr<State> &curr_state();
 
 private:
 //game config:
-    uint32_t _num_of_players;
+    uint8_t _num_of_players;
     bool _is_over;
 
     //game pointers:

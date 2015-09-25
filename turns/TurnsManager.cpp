@@ -31,7 +31,7 @@ void TurnsManager::next_turn() {
     }
 
     //TODO: choose the turn according to the conditions to choose the turn type;
-    shared_ptr<TurnDef> turn_def = _turn_definitions[0];
+    shared_ptr<TurnDef> turn_def = _player_turn_defs[_curr_player_id][0];
 
     shared_ptr<PlayerController> player_controller = curr_player->get_controller();
 
@@ -55,8 +55,8 @@ void TurnsManager::next_turn() {
     }
 }
 
-void TurnsManager::register_turn_def(shared_ptr<TurnDef> turn) {
-    _turn_definitions.push_back(turn);
+void TurnsManager::register_player_turn_def(uint8_t player_id, shared_ptr<TurnDef> turn) {
+    _player_turn_defs[player_id].push_back(turn);
 }
 
 const shared_ptr<State> &TurnsManager::get_curr_state() {
