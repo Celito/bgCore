@@ -120,7 +120,6 @@ BgCore::BgCore() {
 
         _turns_manager->register_player_turn_def(i, normal_turn);
 
-
         // WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
         shared_ptr<OnPiecePlacedOnBoard> white_piece_on_table_event =
                 make_shared<OnPiecePlacedOnBoard>(queen_piece, board, put_piece_on_board);
