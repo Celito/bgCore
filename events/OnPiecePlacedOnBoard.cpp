@@ -21,10 +21,15 @@ void OnPiecePlacedOnBoard::on_tracked_piece_placed_on_board(shared_ptr<Action> a
     if(_target_board.expired()) throw new exception();
     auto target_parent_ptr = _target_board.lock();
     shared_ptr<BitOption> opt_ptr = (shared_ptr<BitOption>)dynamic_pointer_cast<BitOption>(action->get_choose_opt());
-    if(!_happened && _tracked_piece.lock()->is_child_of(target_parent_ptr) &&
-            opt_ptr && opt_ptr->get_bit() == _tracked_piece.lock())
+    if(opt_ptr == nullptr || opt_ptr->get_bit() == nullptr) return;
+    shared_ptr<GameBit> option_piece = opt_ptr->get_bit();
+    shared_ptr<GameBit> tracked_piece_ptr = _tracked_piece.lock();
+    if(!_happened && tracked_piece_ptr->is_child_of(target_parent_ptr) && option_piece == tracked_piece_ptr)
     {
         _happened = true;
-        cout << "Reached an \"OnBitPlaced\" event" << endl;
+        for(auto game_change : _game_changes)
+        {
+            game_change->apply();
+        }
     }
 }

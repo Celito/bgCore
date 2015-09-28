@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <algorithm>
-#include <stdint.h>
 #include "BgCore.h"
 #include "GameController.h"
 #include "player/Player.h"
@@ -30,6 +29,7 @@
 #include "rules/movement/CanStack.h"
 #include "gameBits/attributes/AttrManager.h"
 #include "events/OnPiecePlacedOnBoard.h"
+#include "gameChanges/AddActionOption.h"
 
 using namespace std;
 
@@ -75,8 +75,8 @@ BgCore::BgCore() {
     register_new_bit(board);
     board->initialize_tiles(true);
 
-    for (uint8_t i = 0; i < _num_of_players; i++) {
-
+    for (uint8_t i = 0; i < _num_of_players; i++)
+    {
         shared_ptr<Piece> queen_piece;
 
         shared_ptr<Player> player = make_shared<Player>(*this, i + 1);
@@ -87,8 +87,10 @@ BgCore::BgCore() {
         shared_ptr<PieceSet> player_set = make_shared<PieceSet>(*this, PLAYER_PIECES);
         register_new_bit(player_set);
 
-        for (auto iter = pieces_info.begin(); iter != pieces_info.end(); iter++) {
-            for (uint32_t j = 0; j < iter->first; j++) {
+        for (auto iter = pieces_info.begin(); iter != pieces_info.end(); iter++)
+        {
+            for (uint32_t j = 0; j < iter->first; j++)
+            {
                 shared_ptr<Piece> new_piece = make_shared<Piece>(*this, iter->second);
                 register_new_bit(new_piece);
                 new_piece->set_attr(COLOR_ATTR, i);
@@ -115,26 +117,27 @@ BgCore::BgCore() {
 
         auto first_action = make_shared<MultiActions>(*this);
         first_action->add_sub_action(put_piece_on_board);
-        first_action->add_sub_action(move_piece_on_board);
+        //first_action->add_sub_action(move_piece_on_board);
         normal_turn->add_action_def(first_action);
 
         _turns_manager->register_player_turn_def(i, normal_turn);
 
+        cout << "queen piece " << queen_piece->get_bit_name() << " " << queen_piece->get_unique_id() << " " << queen_piece->get_attr("Color").get_value() << endl;
         // WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
-        shared_ptr<OnPiecePlacedOnBoard> white_piece_on_table_event =
+        shared_ptr<OnPiecePlacedOnBoard> queen_piece_on_table_event =
                 make_shared<OnPiecePlacedOnBoard>(queen_piece, board, put_piece_on_board);
-        _event_manager->add_custom_event(white_piece_on_table_event);
+
+        shared_ptr<AddActionOption> add_movement_game_change =
+                make_shared<AddActionOption>(first_action, move_piece_on_board, *this);
+
+        queen_piece_on_table_event->add_game_change(add_movement_game_change);
+
+        _event_manager->add_custom_event(queen_piece_on_table_event);
     }
 
     // TEMP adding the rules to the rules dictionary
 
-    //TODO: create bit_name and retype the bit_id from string to uint32_t
-
-    //TODO: create the custom events
-    //TODO: add and event when the queen is added in game
-
     //TODO: make possible to add rules to a set of bits (like "all Pieces")
-    //TODO: add the rule that you cannot move any piece until the queen is in game
     //TODO: add the rule that the queen must be placed on game if it is the 4th round
     //TODO: add the victory condition
 

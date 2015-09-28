@@ -16,7 +16,7 @@ class CustomEvent {
 public:
     void add_game_change(shared_ptr<GameChange> game_change);
 
-private:
+protected:
     vector<shared_ptr<GameChange>> _game_changes;
 };
 

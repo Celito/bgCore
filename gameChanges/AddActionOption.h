@@ -8,11 +8,20 @@
 
 #include "GameChange.h"
 
+class ActionDef;
+class MultiActions;
+
 class AddActionOption : public GameChange {
 public:
-    AddActionOption(BgCore &core) : GameChange(core) {}
+    AddActionOption(shared_ptr<MultiActions> target_multi_action, shared_ptr<ActionDef> added_action, BgCore &core) :
+            GameChange(core), _target_multi_action(target_multi_action), _added_action(added_action) {}
 
     virtual void apply();
+
+private:
+
+    weak_ptr<MultiActions> _target_multi_action;
+    shared_ptr<ActionDef> _added_action;
 };
 
 

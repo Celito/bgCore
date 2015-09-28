@@ -23,12 +23,6 @@ void TurnsManager::next_turn() {
 
     cout << "====== PLAYER " << _curr_player_id + 1 << " TURN STARTED ========" << endl;
     auto curr_player = _game.get_player(_curr_player_id);
-    _curr_player_id++;
-    bool round_ended = false;
-    if(_curr_player_id + 1 > _game.get_num_of_players()) {
-        round_ended = true;
-        _curr_player_id = 0;
-    }
 
     //TODO: choose the turn according to the conditions to choose the turn type;
     shared_ptr<TurnDef> turn_def = _player_turn_defs[_curr_player_id][0];
@@ -48,6 +42,13 @@ void TurnsManager::next_turn() {
 
     _match_turns.push_back(_curr_turn);
     _turn_changed();
+
+    _curr_player_id++;
+    bool round_ended = false;
+    if(_curr_player_id + 1 > _game.get_num_of_players()) {
+        round_ended = true;
+        _curr_player_id = 0;
+    }
 
     if(round_ended) {
         _curr_round++;
