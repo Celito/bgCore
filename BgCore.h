@@ -31,6 +31,8 @@ public:
     //interface:
     void start(GameController &game_controller);
 
+    void kill();
+
     //internal:
     shared_ptr<Player> get_player(uint32_t id);
 

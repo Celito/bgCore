@@ -263,6 +263,12 @@ void BgCore::start(GameController &game_controller) {
     }
 }
 
+void BgCore::kill()
+{
+    _turns_manager->kill();
+    _is_over = true;
+}
+
 shared_ptr<Player> BgCore::get_player(uint32_t id) {
     return _players[id];
 }

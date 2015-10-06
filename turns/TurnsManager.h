@@ -27,6 +27,8 @@ public:
 
     void next_turn();
 
+    void kill();
+
     const shared_ptr<State> &get_curr_state();
 
     uint32_t round();
@@ -49,6 +51,7 @@ private:
 
     boost::signals2::signal<void()> _turn_changed;
     boost::signals2::signal<void()> _round_changed;
+    bool _killed;
 };
 
 

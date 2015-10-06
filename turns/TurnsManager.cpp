@@ -13,6 +13,7 @@
 #include "State.h"
 
 TurnsManager::TurnsManager(BgCore &game) : _game(game) {
+    _killed = false;
     _curr_player_id = 0;
     _curr_state = make_shared<State>();
     _curr_round = 1;
@@ -33,8 +34,15 @@ void TurnsManager::next_turn() {
 
     while(_curr_action = _curr_turn->get_next_action()) {
 
+        // ask for the game interface for the player choice;
         if(!_curr_action->self_resolve()) {
             player_controller->resolve_action(_curr_action);
+        }
+
+        // if the game was killed during the choice the function should just return for now;
+        if(_killed)
+        {
+            return;
         }
 
         _curr_turn->register_action(_curr_action);
@@ -74,4 +82,9 @@ uint32_t TurnsManager::round() {
 
 boost::signals2::connection TurnsManager::on_turn_changed(boost::signals2::slot<void()> slot) {
     return _turn_changed.connect(slot);
+}
+
+void TurnsManager::kill()
+{
+    _killed = true;
 }
