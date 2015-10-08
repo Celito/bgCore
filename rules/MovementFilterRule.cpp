@@ -6,12 +6,16 @@
 #include "../turns/actions/options/TileOption.h"
 #include "../gameBits/boards/TilePos.h"
 #include "../gameBits/boards/Tile.h"
+#include "../gameBits/Piece.h"
 #include <queue>
 #include <set>
 
 
-void MovementFilterRule::filter_positions(vector<shared_ptr<Option> > &options, shared_ptr<Tile> initial_tile) {
+void MovementFilterRule::filter_positions(vector<shared_ptr<Option> > &options, shared_ptr<Tile> initial_tile,
+                      const shared_ptr<Piece> &moving_piece)
+{
     bool available_opts = true;
+    moving_piece->set_parent(nullptr);
     queue< shared_ptr<TileOption> > possible_options;
     set< TilePos > tested_pos;
     tested_pos.insert(initial_tile->get_pos());
@@ -44,6 +48,7 @@ void MovementFilterRule::filter_positions(vector<shared_ptr<Option> > &options, 
         //keep going while there are available options to process;
         available_opts = possible_options.size() != 0;
     }
+    initial_tile->receive(moving_piece);
 }
 
 

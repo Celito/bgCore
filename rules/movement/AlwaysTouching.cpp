@@ -12,11 +12,10 @@ bool AlwaysTouching::opt_can_be_processed(const shared_ptr<TileOption> &analyzed
     if(!next->is_empty()) return true;
     const vector<weak_ptr<Tile>> &path = analyzed_option->get_path();
     if(path.size() < 2) return false;
-    const weak_ptr<Tile> &previous_w = path[path.size() - 2];
-    const shared_ptr<Tile> &previous = previous_w.lock();
-    uint32_t num_directions = previous->get_num_of_directions();
-    uint32_t direction = previous->get_direction_of(next->get_pos());
-    const shared_ptr<Tile> &other1 = previous->get_neighbour(direction == (num_directions - 1) ? 0 : direction + 1);
-    const shared_ptr<Tile> &other2 = previous->get_neighbour(direction == 0 ? (num_directions - 1) : direction - 1);
+    shared_ptr<Tile> previous_tile = path[path.size() - 2].lock();
+    uint32_t num_directions = previous_tile->get_num_of_directions();
+    uint32_t direction = previous_tile->get_direction_of(next->get_pos());
+    const shared_ptr<Tile> &other1 = previous_tile->get_neighbour(direction == (num_directions - 1) ? 0 : direction + 1);
+    const shared_ptr<Tile> &other2 = previous_tile->get_neighbour(direction == 0 ? (num_directions - 1) : direction - 1);
     return (other1 != nullptr && !other1->is_empty()) || (other2 != nullptr && !other2->is_empty());
 }

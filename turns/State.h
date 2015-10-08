@@ -8,13 +8,18 @@
 #include <memory>
 #include <map>
 #include <vector>
+#include "../BgCore.h"
 
 class GameBit;
+class BgCore;
 
 using namespace std;
 
 class State {
 public:
+
+    State(BgCore &core): _core(core) { }
+
     shared_ptr<GameBit> get_parent(uint32_t bit_id) const;
 
     const vector<weak_ptr<GameBit>> & get_children(uint32_t bit_id) const;
@@ -29,6 +34,8 @@ private:
     map<uint32_t, vector<weak_ptr<GameBit>>> _children_table;
 
     vector<weak_ptr<GameBit>> _no_children;
+
+    BgCore &_core;
 };
 
 

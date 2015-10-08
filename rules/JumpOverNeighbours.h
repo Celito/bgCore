@@ -11,7 +11,8 @@
 class JumpOverNeighbours : public MovementFilterRule {
 
 public:
-    virtual void filter_positions(vector<shared_ptr<Option> > &options, shared_ptr<Tile> initial_tile) override;
+    virtual void filter_positions(vector<shared_ptr<Option> > &options, shared_ptr<Tile> initial_tile,
+                          const shared_ptr<Piece> &moving_piece) override;
 };
 
 

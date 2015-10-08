@@ -74,8 +74,6 @@ void MovePieceOnBoard::choose(shared_ptr<Action> action) {
     
     BgCore &game = tile->get_game();
 
-    turn->get_player()->receive(selected_bit);
-
     shared_ptr<Action> next_action = make_shared<Action>(turn, _choose_tile_on_board );
 
     next_action->add_req_bit(e_tile, tile);

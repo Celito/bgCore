@@ -38,8 +38,7 @@ void ChooseTileOnBoard::update_options(Action &action) {
         for (auto tile : tiles) {
             bool is_available = true;
             for (auto rule_ptr : placement_rules) {
-                shared_ptr<TestableRule> placement_rule =
-                        (shared_ptr<TestableRule>)dynamic_pointer_cast<TestableRule>(rule_ptr);
+                shared_ptr<TestableRule> placement_rule = dynamic_pointer_cast<TestableRule>(rule_ptr);
                 if(placement_rule == nullptr) throw new exception();
                 placement_rule->add_req_bit(e_tile, tile);
                 placement_rule->set_curr_player(_curr_player);
@@ -70,7 +69,7 @@ void ChooseTileOnBoard::update_options(Action &action) {
             shared_ptr<MovementFilterRule> movement_rule =
                     (shared_ptr<MovementFilterRule>)dynamic_pointer_cast<MovementFilterRule>(rule);
             if(movement_rule == nullptr) throw new exception();
-            movement_rule->filter_positions(options, start_tile);
+            movement_rule->filter_positions(options, start_tile, piece);
         }
         for (auto option : options) {
             action.add_option(option);

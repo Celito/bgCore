@@ -19,7 +19,7 @@ const vector<weak_ptr<GameBit>> &State::get_children(uint32_t bit_id) const {
 
 void State::transfer(uint32_t child_id, shared_ptr<GameBit> parent_ptr) {
     const shared_ptr<GameBit> &old_parent = get_parent(child_id);
-    shared_ptr<GameBit> child_ptr = parent_ptr->get_game().bits_manager()->get_bit(child_id);
+    shared_ptr<GameBit> child_ptr = _core.bits_manager()->get_bit(child_id);
     if(old_parent != nullptr){
         vector<weak_ptr<GameBit>> &children = _children_table[old_parent->get_unique_id()];
         children.erase(
@@ -34,7 +34,7 @@ void State::transfer(uint32_t child_id, shared_ptr<GameBit> parent_ptr) {
         );
     }
     _parenting_table[child_id] = parent_ptr;
-    _children_table[parent_ptr->get_unique_id()].push_back(child_ptr);
+    if(parent_ptr != nullptr) _children_table[parent_ptr->get_unique_id()].push_back(child_ptr);
 }
 
 void State::remove_from_parent(uint32_t parent_id, shared_ptr<GameBit> child) {

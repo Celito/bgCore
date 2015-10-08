@@ -13,6 +13,7 @@
 
 class Tile;
 class TileOption;
+class Piece;
 class Option;
 class MovementSubRule;
 
@@ -20,7 +21,8 @@ using namespace std;
 
 class MovementFilterRule : public Rule {
 public:
-    virtual void filter_positions(vector<shared_ptr<Option> > &options, shared_ptr<Tile> initial_tile);
+    virtual void filter_positions(vector<shared_ptr<Option> > &options, shared_ptr<Tile> initial_tile,
+                          const shared_ptr<Piece> &moving_piece);
 
     void set_max_steps(uint32_t value);
 

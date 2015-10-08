@@ -15,7 +15,7 @@
 TurnsManager::TurnsManager(BgCore &game) : _game(game) {
     _killed = false;
     _curr_player_id = 0;
-    _curr_state = make_shared<State>();
+    _curr_state = make_shared<State>(game);
     _curr_round = 1;
 }
 
