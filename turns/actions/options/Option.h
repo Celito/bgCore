@@ -15,6 +15,9 @@ class Action;
 class Option {
 public:
     virtual string get_description() = 0;
+
+private:
+    shared_ptr<Action> _pre_processed_next_action;
 };
 
 

@@ -23,6 +23,9 @@ public:
 
     virtual bool is_available(shared_ptr<Player> player) override;
 
+
+    virtual void init_by_option(shared_ptr<Action> action, shared_ptr<Option> selected_option) override;
+
 private:
     shared_ptr<ChooseTileOnBoard> _choose_tile_on_board;
 };

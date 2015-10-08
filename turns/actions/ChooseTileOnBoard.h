@@ -8,7 +8,8 @@
 #include "ActionDef.h"
 #include "../../gameBits/boards/Board.h"
 
-class ChooseTileOnBoard : public ActionDef {
+class ChooseTileOnBoard : public ActionDef
+{
 public:
     ChooseTileOnBoard(BgCore &game, shared_ptr<BitReference> target);
 
@@ -20,9 +21,9 @@ public:
 
     virtual bool is_available(shared_ptr<Player> player);
 
-    void set_reason(const available_tiles_t &_reason) {
-        ChooseTileOnBoard::_reason = _reason;
-    }
+    void set_reason(const available_tiles_t &_reason) { ChooseTileOnBoard::_reason = _reason; }
+
+    virtual void init_by_option(shared_ptr<Action> action, shared_ptr<Option> selected_option) override;
 
 private:
     available_tiles_t _reason = e_for_placement;

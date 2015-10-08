@@ -116,19 +116,18 @@ BgCore::BgCore() {
                 make_shared<MovePieceOnBoard>(*this, make_shared<BitReference>(HEX_BOARD_NAME, *this));
 
         auto first_action = make_shared<MultiActions>(*this);
+
         first_action->add_sub_action(put_piece_on_board);
-        //first_action->add_sub_action(move_piece_on_board);
+
         normal_turn->add_action_def(first_action);
 
         _turns_manager->register_player_turn_def(i, normal_turn);
 
         cout << "queen piece " << queen_piece->get_bit_name() << " " << queen_piece->get_unique_id() << " " << queen_piece->get_attr("Color").get_value() << endl;
         // WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
-        shared_ptr<OnPiecePlacedOnBoard> queen_piece_on_table_event =
-                make_shared<OnPiecePlacedOnBoard>(queen_piece, board, put_piece_on_board);
+        auto queen_piece_on_table_event = make_shared<OnPiecePlacedOnBoard>(queen_piece, board, put_piece_on_board);
 
-        shared_ptr<AddActionOption> add_movement_game_change =
-                make_shared<AddActionOption>(first_action, move_piece_on_board, *this);
+        auto add_movement_game_change = make_shared<AddActionOption>(first_action, move_piece_on_board, *this);
 
         queen_piece_on_table_event->add_game_change(add_movement_game_change);
 

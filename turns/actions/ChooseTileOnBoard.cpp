@@ -11,6 +11,7 @@
 #include "../../rules/TestableRule.h"
 #include "../../rules/MovementFilterRule.h"
 #include "../../rules/RulesManager.h"
+#include "options/BitOption.h"
 
 ChooseTileOnBoard::ChooseTileOnBoard(BgCore &game, shared_ptr<BitReference> target) : ActionDef(game) {
     _bit_refs[e_board] = target;
@@ -85,4 +86,26 @@ bool ChooseTileOnBoard::is_available(shared_ptr<Player> player) {
 
 action_type_e ChooseTileOnBoard::get_type() {
     return e_choose_tile;
+}
+
+void ChooseTileOnBoard::init_by_option(shared_ptr<Action> action, shared_ptr<Option> selected_option)
+{
+    auto bit_opt = dynamic_pointer_cast<BitOption>(selected_option);
+    shared_ptr<GameBit> selected_bit = bit_opt->get_bit();
+
+    action->add_req_bit(e_piece, selected_bit);
+
+    if(_reason == e_for_movement)
+    {
+        shared_ptr<GameBit> piece_parent = selected_bit->get_parent();
+        if(piece_parent == nullptr)throw new exception();
+
+        shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(piece_parent);
+        if(tile == nullptr)throw new exception();
+
+        BgCore &game = tile->get_game();
+
+        action->add_req_bit(e_tile, tile);
+    }
+    ActionDef::init_by_option(action, selected_option);
 }

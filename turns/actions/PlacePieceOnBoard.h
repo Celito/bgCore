@@ -21,6 +21,9 @@ public:
 
     virtual void choose(shared_ptr<Action> action) override;
 
+
+    virtual void init_by_option(shared_ptr<Action> action, shared_ptr<Option> selected_option) override;
+
 private:
     shared_ptr<GameBit> _selected_bit;
     shared_ptr<ChooseTileOnBoard> _choose_tile_on_board;

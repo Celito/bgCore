@@ -19,6 +19,8 @@ MovePieceOnBoard::MovePieceOnBoard(BgCore &game, shared_ptr<BitReference> target
         ChoosePieceOnBoard(game, target_board) {
     _choose_tile_on_board = make_shared<ChooseTileOnBoard>(_game, target_board);
     _choose_tile_on_board->set_reason(e_for_movement);
+    _static_next_action = _choose_tile_on_board;
+    _can_pre_process = true;
 }
 
 string MovePieceOnBoard::get_description() const {
@@ -71,7 +73,7 @@ void MovePieceOnBoard::choose(shared_ptr<Action> action) {
 
     shared_ptr<Tile> tile = (shared_ptr<Tile>)dynamic_pointer_cast<Tile>(piece_parent);
     if(tile == nullptr)throw new exception();
-    
+
     BgCore &game = tile->get_game();
 
     shared_ptr<Action> next_action = make_shared<Action>(turn, _choose_tile_on_board );
@@ -126,4 +128,9 @@ bool MovePieceOnBoard::is_available(shared_ptr<Player> player) {
     }
 
     return movable_piece_found;
+}
+
+void MovePieceOnBoard::init_by_option(shared_ptr<Action> action, shared_ptr<Option> selected_option)
+{
+    ActionDef::init_by_option(action, selected_option);
 }

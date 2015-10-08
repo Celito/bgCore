@@ -17,6 +17,8 @@ PlacePieceOnBoard::PlacePieceOnBoard(BgCore &game, shared_ptr<BitReference> piec
                                  shared_ptr<BitReference> target_board)
         : ChoosePieceOnSet(game, pieces_pool) {
     _choose_tile_on_board = make_shared<ChooseTileOnBoard>(_game, target_board);
+    _static_next_action = _choose_tile_on_board;
+    _can_pre_process = true;
 }
 
 string PlacePieceOnBoard::get_description() const {
@@ -48,5 +50,10 @@ void PlacePieceOnBoard::choose(shared_ptr<Action> action) {
     next_action->init(next_action);
 
     turn->add_next_action(next_action);
+}
 
+void PlacePieceOnBoard::init_by_option(shared_ptr<Action> action, shared_ptr<Option> selected_option)
+{
+
+    ActionDef::init_by_option(action, selected_option);
 }
