@@ -20,12 +20,10 @@ TurnsManager::TurnsManager(BgCore &game) : _game(game) {
 }
 
 void TurnsManager::next_turn() {
-    //TODO: add the configuration option to allow a player to skip a turn or not
 
     cout << "====== PLAYER " << _curr_player_id + 1 << " TURN STARTED ========" << endl;
     auto curr_player = _game.get_player(_curr_player_id);
 
-    //TODO: choose the turn according to the conditions to choose the turn type;
     shared_ptr<TurnDef> turn_def = _player_turn_defs[_curr_player_id][0];
 
     shared_ptr<PlayerController> player_controller = curr_player->get_controller();
