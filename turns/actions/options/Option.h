@@ -8,13 +8,18 @@
 #include <memory>
 #include <string>
 
-using  namespace std;
+using namespace std;
 
 class Action;
 
-class Option {
+class Option
+{
 public:
     virtual string get_description() = 0;
+
+    void set_pre_processed_next_action(const shared_ptr<Action> &next_action) { _pre_processed_next_action = next_action; }
+
+    const shared_ptr<Action> & get_pre_processed_next_action() { return _pre_processed_next_action; }
 
 private:
     shared_ptr<Action> _pre_processed_next_action;

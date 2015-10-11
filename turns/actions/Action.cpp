@@ -5,6 +5,7 @@
 #include "Action.h"
 #include "ActionDef.h"
 #include "../Turn.h"
+#include "options/Option.h"
 
 Action::Action(const weak_ptr<Turn> &turn, const weak_ptr<ActionDef> &definition)
         : _turn(turn), _definition(definition)
@@ -36,7 +37,7 @@ void Action::choose(shared_ptr<Option> option)
     if (!_choose_option.expired()) throw new exception();
     if (_self_ptr.expired()) throw new exception();
     _choose_option = option;
-    _definition.lock()->choose(_self_ptr.lock());
+    _definition.lock()->process_choice(_self_ptr.lock());
     _option_taken(option);
 }
 
@@ -66,15 +67,16 @@ void Action::add_option(shared_ptr<Option> option)
 {
     _options.push_back(option);
     shared_ptr<ActionDef> def_ptr = _definition.lock();
-    if (def_ptr->can_pre_process())
-    {
-        shared_ptr<ActionDef> next_action_def_ptr = def_ptr.get()->get_next_action_def(option);
-        if(next_action_def_ptr != nullptr)
-        {
-            shared_ptr<Action> next_action = make_shared<Action>(_turn, next_action_def_ptr);
-            next_action_def_ptr->init_by_option(next_action, option);
-        }
-    }
+
+    if (!def_ptr->can_pre_process()) return;
+
+    shared_ptr<ActionDef> next_action_def_ptr = def_ptr.get()->get_next_action_def(option);
+
+    if(next_action_def_ptr == nullptr) return;
+
+    shared_ptr<Action> next_action = make_shared<Action>(_turn, next_action_def_ptr);
+    next_action_def_ptr->init_by_option(next_action, option);
+    option->set_pre_processed_next_action(next_action);
 }
 
 shared_ptr<Turn> Action::get_turn() const

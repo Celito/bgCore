@@ -19,7 +19,7 @@ public:
 
     virtual string get_description() const override;
 
-    virtual void choose(shared_ptr<Action> action) override;
+    virtual void process_choice(shared_ptr<Action> action) override;
 
     virtual bool is_available(shared_ptr<Player> player) override;
 

@@ -16,9 +16,16 @@
 #include "../turns/actions/options/TileOption.h"
 #include "../player/PlayerInterface.h"
 
+/**
+ * Receive the action from the bg core, display them in the console, waits for a player entry with the choose option and
+ * set the chose option on the action before sending the control of the thread back to the core. If the chosen option
+ * have a preprocessed action attached to it, the process repeats until there are no more pre processed actions to be
+ * made by the player;
+ */
 void PlayerTUI::resolve_action(shared_ptr<Action> action) {
     //system("cls");
     //TODO: Make the TUI use the pre processed actions;
+
     shared_ptr<PlayerInterface> my_player = get_interface().lock();
     cout << "============ " << (my_player->get_id() == 1? "-WHITE-" : "<BLACK>") << " PLAYER TURN =============" << endl;
     vector<shared_ptr<Option>> const &options = action->get_options();

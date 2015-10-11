@@ -34,7 +34,7 @@ public:
 
     virtual string get_description() const = 0;
 
-    virtual void choose(shared_ptr<Action> action);
+    virtual void process_choice(shared_ptr<Action> action);
 
     virtual action_type_e get_type() { return e_not_defined; }
 

@@ -23,8 +23,6 @@ public:
 
     virtual bool is_available(shared_ptr<Player> player);
 
-    virtual void choose(shared_ptr<Action> action) override;
-
     virtual const shared_ptr<ActionDef> &get_next_action_def(const shared_ptr<Option> &selected_option) override;
 
 private:
