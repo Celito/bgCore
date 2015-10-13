@@ -38,10 +38,14 @@ public:
 
     void remove_tile(TilePos pos);
 
+    boost::signals2::connection on_tile_added(boost::signals2::slot<void(const shared_ptr<Tile> &)> slot);
+
 protected:
     map< TilePos, shared_ptr< Tile > > _tile_grid;
 
     vector<TilePos> _default_directions;
+
+    boost::signals2::signal<void(const shared_ptr<Tile> &)> _tile_added;
 
     bool _grown_on_usage = false;
 };

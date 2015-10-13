@@ -21,6 +21,7 @@ void Board::add_new_tile(TilePos pos) {
             caller.populate_neighbours();
         });
     }
+    _tile_added(tile);
 }
 
 vector< shared_ptr<Tile> > Board::get_tiles() {
@@ -55,4 +56,9 @@ void Board::initialize_tiles(bool grown_on_usage) {
     _grown_on_usage = grown_on_usage;
     auto zero = TilePos(0, 0);
     add_new_tile(zero);
+}
+
+boost::signals2::connection Board::on_tile_added(boost::signals2::slot<void(const shared_ptr<Tile> &)> slot)
+{
+    return _tile_added.connect(slot);
 }
