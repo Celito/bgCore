@@ -85,7 +85,7 @@ bool ChooseTileOnBoard::is_available(shared_ptr<Player> player) {
 }
 
 action_type_e ChooseTileOnBoard::get_type() {
-    return e_choose_tile;
+    return e_action_type_choose_tile;
 }
 
 void ChooseTileOnBoard::init_by_option(shared_ptr<Action> action, shared_ptr<Option> selected_option)

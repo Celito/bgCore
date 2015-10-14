@@ -21,6 +21,8 @@ public:
 
     virtual void process_choice(shared_ptr<Action> action) override;
 
+    virtual action_type_e get_type() const override { return e_action_type_place_piece_on_board; }
+
 private:
     shared_ptr<ChooseTileOnBoard> _choose_tile_on_board;
 };

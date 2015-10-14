@@ -30,7 +30,7 @@ void PlayerTUI::resolve_action(shared_ptr<Action> action) {
     cout << "============ " << (my_player->get_id() == 1? "-WHITE-" : "<BLACK>") << " PLAYER TURN =============" << endl;
     vector<shared_ptr<Option>> const &options = action->get_options();
     print_opts(action, options);
-    if(action->get_type() == e_choose_tile) {
+    if(action->get_type() == e_action_type_choose_tile) {
         shared_ptr<Board> board = (shared_ptr<Board>)dynamic_pointer_cast<Board>(action->get_req_bit(e_board));
         if(board != nullptr){
             cout << "=======================================================" << endl;

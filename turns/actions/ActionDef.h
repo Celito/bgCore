@@ -36,7 +36,7 @@ public:
 
     virtual void process_choice(shared_ptr<Action> action);
 
-    virtual action_type_e get_type() { return e_not_defined; }
+    virtual action_type_e get_type() const { return e_action_type_not_defined; }
 
     bool can_pre_process() const { return _can_pre_process; }
 
