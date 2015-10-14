@@ -84,7 +84,7 @@ bool ChooseTileOnBoard::is_available(shared_ptr<Player> player) {
     return board != nullptr && !board->is_empty();
 }
 
-action_type_e ChooseTileOnBoard::get_type() {
+action_type_e ChooseTileOnBoard::get_type() const {
     return e_action_type_choose_tile;
 }
 
