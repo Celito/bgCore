@@ -127,9 +127,9 @@ BgCore::BgCore() {
         // WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
         auto queen_piece_on_table_event = make_shared<OnPiecePlacedOnBoard>(queen_piece, board, put_piece_on_board);
 
-        auto add_movement_game_change = make_shared<AddActionOption>(first_action, move_piece_on_board, *this);
+        auto add_movement_action_game_change = make_shared<AddActionOption>(first_action, move_piece_on_board, *this);
 
-        queen_piece_on_table_event->add_game_change(add_movement_game_change);
+        queen_piece_on_table_event->add_game_change(add_movement_action_game_change);
 
         _event_manager->add_custom_event(queen_piece_on_table_event);
     }
