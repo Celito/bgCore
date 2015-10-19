@@ -123,9 +123,12 @@ BgCore::BgCore() {
 
         _turns_manager->register_player_turn_def(i, normal_turn);
 
-        cout << "queen piece " << queen_piece->get_bit_name() << " " << queen_piece->get_unique_id() << " " << queen_piece->get_attr("Color").get_value() << endl;
+        //cout << "queen piece " << queen_piece->get_bit_name() << " " << 
+			//queen_piece->get_unique_id() << " " << 
+			//queen_piece->get_attr("Color").get_value() << endl;
         // WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
-        auto queen_piece_on_table_event = make_shared<OnPiecePlacedOnBoard>(queen_piece, board, put_piece_on_board);
+        auto queen_piece_on_table_event = 
+			make_shared<OnPiecePlacedOnBoard>(queen_piece, board, put_piece_on_board);
 
         auto add_movement_game_change = make_shared<AddActionOption>(first_action, move_piece_on_board, *this);
 
