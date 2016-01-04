@@ -19,7 +19,8 @@ using namespace std;
 
 enum action_type_e {
     e_action_type_not_defined,
-    e_action_type_choose_tile,
+    e_action_type_multi_action,
+    e_action_type_choose_tile_on_board,
     e_action_type_place_piece_on_board,
     e_action_type_move_piece_on_board
 };

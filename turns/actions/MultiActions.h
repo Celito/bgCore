@@ -25,6 +25,8 @@ public:
 
     virtual const shared_ptr<ActionDef> &get_next_action_def(const shared_ptr<Option> &selected_option) override;
 
+    virtual action_type_e get_type() const override { return e_action_type_multi_action; }
+
 private:
 
     vector<shared_ptr<ActionDef> > _sub_actions;
