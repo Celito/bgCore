@@ -84,6 +84,10 @@ bool ChooseTileOnBoard::is_available(shared_ptr<Player> player) {
     return board != nullptr && !board->is_empty();
 }
 
+action_type_e ChooseTileOnBoard::get_type() {
+    return e_action_type_choose_tile;
+}
+
 void ChooseTileOnBoard::init_by_option(shared_ptr<Action> action, shared_ptr<Option> selected_option)
 {
     auto bit_opt = dynamic_pointer_cast<BitOption>(selected_option);

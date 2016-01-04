@@ -58,7 +58,7 @@ public:
 
 private:
     bool _initialized;
-    bool _can_self_resolve = true;
+    bool _can_self_resolve = false;
     weak_ptr<Turn> _turn;
     weak_ptr<ActionDef> _definition;
     weak_ptr<Option> _choose_option;
