@@ -87,15 +87,15 @@ BgCore::BgCore() {
         shared_ptr<PieceSet> player_set = make_shared<PieceSet>(*this, PLAYER_PIECES);
         register_new_bit(player_set);
 
-        for (auto iter = pieces_info.begin(); iter != pieces_info.end(); iter++)
+        for (auto &iter : pieces_info)
         {
-            for (uint32_t j = 0; j < iter->first; j++)
+            for (uint32_t j = 0; j < iter.first; j++)
             {
-                shared_ptr<Piece> new_piece = make_shared<Piece>(*this, iter->second);
+                shared_ptr<Piece> new_piece = make_shared<Piece>(*this, iter.second);
                 register_new_bit(new_piece);
                 new_piece->set_attr(COLOR_ATTR, i);
                 player_set->receive(new_piece);
-                if(iter->second == QUEEN_NAME)
+                if(iter.second == QUEEN_NAME)
                 {
                     queen_piece = new_piece;
                 }
@@ -123,10 +123,8 @@ BgCore::BgCore() {
 
         _turns_manager->register_player_turn_def(i, normal_turn);
 
-        //cout << "queen piece " << queen_piece->get_bit_name() << " " << 
-			//queen_piece->get_unique_id() << " " << 
-			//queen_piece->get_attr("Color").get_value() << endl;
-        // WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
+        // TODO: Make this a custom PLAYER event, so it happens for both players
+        // CREATE THE CUSTOM EVENT WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
         auto queen_piece_on_table_event = 
 			make_shared<OnPiecePlacedOnBoard>(queen_piece, board, put_piece_on_board);
 

@@ -10,6 +10,10 @@ GameTUI::GameTUI(BgCore &game) : _game(game) {
     for (uint32_t i = 0; i < num; ++i) {
         _player_TUIS.push_back(make_shared<PlayerTUI>(*this));
     }
+
+    // Must place the queen at the 4th turn
+    const vector<int32_t> t = {0, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 2, 0, 1, 1, 0, 1, 0, 0};
+
     // Ant can't jump test case
 //    const vector<int32_t> t = {1, 0, 1, 4, 0, 1, 7, 0, 1, 6, 0, 1, 3, 0, 3, 9, 0, 3, 7, 1, 3};
 
@@ -20,7 +24,7 @@ GameTUI::GameTUI(BgCore &game) : _game(game) {
 //    const vector<int32_t> t = {4,0,4,5,0,4,2,1};;
 
 //    const vector<int32_t> t = {1, 0, 1, 4, 1, 0, 0, 0, 1, 6, 1, 0};
-//    for_each(t.cbegin(),t.cend(), [this](int32_t n) { pre_loaded_opt.push(n); });
+    for_each(t.cbegin(),t.cend(), [this](int32_t n) { pre_loaded_opt.push(n); });
 }
 
 void GameTUI::run() {
@@ -32,7 +36,7 @@ shared_ptr<PlayerController> GameTUI::get_player_controller(uint32_t player_id) 
 }
 
 int32_t GameTUI::get_next_pre_loaded_option() {
-    if (pre_loaded_opt.size() > 0) {
+    if (!pre_loaded_opt.empty()) {
         int ret = pre_loaded_opt.front();
         pre_loaded_opt.pop();
         return ret;

@@ -20,8 +20,8 @@ const vector<shared_ptr<Option> > &Action::get_options() const
 
 bool Action::self_resolve()
 {
-    if (!_initialized) throw new exception();
-    if (_options.size() == 0) throw new exception();
+    if (!_initialized) throw exception();
+    if (_options.empty()) throw exception();
 
     if (_can_self_resolve && _options.size() == 1)
     {
@@ -34,8 +34,8 @@ bool Action::self_resolve()
 void Action::choose(shared_ptr<Option> option)
 {
     // The _choose_option must be null to make sure this action was not already taken
-    if (!_choose_option.expired()) throw new exception();
-    if (_self_ptr.expired()) throw new exception();
+    if (!_choose_option.expired()) throw exception();
+    if (_self_ptr.expired()) throw exception();
     _choose_option = option;
     _definition.lock()->process_choice(_self_ptr.lock());
     _option_taken(option);
@@ -43,13 +43,13 @@ void Action::choose(shared_ptr<Option> option)
 
 string Action::get_description() const
 {
-    if (_definition.expired()) throw new exception();
+    if (_definition.expired()) throw exception();
     return _definition.lock()->get_description();
 }
 
 action_type_e Action::get_type() const
 {
-    if (_definition.expired()) throw new exception();
+    if (_definition.expired()) throw exception();
     return _definition.lock()->get_type();
 }
 
@@ -96,7 +96,7 @@ boost::signals2::connection Action::on_option_taken(boost::signals2::slot<void(s
 
 void Action::init(const shared_ptr<Action> &self_ptr)
 {
-    if (_initialized) throw new exception();
+    if (_initialized) throw exception();
     _definition.lock()->init_act_instance(*this);
     _initialized = true;
     _self_ptr = self_ptr;

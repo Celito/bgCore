@@ -55,16 +55,17 @@ void PlayerTUI::print_opts(const shared_ptr<Action> &action, const vector<shared
     cout << action->get_description() << ":" << endl;
     queue<string> opts_str;
     uint16_t biggest_opt_str = 0;
-    for (int i = 0; i < options.size(); ++i) {
-        const string &opt_str = options[i]->get_description();
+    for (const auto &option : options)
+    {
+        const string &opt_str = option->get_description();
         if(opt_str.size() > biggest_opt_str) biggest_opt_str = (uint16_t) opt_str.size();
         opts_str.push(opt_str);
     }
-    uint16_t opts_size = (uint16_t) (biggest_opt_str + 6);
+    auto opts_size = (uint16_t) (biggest_opt_str + 6);
     const int max_per_line = 79;
-    uint16_t opts_per_line = (uint16_t) (max_per_line / opts_size);
-    uint16_t chars_left = (uint16_t) (max_per_line - (opts_per_line * (biggest_opt_str + 6)));
-    uint16_t lines = (uint16_t) ((opts_str.size() / opts_per_line) + 1);
+    auto opts_per_line = (uint16_t) (max_per_line / opts_size);
+    auto chars_left = (uint16_t) (max_per_line - (opts_per_line * (biggest_opt_str + 6)));
+    auto lines = (uint16_t) ((opts_str.size() / opts_per_line) + 1);
     uint16_t k = 0;
     for (int j = 0; j < lines; ++j) {
         for (int i = 0; i < opts_per_line && !opts_str.empty(); ++i) {
@@ -99,7 +100,7 @@ void PlayerTUI::print_board(const vector<shared_ptr<Option>> &options, const sha
             j += curr_y - tile->y();
             curr_y = tile->y();
         }
-        while(lines.size() <= j) lines.push_back("");
+        while(lines.size() <= j) lines.emplace_back("");
         if(new_line){
             for (int k = 0; k < tile->x() - min_x; ++k) {
                 lines[j] += "    ";
@@ -152,7 +153,8 @@ void PlayerTUI::print_board(const vector<shared_ptr<Option>> &options, const sha
             }
         }
     }
-    for (int k = 0; k < lines.size(); ++k) {
-        cout << lines[k] << endl;
+    for (const auto &line : lines)
+    {
+        cout << line << endl;
     }
 }

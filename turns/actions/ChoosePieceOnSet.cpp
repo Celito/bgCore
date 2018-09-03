@@ -34,7 +34,7 @@ bool ChoosePieceOnSet::is_available(shared_ptr<Player> player) {
     shared_ptr<BitReference> &bit_ref = _bit_refs[e_piece_set];
     if(bit_ref == nullptr) throw new exception();
     shared_ptr<GameBit> bit_ptr = bit_ref->get_bit(player);
-    if(bit_ptr == nullptr) throw new exception();
+    if(bit_ptr == nullptr) throw "ChoosePieceOnSet: Missing bit reference.";
     shared_ptr<PieceSet> piece_set = (shared_ptr<PieceSet>)dynamic_pointer_cast<PieceSet>(bit_ptr);
     if(piece_set == nullptr) throw new exception();
 

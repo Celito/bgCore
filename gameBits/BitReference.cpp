@@ -11,7 +11,7 @@ shared_ptr<GameBit> BitReference::get_bit() {
     }
     if(_curr_player == nullptr)
     {
-        throw "Tring to access a bit reference from a not defined player player";
+        throw "Trying to access a bit reference from a not defined player player";
     }
     return _curr_player->get_first_bit_by_name(_bit_id);
 }

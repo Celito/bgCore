@@ -25,7 +25,7 @@ shared_ptr<Turn> TurnDef::generate_turn(shared_ptr<Player> player) {
     shared_ptr<Action> first_action = make_shared<Action>(turn, first_action_def);
 
     // initialize it before using it;
-    first_action->init(first_action);
+    first_action.get()->init(first_action);
 
     // add the first action to the turn queue of next actions;
     turn->add_next_action(first_action);

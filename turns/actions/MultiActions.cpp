@@ -20,12 +20,15 @@ string MultiActions::get_description() const
 
 void MultiActions::update_options(Action &action)
 {
+    shared_ptr<Player> player = action.get_turn()->get_player();
+    Player * player_ptr = player.get();
     for (auto sub_action_def : _sub_actions)
     {
-        if (sub_action_def->is_available(action.get_turn()->get_player()))
+        ActionDef * sub_action_def_ptr = sub_action_def.get();
+        bool is_available =  sub_action_def_ptr->is_available(player);
+        if (is_available)
             action.add_option(make_shared<ActionOption>(sub_action_def));
     }
-    return;
 }
 
 bool MultiActions::is_available(shared_ptr<Player> player)

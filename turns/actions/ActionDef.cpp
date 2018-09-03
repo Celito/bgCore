@@ -17,7 +17,8 @@ void ActionDef::init_act_instance(Action &action)
         if (bit) action.add_req_bit(item.first, bit);
     }
     update_options(action);
-    if (action.get_options().size() == 0) throw new exception();
+    vector< shared_ptr<Option> > opts = action.get_options();
+    if (opts.empty()) throw exception();
 }
 
 void ActionDef::process_choice(shared_ptr<Action> action)
