@@ -1,0 +1,109 @@
+NUMBER_OF_PLAYERS: 2
+TURNS: SEQUENTIAL
+
+COMPONENTS:
+{
+    Board
+    {
+        TYPE: BOARD
+        {
+            FORMAT: HEX
+        }
+    }
+    Queen
+    {
+        PLAYER_OWNED: True
+        TYPE: PIECE
+    }
+    Grasshopper
+    {
+        PLAYER_OWNED: True
+        TYPE: PIECE
+    }
+    Beetle
+    {
+        PLAYER_OWNED: True
+        TYPE: PIECE
+    }
+    Spider
+    {
+        PLAYER_OWNED: True
+        TYPE: PIECE
+    }
+    Ant
+    {
+        PLAYER_OWNED: True
+        TYPE: PIECE
+    }
+}
+
+PLAYERS:
+{
+    White
+    Black
+    SHARED:
+    {
+        STARTING_SET:
+        {
+            Queen 1
+            Beetle 2
+            Spider 2
+            Grasshopper 3
+            Ant 3
+        }
+    }
+}
+
+ACTIONS:
+{
+    PlayersChoice:
+    {
+        TYPE: MULTI_ACTION
+        {
+            ACTIONS:
+            {
+                PlacePiece:
+                {
+                    TYPE: PLACE_PIECE
+                    {
+                        PIECE_SET: Hand(&)
+                        TARGET: Table
+                        PLACEMENT_RESTRICTIONS:
+                        {
+                            {
+                                TYPE: NEED_TO_TOUCH
+                            }
+                            {
+                                REVERSED: True
+                                TYPE: NEED_TO_TOUCH
+                                {
+                                    ADVERSARY: True
+                                }
+                            }
+                        }
+                    }
+                }
+                Move:
+                {
+                    TYPE: MOVE
+                    {
+                        TARGET: Table
+                        PIECE_SELECTION_RESTRICTIONS:
+                        {
+                            {
+                                TYPE: OWNED
+                            }
+                            {
+                                TYPE: KEEP_COHESION
+                            }
+                            {
+                                TYPE: TOP_OF_STACK
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

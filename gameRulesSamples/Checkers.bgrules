@@ -1,0 +1,83 @@
+NUMBER_OF_PLAYERS: 2
+TURNS: SEQUENTIAL
+
+COMPONENTS:
+{
+    Table
+    {
+        TYPE: BOARD
+        {
+            FORMAT: SQUARE
+            SIZE: 8 8
+        }
+    }
+    Checker
+    {
+        TYPE: PIECE
+        {
+            MOVEMENTS:
+            {
+                Right
+                {
+                    WHERE: Board
+                    PERSPECTIVE: True
+                    TYPE: SQUARE
+                    {
+                        MOVE_X: 1
+                        MOVE_Y: 1
+                    }
+                }
+                Left
+                {
+                    WHERE: Board
+                    PERSPECTIVE: True
+                    TYPE:SQUARE
+                    {
+                        MOVE_X: -1
+                        MOVE_Y: 1
+                    }
+                }
+            }
+        }
+    }
+}
+
+PLAYERS:
+{
+    White
+    {
+        PERSPECTIVE: Board 0
+    }
+    Black
+    {
+        PERSPECTIVE: Board 2
+    }
+    SHARED:
+    {
+        STARTING_SET:
+        {
+            Checker 1
+        }
+        SETUP_BOARD:
+        {
+            1
+            {
+                PIECE: Checker
+                POS_X: 4
+                POS_Y: 0
+            }
+        }
+    }
+}
+
+ACTIONS:
+{
+    Move
+    {
+        TYPE:MOVE
+        {
+            TARGET: Board
+            RESTRICTION: OWNED
+        }
+    }
+}

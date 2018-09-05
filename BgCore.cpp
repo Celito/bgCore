@@ -1,3 +1,5 @@
+#include <utility>
+
 //
 // Created by Celito on 5/27/2015.
 //
@@ -56,7 +58,7 @@ BgCore::BgCore() {
     string QUEEN_NAME = "Queen";
     string BEETLE_NAME = "Beetle";
     string SPIDER_NAME = "Spider";
-    string ANT_NAME = "Ant";
+    string ANT_NAME = "ANT_NAME";
 
     vector<pair<uint32_t, string> > pieces_info = {
             {1, QUEEN_NAME},
@@ -113,7 +115,9 @@ BgCore::BgCore() {
                         make_shared<BitReference>(HEX_BOARD_NAME, *this)
                 );
         auto move_piece_on_board =
-                make_shared<MovePieceOnBoard>(*this, make_shared<BitReference>(HEX_BOARD_NAME, *this));
+            make_shared<MovePieceOnBoard>(
+                *this, make_shared<BitReference>(HEX_BOARD_NAME, *this)
+            );
 
         auto first_action = make_shared<MultiActions>(*this);
 
@@ -274,7 +278,7 @@ shared_ptr<Player> BgCore::get_player(uint32_t id) {
 }
 
 shared_ptr<GameBit> BgCore::get_table_bit(string bit_id) const {
-    return _bits_manager->get_first_bit(bit_id);
+    return _bits_manager->get_first_bit(std::move(bit_id));
 }
 
 void BgCore::register_new_bit(shared_ptr<GameBit> bit) {
