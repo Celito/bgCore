@@ -50,6 +50,8 @@ public:
 
     const shared_ptr<State> &curr_state();
 
+    bool loadManual(const string &filePath);
+
 private:
 //game config:
     uint8_t _num_of_players;

@@ -7,8 +7,15 @@ using namespace std;
 int main() {
 
     BgCore game;
-    GameTUI gameTUI(game);
-    gameTUI.run();
+    if(game.loadManual("Hive.bgrules"))
+    {
+        GameTUI gameTUI(game);
+        gameTUI.run();
+    }
+    else
+    {
+        cout << "Error loading the rules files" << endl;
+    }
 
     cout << "You reached the end of the program" << endl;
     system("pause");

@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <c++/fstream>
 #include "BgCore.h"
 #include "GameController.h"
 #include "player/Player.h"
@@ -35,7 +36,8 @@
 
 using namespace std;
 
-BgCore::BgCore() {
+BgCore::BgCore()
+{
     cout << "Creating the Game" << endl;
 
     // Initialize the supporting managers;
@@ -61,11 +63,11 @@ BgCore::BgCore() {
     string ANT_NAME = "ANT_NAME";
 
     vector<pair<uint32_t, string> > pieces_info = {
-            {1, QUEEN_NAME},
-            {2, BEETLE_NAME},
-            {2, SPIDER_NAME},
-            {3, GRASSHOPPER_NAME},
-            {3, ANT_NAME},
+        {1, QUEEN_NAME},
+        {2, BEETLE_NAME},
+        {2, SPIDER_NAME},
+        {3, GRASSHOPPER_NAME},
+        {3, ANT_NAME},
     };
 
     // TEMP creating the game pieces and making its setup
@@ -97,7 +99,7 @@ BgCore::BgCore() {
                 register_new_bit(new_piece);
                 new_piece->set_attr(COLOR_ATTR, i);
                 player_set->receive(new_piece);
-                if(iter.second == QUEEN_NAME)
+                if (iter.second == QUEEN_NAME)
                 {
                     queen_piece = new_piece;
                 }
@@ -109,11 +111,11 @@ BgCore::BgCore() {
         shared_ptr<TurnDef> normal_turn = make_shared<TurnDef>();
 
         auto put_piece_on_board =
-                make_shared<PlacePieceOnBoard>(
-                        *this,
-                        make_shared<BitReference>(PLAYER_PIECES, *this, true),
-                        make_shared<BitReference>(HEX_BOARD_NAME, *this)
-                );
+            make_shared<PlacePieceOnBoard>(
+                *this,
+                make_shared<BitReference>(PLAYER_PIECES, *this, true),
+                make_shared<BitReference>(HEX_BOARD_NAME, *this)
+            );
         auto move_piece_on_board =
             make_shared<MovePieceOnBoard>(
                 *this, make_shared<BitReference>(HEX_BOARD_NAME, *this)
@@ -129,8 +131,8 @@ BgCore::BgCore() {
 
         // TODO: Make this a custom PLAYER event, so it happens for both players
         // CREATE THE CUSTOM EVENT WHEN THE WHITE QUEEN IS PLACED ON THE TABLE:
-        auto queen_piece_on_table_event = 
-			make_shared<OnPiecePlacedOnBoard>(queen_piece, board, put_piece_on_board);
+        auto queen_piece_on_table_event =
+            make_shared<OnPiecePlacedOnBoard>(queen_piece, board, put_piece_on_board);
 
         auto add_movement_action_game_change = make_shared<AddActionOption>(first_action, move_piece_on_board, *this);
 
@@ -255,14 +257,17 @@ BgCore::BgCore() {
 
 }
 
-void BgCore::start(GameController &game_controller) {
+void BgCore::start(GameController &game_controller)
+{
     _initialize_pieces();
 
-    for (uint32_t i = 0; i < _players.size(); i++) {
+    for (uint32_t i = 0; i < _players.size(); i++)
+    {
         _players[i]->set_controller(game_controller.get_player_controller(i));
     }
 
-    while (!_is_over) {
+    while (!_is_over)
+    {
         _turns_manager->next_turn();
     }
 }
@@ -273,21 +278,50 @@ void BgCore::kill()
     _is_over = true;
 }
 
-shared_ptr<Player> BgCore::get_player(uint32_t id) {
+shared_ptr<Player> BgCore::get_player(uint32_t id)
+{
     return _players[id];
 }
 
-shared_ptr<GameBit> BgCore::get_table_bit(string bit_id) const {
+shared_ptr<GameBit> BgCore::get_table_bit(string bit_id) const
+{
     return _bits_manager->get_first_bit(std::move(bit_id));
 }
 
-void BgCore::register_new_bit(shared_ptr<GameBit> bit) {
+void BgCore::register_new_bit(shared_ptr<GameBit> bit)
+{
     // Add bit to the general list of bits and give it an unique id
     _bits_manager->register_bit(bit);
     // Subscribe the bit to the init signal
     _initialize_pieces.connect(boost::bind(&GameBit::init, bit.get()));
 }
 
-const shared_ptr<State> &BgCore::curr_state() {
+const shared_ptr<State> &BgCore::curr_state()
+{
     return _turns_manager->get_curr_state();
+}
+
+bool BgCore::loadManual(const string &filePath)
+{
+    ifstream rulesFile;
+    string line;
+    rulesFile.open(filePath);
+
+    if (rulesFile.is_open())
+    {
+        while (!rulesFile.eof())
+        {
+            getline(rulesFile, line);
+            cout << line << endl;
+        }
+
+        rulesFile.close();
+    }
+    else
+    {
+        cout << "Error opening the rules file" << endl;
+    }
+
+
+    return false;
 }

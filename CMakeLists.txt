@@ -17,8 +17,38 @@ else()
     message(STATUS "Boost library not found")
 endif()
 
-set(SOURCE_FILES main.cpp events/CustomEvent.cpp events/CustomEvent.h events/OnPiecePlacedOnBoard.cpp events/OnPiecePlacedOnBoard.h gameChanges/GameChange.cpp gameChanges/GameChange.h gameChanges/AddActionOption.cpp gameChanges/AddActionOption.h rules/ComplexTestableRule.cpp rules/ComplexTestableRule.h)
-add_executable(bgCore ${SOURCE_FILES} player/Player.cpp player/Player.h BgCore.cpp BgCore.h ConfigManager.cpp ConfigManager.h BitsManager.cpp BitsManager.h gameBits/GameBit.cpp gameBits/GameBit.h gameBits/PieceSet.cpp gameBits/PieceSet.h gameBits/Piece.cpp gameBits/Piece.h gameBits/boards/HexBoard.cpp gameBits/boards/HexBoard.h turns/TurnsManager.cpp turns/TurnsManager.h tui/GameTUI.cpp tui/GameTUI.h player/PlayerInterface.cpp player/PlayerInterface.h turns/TurnDef.cpp turns/TurnDef.h turns/actions/ActionDef.cpp turns/actions/ActionDef.h player/PlayerController.cpp player/PlayerController.h tui/PlayerTUI.cpp tui/PlayerTUI.h GameController.cpp GameController.h turns/actions/PlacePieceOnBoard.cpp turns/actions/PlacePieceOnBoard.h gameBits/boards/Board.cpp gameBits/boards/Board.h gameBits/BitReference.cpp gameBits/BitReference.h turns/actions/MultiActions.cpp turns/actions/MultiActions.h turns/actions/options/ActionOption.cpp turns/actions/options/ActionOption.h turns/actions/options/Option.cpp turns/actions/options/Option.h turns/actions/ChoosePieceOnSet.cpp turns/actions/ChoosePieceOnSet.h turns/actions/options/BitOption.cpp turns/actions/options/BitOption.h turns/actions/ChooseTileOnBoard.cpp turns/actions/ChooseTileOnBoard.h gameBits/boards/Tile.cpp gameBits/boards/Tile.h gameBits/boards/TilePos.cpp gameBits/boards/TilePos.h turns/actions/options/TileOption.cpp turns/actions/options/TileOption.h rules/Rule.cpp rules/Rule.h gameBits/attributes/Attribute.cpp gameBits/attributes/Attribute.h gameBits/attributes/AttrManager.cpp gameBits/attributes/AttrManager.h turns/actions/MovePieceOnBoard.cpp turns/actions/MovePieceOnBoard.h turns/actions/ChoosePieceOnBoard.cpp turns/actions/ChoosePieceOnBoard.h rules/PlayerAttrComparison.cpp rules/PlayerAttrComparison.h rules/MovementFilterRule.cpp rules/MovementFilterRule.h turns/Turn.cpp turns/Turn.h turns/actions/Action.cpp turns/actions/Action.h rules/TestableRule.cpp rules/TestableRule.h rules/TouchAnotherPieceRule.cpp rules/TouchAnotherPieceRule.h rules/RulesManager.cpp rules/RulesManager.h turns/State.cpp turns/State.h rules/IsEmpty.cpp rules/IsEmpty.h rules/TimedCondition.cpp rules/TimedCondition.h rules/IsRound.cpp rules/IsRound.h rules/JumpOverNeighbours.cpp rules/JumpOverNeighbours.h rules/movement/MovementSubRule.cpp rules/movement/MovementSubRule.h rules/movement/AlwaysTouching.cpp rules/movement/AlwaysTouching.h rules/OnePiecesGroup.h rules/OnePiecesGroup.cpp rules/movement/CanStack.h rules/movement/CanStack.cpp events/EventManager.cpp events/EventManager.h)
+set(SOURCE_FILES main.cpp events/CustomEvent.cpp events/CustomEvent.h events/OnPiecePlacedOnBoard.cpp
+        events/OnPiecePlacedOnBoard.h gameChanges/GameChange.cpp gameChanges/GameChange.h
+        gameChanges/AddActionOption.cpp gameChanges/AddActionOption.h rules/ComplexTestableRule.cpp
+        rules/ComplexTestableRule.h manual/ManualLoader.cpp manual/ManualLoader.h manual/ManualProperty.cpp manual/ManualProperty.h manual/ManualPropertyInteger.cpp manual/ManualPropertyInteger.h)
+add_executable(bgCore ${SOURCE_FILES} player/Player.cpp player/Player.h BgCore.cpp BgCore.h ConfigManager.cpp
+        ConfigManager.h BitsManager.cpp BitsManager.h gameBits/GameBit.cpp gameBits/GameBit.h gameBits/PieceSet.cpp
+        gameBits/PieceSet.h gameBits/Piece.cpp gameBits/Piece.h gameBits/boards/HexBoard.cpp gameBits/boards/HexBoard.h
+        turns/TurnsManager.cpp turns/TurnsManager.h tui/GameTUI.cpp tui/GameTUI.h player/PlayerInterface.cpp
+        player/PlayerInterface.h turns/TurnDef.cpp turns/TurnDef.h turns/actions/ActionDef.cpp turns/actions/ActionDef.h
+        player/PlayerController.cpp player/PlayerController.h tui/PlayerTUI.cpp tui/PlayerTUI.h GameController.cpp
+        GameController.h turns/actions/PlacePieceOnBoard.cpp turns/actions/PlacePieceOnBoard.h gameBits/boards/Board.cpp
+        gameBits/boards/Board.h gameBits/BitReference.cpp gameBits/BitReference.h turns/actions/MultiActions.cpp
+        turns/actions/MultiActions.h turns/actions/options/ActionOption.cpp turns/actions/options/ActionOption.h
+        turns/actions/options/Option.cpp turns/actions/options/Option.h turns/actions/ChoosePieceOnSet.cpp
+        turns/actions/ChoosePieceOnSet.h turns/actions/options/BitOption.cpp turns/actions/options/BitOption.h
+        turns/actions/ChooseTileOnBoard.cpp turns/actions/ChooseTileOnBoard.h gameBits/boards/Tile.cpp
+        gameBits/boards/Tile.h gameBits/boards/TilePos.cpp gameBits/boards/TilePos.h
+        turns/actions/options/TileOption.cpp turns/actions/options/TileOption.h rules/Rule.cpp rules/Rule.h
+        gameBits/attributes/Attribute.cpp gameBits/attributes/Attribute.h gameBits/attributes/AttrManager.cpp
+        gameBits/attributes/AttrManager.h turns/actions/MovePieceOnBoard.cpp turns/actions/MovePieceOnBoard.h
+        turns/actions/ChoosePieceOnBoard.cpp turns/actions/ChoosePieceOnBoard.h rules/PlayerAttrComparison.cpp
+        rules/PlayerAttrComparison.h rules/MovementFilterRule.cpp rules/MovementFilterRule.h turns/Turn.cpp turns/Turn.h
+        turns/actions/Action.cpp turns/actions/Action.h rules/TestableRule.cpp rules/TestableRule.h
+        rules/TouchAnotherPieceRule.cpp rules/TouchAnotherPieceRule.h rules/RulesManager.cpp rules/RulesManager.h
+        turns/State.cpp turns/State.h rules/IsEmpty.cpp rules/IsEmpty.h rules/TimedCondition.cpp rules/TimedCondition.h
+        rules/IsRound.cpp rules/IsRound.h rules/JumpOverNeighbours.cpp rules/JumpOverNeighbours.h
+        rules/movement/MovementSubRule.cpp rules/movement/MovementSubRule.h rules/movement/AlwaysTouching.cpp
+        rules/movement/AlwaysTouching.h rules/OnePiecesGroup.h rules/OnePiecesGroup.cpp rules/movement/CanStack.h
+        rules/movement/CanStack.cpp events/EventManager.cpp events/EventManager.h)
+
+configure_file(gameRulesSamples/Hive.bgrules ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+configure_file(gameRulesSamples/Checkers.bgrules ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
 if(Boost_FOUND)
     target_link_libraries(bgCore ${Boost_LIBRARIES})
