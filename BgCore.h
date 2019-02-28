@@ -26,7 +26,7 @@ using namespace std;
 
 class BgCore {
 public:
-    BgCore();
+    BgCore(const string& filePath);
 
     //interface:
     void start(GameController &game_controller);

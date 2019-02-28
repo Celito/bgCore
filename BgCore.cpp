@@ -32,10 +32,11 @@
 #include "gameBits/attributes/AttrManager.h"
 #include "events/OnPiecePlacedOnBoard.h"
 #include "gameChanges/AddActionOption.h"
+#include "loader/GameLoader.h"
 
 using namespace std;
 
-BgCore::BgCore() {
+BgCore::BgCore(const string& filePath) {
     cout << "Creating the Game" << endl;
 
     // Initialize the supporting managers;
@@ -44,6 +45,10 @@ BgCore::BgCore() {
     _attr_manager = make_shared<AttrManager>();
     _rules_manager = make_shared<RulesManager>();
     _event_manager = make_shared<EventManager>(*this);
+
+    GameLoader gameLoader(*this);
+
+    gameLoader.LoadRules(filePath);
 
     _is_over = false;
 
@@ -58,7 +63,7 @@ BgCore::BgCore() {
     string QUEEN_NAME = "Queen";
     string BEETLE_NAME = "Beetle";
     string SPIDER_NAME = "Spider";
-    string ANT_NAME = "ANT_NAME";
+    string ANT_NAME = "Ant";
 
     vector<pair<uint32_t, string> > pieces_info = {
             {1, QUEEN_NAME},

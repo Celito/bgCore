@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
 
-    BgCore game;
+    BgCore game("Hive.bgrules");
     GameTUI gameTUI(game);
     gameTUI.run();
 
